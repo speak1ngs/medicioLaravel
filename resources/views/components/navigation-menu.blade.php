@@ -11,7 +11,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 				<i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand" href="./index-renew.php">
+			<a class="navbar-brand" href="./inicio">
 				<img src="{{ mix('img/logo.png')}}" alt="" width="150" height="40" />
 			</a>
 
@@ -28,23 +28,23 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-right navbar-main-collapse ">
 			<ul class="nav navbar-nav hid-burguer">
-				<li><a href="./profile.php">Perfil</a></li>
-				<li><a href="./registro-doctor.php">Registrar Doctor</a></li>
-				<li><a href="./alta-doctor.php">Alta Doctor</a></li>
-				<li><a href="./calendario-doctor.php">Asignar horarios</a></li>
-				<li><a href="./importe-consulta.php">Cargar monto de consulta</a></li>
-				<li><a href="./editar-importe-consulta.php">Editar monto de consultas</a></li>
-				<li><a href="./post.php">Crear post</a></li>
-				<li><a href="./alta-post.php">Dar de alta post</a></li>
-				<li><a href="./changePass.php">Cambiar Contraseña</a></li>
-				<li><a href="./changeEmail.php">Cambiar Correo</a></li>
-				<li><a href="./reservar.php">Reservar Turno</a></li>
-				<li><a href="./reservar-admin.php">Reservar Turno Admin</a></li>
-				<li><a href="./alta-reservar-admin.php">Alta Turno Reservados Admin</a></li>
-				<li><a href="./reservas.php">Turnos reservados</a></li>
-				<li><a href="./reservas-doctor-agenda.php">Citas programadas</a></li>
-				<li><a href="./reservas-consultorio-agenda.php">Citas programadas consultorio</a></li>
-				<li><a href="./historial-citas-doctor.php">Historial de citas</a></li>
+				<li><a href="/profile">Perfil</a></li>
+				<li><a href="/registro-doctor">Registrar Doctor</a></li>
+				<li><a href="/alta-doctor">Alta Doctor</a></li>
+				<li><a href="/calendario-doctor">Asignar horarios</a></li>
+				<li><a href="/importe">Cargar monto de consulta</a></li>
+				<li><a href="/edit-importe">Editar monto de consultas</a></li>
+				<li><a href="/crear-post">Crear post</a></li>
+				<li><a href="/alta-post">Dar de alta post</a></li>
+				<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>
+				<li><a href="/cambiar-correo">Cambiar Correo</a></li>
+				<li><a href="/reservar">Reservar Turno</a></li>
+				<li><a href="/reservar-adm">Reservar Turno Admin</a></li>
+				<li><a href="/alta-reser-adm">Alta Turno Reservados Admin</a></li>
+				<li><a href="/turnos-reservados">Turnos reservados</a></li>
+				<li><a href="/doctor-agenda">Citas programadas</a></li>
+				<li><a href="/consultorio-agenda">Citas programadas consultorio</a></li>
+				<li><a href="/historial-cita">Historial de citas</a></li>
 				<li><a href="#">Salir</a></li>
 			</ul>
 
@@ -55,24 +55,24 @@
 				<li class="dropdown ">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="./profile.php">Perfil</a></li>
-						<li><a href="./registro-doctor.php">Registrar Doctor</a></li>
-						<li><a href="./alta-doctor.php">Alta Doctor</a></li>
-						<li><a href="./calendario-doctor.php">Asignar horarios</a></li>
-						<li><a href="./importe-consulta.php">Cargar monto de consulta</a></li>
-						<li><a href="./editar-importe-consulta.php">Editar monto de consultas</a></li>
-						<li><a href="./post.php">Crear post</a></li>
-						<li><a href="./alta-post.php">Dar de alta post</a></li>
-						<li><a href="./changePass.php">Cambiar Contraseña</a></li>
-						<li><a href="./changeEmail.php">Cambiar Correo</a></li>
-						<li><a href="./reservar.php">Reservar Turno</a></li>
-						<li><a href="./reservar-admin.php">Reservar Turno Admin</a></li>
-						<li><a href="./alta-reservar-admin.php">Alta Turno Reservados Admin</a></li>
-						<li><a href="./reservas.php">Turnos reservados</a></li>
-						<li><a href="./reservas-doctor-agenda.php">Citas programadas</a></li>
-						<li><a href="./reservas-consultorio-agenda.php">Citas programadas consultorio</a></li>
-						<li><a href="./historial-citas-doctor.php">Historial de citas</a></li>
-						<li><a href="#">Salir</a></li>
+					<li><a href="/profile">Perfil</a></li>
+					<li><a href="/registro-doctor">Registrar Doctor</a></li>
+					<li><a href="/alta-doctor">Alta Doctor</a></li>
+					<li><a href="/calendario-doctor">Asignar horarios</a></li>
+					<li><a href="/importe">Cargar monto de consulta</a></li>
+					<li><a href="/edit-importe">Editar monto de consultas</a></li>
+					<li><a href="/crear-post">Crear post</a></li>
+					<li><a href="/alta-post">Dar de alta post</a></li>
+					<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>
+					<li><a href="/cambiar-correo">Cambiar Correo</a></li>
+					<li><a href="/reservar">Reservar Turno</a></li>
+					<li><a href="/reservar-adm">Reservar Turno Admin</a></li>
+					<li><a href="/alta-reser-adm">Alta Turno Reservados Admin</a></li>
+					<li><a href="/turnos-reservados">Turnos reservados</a></li>
+					<li><a href="/doctor-agenda">Citas programadas</a></li>
+					<li><a href="/consultorio-agenda">Citas programadas consultorio</a></li>
+					<li><a href="/historial-cita">Historial de citas</a></li>
+					<li><a href="#">Salir</a></li>
 					</ul>
 				</li>
 			</ul>
