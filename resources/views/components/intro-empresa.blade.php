@@ -46,7 +46,7 @@
 								</li>
 							</ul>
 							<p class="text-right wow bounceIn" data-wow-delay="0.4s">
-								<a href="/registro" class="btn btn-skin btn-lg"
+								<a href="/paciente/registro" class="btn btn-skin btn-lg"
 									>Registrarse <i class="fa fa-angle-right"></i
 								></a>
 							</p>

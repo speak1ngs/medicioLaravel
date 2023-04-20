@@ -1,6 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdmFuncController;
+use App\Http\Controllers\AdmTempController;
+use App\Http\Controllers\ConsultorioController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PassController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,88 +22,61 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/inicio', function () {
-    return view('index');
+// Route::get('/inicio', function () {
+//     return view('index');
+// });
+
+Route::get('/inicio', HomeController::class);
+
+//  RUTAS DE PACIENTES
+Route::controller(PacienteController::class)->group( function ()
+{
+    Route::get('paciente/profile','profile');
+    Route::get('paciente/reservar','reservar');
+    Route::get('paciente/registro','registro');
+    Route::get('paciente/turnos-reservados','reservad');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
+// RUTAS ADM FUNCIONALIDADES
+
+Route::controller(AdmFuncController::class) -> group( function ()
+{
+    Route::get('admfunc/registro-doctor', 'registro');
+    Route::get('admfunc/alta-doctor', 'alta');
+    Route::get('admfunc/calendario-doctor', 'calendario');
+    Route::get('admfunc/importe', 'importe');
+    Route::get('admfunc/edit-importe','edit');
+    Route::get('admfunc/historial-citas','historial');
+    Route::get('admfunc/reservar-adm','reserva');
+    Route::get('admfunc/alta-reser-adm','altaReser');
+    
 });
 
-Route::get('/registro', function () {
-    return view('registro');
-});
-
-Route::get('/registro-doctor', function () {
-    return view('registro-doctor');
-});
-
-Route::get('/alta-doctor', function () {
-    return view('alta-doctor');
-});
-Route::get('/calendario-doctor', function () {
-    return view('calendario-doctor');
-});
-
-Route::get('/importe', function () {
-    return view('importe-consulta');
-});
-
-Route::get('/edit-importe', function () {
-    return view('editar-importe');
-});
-Route::get('/crear-post', function () {
-    return view('crear-post');
-});
-
-Route::get('/alta-post', function () {
-    return view('alta-post');
-});
-
-Route::get('/cambiar-pass', function () {
-    return view('cambiar-password');
-});
-
-Route::get('/cambiar-correo', function () {
-    return view('cambiar-email');
-});
-
-Route::get('/reservar', function () {
-    return view('reservar');
-});
-
-Route::get('/reservar-adm', function () {
-    return view('reservar-admin');
-});
-
-Route::get('/alta-reser-adm', function () {
-    return view('alta-reserva');
+//  RUTAS DE POST
+Route::controller(PostController::class)->group(function ()
+{
+    Route::get('post/crear', 'crear');
+    Route::get('post/alta', 'alta');
 });
 
 
-Route::get('/turnos-reservados', function () {
-    return view('turnos-reservados');
-});
+//  RUTAS COMUNES EN TODOS LOS USUARIOS
+Route::get('/cambiar-pass', [PassController::class, 'cambiar']);
+Route::get('/cambiar-correo', [EmailController::class, 'cambiar']);
 
+//  RUTAS DE DOCTOR 
+Route::get('doctor/agenda',[DoctorController::class, 'agenda']);
 
-Route::get('/doctor-agenda', function () {
-    return view('reserva-doctor-agenda');
-});
+// RUTAS DE AGENDA CONSULTORIO
+Route::get('consultorio/agenda',[ConsultorioController::class,'agenda']);
 
-
-Route::get('/consultorio-agenda', function () {
-    return view('reservas-consultorio-agenda');
-});
-
-Route::get('/historial-cita', function () {
-    return view('historial-citas');
-});
-
-
+//  RUTAS DE ADMIN TEMPLATE 
+Route::get('adm/dashboard', [AdmTempController::class,'dashboard']);
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 // Route::middleware([
 //     'auth:sanctum',
