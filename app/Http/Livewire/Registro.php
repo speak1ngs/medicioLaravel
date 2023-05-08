@@ -19,21 +19,24 @@ class Registro extends Component
     public $tip_user;  // 1 = paciente
 
     protected $rules = [
-        'inputNombre' => 'required|text',
-        'inputApellido' => 'required|text',
+        'inputNombre' => 'required|string',
+        'inputApellido' => 'required|string',
         'inputCedula' => 'required',
         'inputEmail' => 'required|email',
-        'inputPassword' => 'required|min:8|mixedCase',
         'inputAddress' => 'required',
         'inputTelf' => 'required',
-        'inputPhoto' => 'required|image|max:2048|mime:jpg'
+     
 
     ];
+    // 'inputPassword' => 'required|min:8|max:256|regex:/^(?=.[a-z])(?=.[A-Z])(?=.*\d).+$/',
+
+    // 'inputPhoto' => 'image|max:2048|mimes:jpeg,jpg'
+    // 'inputPhoto' => 'required|image|max:2048|mime:jpg'
 
     public function guardar()
     {
    
-        // $this->validate();
+        $this->validate();
 
         persona::create(
             [
@@ -51,6 +54,7 @@ class Registro extends Component
 
         $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
 
+       
         if($iden){
            
             paciente::create(
@@ -59,23 +63,23 @@ class Registro extends Component
                     'calificacion' =>  0,
                     'cantidad_consultas_reservadas' => 0,
                     'cantidad_consultas_canceladas' => 0,
-                    'persona_id' => $iden,
-                    'stat_id' => '0'
+                    'persona_id' => $iden[0]->id,
+                    'stat_id' => 1
                 ]
                 );
 
         }
-           $paciente = paciente::select('id')->where('persona_id', '=', $iden)->get();
-            $tip_user = '1';
+           $paciente = paciente::select('id')->where('persona_id', '=', $iden[0]->id)->get();
+            $tip_user = 1;
            if( $paciente){
 
                 User::create(
                     [
                         'email' => $this->inputEmail,
                         'password' => $this->inputPassword,
-                        'paciente_id' => $paciente,
-                        'doctor_id' => '0',
-                        'tipo_usaurio_id' => $tip_user  
+                        'paciente_id' => $paciente[0]->id,
+                        'doctor_id' => null,
+                        'tipo_usaurio_id' => 1  
                     ]
                     );
 
@@ -83,7 +87,7 @@ class Registro extends Component
 
 
 
-        $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAdress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
+        $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
        
     }
 

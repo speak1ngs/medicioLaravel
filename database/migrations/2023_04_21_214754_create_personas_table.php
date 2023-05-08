@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre',60);
             $table->string('apellido',60);
             $table->string('cedula',15);
-            $table->time('fecha_nacimiento')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
             $table->integer('telefono_particular')->nullable();
             $table->integer('edad')->nullable();
             $table->unsignedBigInteger('ciudad_id')->nullable();
