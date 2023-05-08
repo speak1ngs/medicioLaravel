@@ -18,7 +18,7 @@ class PacienteController extends Controller
 
     public function registro()
     {
-        return view('registro');
+        return view('registro-inc');
     }
 
     public function reservados()

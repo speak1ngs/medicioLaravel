@@ -1,6 +1,6 @@
 <x-header />
 	<x-body-wrapper >
 		<x-nav-bar /> 
-		<x-registro />
+		@livewire('registro');
 	</x-body-wrapper>
 <x-footer />

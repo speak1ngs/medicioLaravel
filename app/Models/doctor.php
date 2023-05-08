@@ -29,4 +29,15 @@ class doctor extends Model
         return $this->belongsToMany(consultorio::class);
     }
 
+
+    protected $fillable = [
+        'registro',
+        'foto_url',
+        'telefono_laboral',
+        'registro_expericacion_fecha',
+        'calificacion',
+        'especialidades',
+        'persona_id',
+        'stat_id'
+    ];
 }

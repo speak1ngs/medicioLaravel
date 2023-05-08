@@ -28,4 +28,12 @@ class paciente extends Model
         return $this->belongsToMany(cita::class);
     }
 
+    protected $fillable = [
+        'foto_url',
+        'calificacion',
+        'cantidad_consultas_reservadas',
+        'cantidad_consultas_canceladas',
+        'persona_id',
+        'stat_id'
+    ];
 }

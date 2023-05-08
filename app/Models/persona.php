@@ -30,4 +30,5 @@ class persona extends Model
         return $this->belongsTo(ciudad::class);
     }
 
+    protected $fillable = ['nombre', 'apellido', 'cedula','fecha_nacimiento', 'telefono_particular', 'edad','ciudad_id','pais_id', 'barrio_id'];
 }
