@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 class AdmFuncController extends Controller
 {
     
-    public function registro()
-    {
-        return view('registro-doctor');
-    }
+    // public function registro()
+    // {
+    //     // return view('registro-doctor');
+    // }
 
 
     public function alta()

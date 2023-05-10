@@ -45,8 +45,6 @@
 	<script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js" type="text/javascript"></script>
 
-
-
 	<!-- boxed bg -->
 	<link id="bodybg" href="{{ mix('bodybg/bg1.css')}}" rel="stylesheet" type="text/css" />
 	<!-- template skin -->

@@ -10,6 +10,7 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
 use App\Http\Livewire\Registro;
+use App\Http\Livewire\RegistroDoctor;
 use Illuminate\Support\Facades\Route;
 
 
@@ -40,10 +41,11 @@ Route::controller(PacienteController::class)->group( function ()
 });
 
 // RUTAS ADM FUNCIONALIDADES
+Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('registro-doctor');
 
 Route::controller(AdmFuncController::class) -> group( function ()
 {
-    Route::get('admfunc/registro-doctor', 'registro');
+    // Route::get('admfunc/registro-doctor', 'registro');
     Route::get('admfunc/alta-doctor', 'alta');
     Route::get('admfunc/calendario-doctor', 'calendario');
     Route::get('admfunc/importe', 'importe');

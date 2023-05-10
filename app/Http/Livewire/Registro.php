@@ -13,8 +13,7 @@ use Livewire\Component;
 
 class Registro extends Component
 {
-    public $inputNombre, $inputApellido , $inputCedula, $inputEmail, $inputPassword , $inputTelf, $inputEdad, $inputAddress, 
-    $inputAddress2, $inputAddress3 ,$inputCiudad ,$inputBarrio, $inputPais, $inputNac ,$inputPhoto;
+    public $inputNombre, $inputApellido , $inputCedula, $inputEmail, $inputPassword , $inputTelf, $inputEdad,$inputCiudad ,$inputBarrio, $inputPais, $inputNac ,$inputPhoto;
     public $iden ,$paciente;
     public $tip_user;  // 1 = paciente
 
@@ -79,7 +78,7 @@ class Registro extends Component
                         'password' => $this->inputPassword,
                         'paciente_id' => $paciente[0]->id,
                         'doctor_id' => null,
-                        'tipo_usaurio_id' => 1  
+                        'tipo_usaurio_id' => $tip_user  
                     ]
                     );
 

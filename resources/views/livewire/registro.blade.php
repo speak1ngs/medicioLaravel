@@ -52,7 +52,7 @@
                 <input type="number" class="form-control" id="inputEdad" wire:model="inputEdad" placeholder="Edad">
             </div>
 
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
                 <label for="inputAddress">Calle principal</label>
                 <input type="text" class="form-control" id="inputAddress" wire:model="inputAddress">
                 <x-input-error for="inputAddress" />
@@ -75,20 +75,24 @@
                 <input type="text" class="form-control" id="inputAddress3"
                 wire:model="inputAddress3">
             </div>
+        </div> -->
+
+        <div class="form-group col-md-6">
+            <label>Fecha de nacimiento</label>
+            <input type="date" wire:model="inputNac" class="form-control">
         </div>
 
 
-
         <div class="form-group col-md-4">
-            <label for="inputCiudad">Ciudad</label>
-            <select id="inputCiudad" wire:model="inputCiudad" class="form-control">
+            <label for="inputBarrio">Barrio</label>
+            <select id="inputBarrio" wire:model="inputBarrio" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
         </div>
         <div class="form-group col-md-4">
-            <label for="inputBarrio">Barrio</label>
-            <select id="inputBarrio" wire:model="inputBarrio" class="form-control">
+            <label for="inputCiudad">Ciudad</label>
+            <select id="inputCiudad" wire:model="inputCiudad" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
@@ -100,10 +104,7 @@
                 <option>...</option>
             </select>
         </div>
-        <div class="from-group col-md-4">
-            <label>Fecha de nacimiento</label>
-            <input type="date" wire:model="inputNac" class="form-control">
-        </div>
+
 
 
         <div class="form-group col-md-12">
