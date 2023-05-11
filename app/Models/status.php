@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class stat extends Model
+class status extends Model
 {
     use HasFactory;
+
 
     public function consultorios()
     {
@@ -24,4 +25,5 @@ class stat extends Model
         return $this->hasMany(doctor::class);
     }
 
+    protected $fillable  = [ 'descripcion'];
 }

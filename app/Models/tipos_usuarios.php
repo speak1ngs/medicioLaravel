@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class calle extends Model
+class tipos_usuarios extends Model
 {
     use HasFactory;
 
-    public function consultorios(){
-        return $this->hasMany(consultorio::class);
+    function users()
+    {
+        return $this->hasMany(User::class);
     }
+
+    protected $fillable  = [ 'descripcion'];
 }

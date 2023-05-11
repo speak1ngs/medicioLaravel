@@ -16,7 +16,8 @@ return new class extends Migration
             $table->integer('registro');
             $table->string('foto_url',200);
             $table->integer('telefono_laboral');
-            $table->time('registro_expericacion_fecha')->nullable();
+            $table->date('registro_expericacion_fecha')->nullable();
+            $table->text('descripcion')->nullable();
             $table->double('calificacion',0,1);
             $table->string('especialidades')->nullable();
             $table->unsignedBigInteger('persona_id');

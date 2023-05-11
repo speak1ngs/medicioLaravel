@@ -32,27 +32,48 @@
 								<label>Registro Medico</label>
 								<input type="text" placeholder="Enter Last Name Here.." class="form-control" wire:model="inputRegistro">
                                 <x-input-error for="inputRegistro" />
+								<label>Edad</label>
+								<input type="number" placeholder="Enter Last Name Here.." class="form-control" wire:model="inputEdad">
+                            
 							</div>
 							<div class="row">
 								<div class="col-sm-4 form-group">
 									<label for="inputState">Barrio</label>
 									<select id="inputState" class="form-control" wire:model="inputBarrio">
-										<option selected>Choose...</option>
-										<option>...</option>
+										<option selected>Seleccionar Barrio</option>
+										@if(count($barrio)>=1)
+										@foreach($barrio as $barr )
+											<option value="{{ $barr->id}}">{{$barr->descripcion}}</option>
+										@endforeach
+										@else
+										<option selected>No hay Barrio</option>
+										@endif
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
 									<label for="inputState">Ciudad</label>
 									<select id="inputState" class="form-control"  wire:model="inputCiudad">
-										<option selected>Choose...</option>
-										<option>...</option>
+										<option selected>Seleccionar Ciudad</option>
+										@if(count($ciudad)>=1)
+										@foreach($ciudad as $ciuda )
+											<option value="{{ $ciuda->id}}">{{$ciuda->descripcion}}</option>
+										@endforeach
+										@else
+										<option>No hay Ciudad</option>
+										@endif
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
 									<label for="inputState">Pais</label>
 									<select id="inputState" class="form-control" wire:model="inputPais">
-										<option selected>Choose...</option>
-										<option>...</option>
+										<option selected>Seleccionar Pais</option>
+									@if(count($pais) >= 1)
+											@foreach($pais as $pai )
+												<option value="{{ $pai->id}}">{{$pai->descripcion}}</option>
+										@endforeach
+									@else
+									<option>No hay Pais</option>
+									@endif
 									</select>
 								</div>
 							</div>
@@ -61,11 +82,11 @@
 							<div class="row">
                                 <div class="col-sm-6 from-group">
                                     <label>Fecha de nacimiento</label>
-                                    <input type="date" wire:model="inputNac" class="form-control" wire:model="inputFechNac">
+                                    <input type="date"  class="form-control" wire:model="inputFechNac">
                                 </div>
                                 <div class="col-sm-6 from-group">
                                             <label>Registro Fecha de Expiracion</label>
-                                            <input type="date" wire:model="inputNac" class="form-control" wire:model="inputFechaExpReg">
+                                            <input type="date"  class="form-control" wire:model="inputFechaExpReg">
                                 </div>
 							</div>
 	
@@ -92,20 +113,29 @@
 							</div>
 
 							<div class="form-group">
-								<label for="descript">Modificar descripcion</label>
+								<label for="descript">Descripcion:</label>
 								<textarea name="text-description" id="descript" class="form-control"cols="120" rows="5" wire:model="inputDescrip"></textarea>
 							</div>
 							<div class="form-group">
-								<label for="inputState">Seleccionar consultorio</label>
+								<label for="inputState">Consultorio</label>
 								<select id="inputState" class="form-control" wire:model="inputConsultorio">
-									<option selected>Choose...</option>
-									<option>...</option>
+									<option selected>Seleccionar Consultorio</option>
+									@if (count($consul)>=1)
+										@foreach($consul as $consu )
+												<option value="{{ $consu->id}}">{{$consu->nombre}}</option>
+										@endforeach
+									@else
+									<option >No hay consultorios</option>
+										
+									@endif
+
 								</select>
 							</div>
 
                             <div class="form-group">
-                            <label for="Especialidades"></label>
+                            <label for="Especialidades">Especialidades:</label>
                             <div class="row center-block">
+								@if(count($especialidades) >= 1)
                                 @foreach($especialidades as $especial )    
                                 
                                 <div class="col-xs-3">
@@ -120,7 +150,11 @@
                                
                                 
                                 @endforeach
-                                    Especial: {{ var_export($inputEspecial)}}
+								@else
+								<label">
+                                                <span>No hay especialidades cargadas</span>
+                                            </label>>
+								@endif
                                 </div>
                     
                             </div>

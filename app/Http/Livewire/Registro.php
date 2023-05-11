@@ -44,7 +44,7 @@ class Registro extends Component
                 'cedula' => $this->inputCedula,
                 'fecha_nacimiento' => $this->inputNac, 
                 'telefono_particular' => $this->inputTelf, 
-                'edad' => $this->inputTelf,
+                'edad' => $this->inputEdad,
                 'ciudad_id' => $this->inputCiudad,
                 'pais_id' => $this->inputPais, 
                 'barrio_id' => $this->inputBarrio
