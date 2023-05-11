@@ -7,6 +7,7 @@ use App\Models\persona;
 use App\Models\tipo_usuario;
 use App\Models\User;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 
 use Livewire\Component;
@@ -75,7 +76,7 @@ class Registro extends Component
                 User::create(
                     [
                         'email' => $this->inputEmail,
-                        'password' => $this->inputPassword,
+                        'password' => Hash::make($this->inputPassword),
                         'paciente_id' => $paciente[0]->id,
                         'doctor_id' => null,
                         'tipo_usaurio_id' => $tip_user  

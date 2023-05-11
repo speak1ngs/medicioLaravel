@@ -10,6 +10,7 @@ use App\Models\especialidades;
 use App\Models\paises;
 use App\Models\persona;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class RegistroDoctor extends Component
@@ -89,7 +90,7 @@ class RegistroDoctor extends Component
                 User::create(
                     [
                         'email' => $this->inputEmail,
-                        'password' => $this->inputPass,
+                        'password' => Hash::make($this->inputPass),
                         'paciente_id' => null,
                         'doctor_id' =>  $doctor[0]->id,
                         'tipo_usaurio_id' => $tip_user  
