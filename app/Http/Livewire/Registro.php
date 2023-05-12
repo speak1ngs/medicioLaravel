@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\barrios;
+use App\Models\ciudades;
 use App\Models\paciente;
+use App\Models\paises;
 use App\Models\persona;
 use App\Models\tipo_usuario;
 use App\Models\User;
@@ -17,6 +20,10 @@ class Registro extends Component
     public $inputNombre, $inputApellido , $inputCedula, $inputEmail, $inputPassword , $inputTelf, $inputEdad,$inputCiudad ,$inputBarrio, $inputPais, $inputNac ,$inputPhoto;
     public $iden ,$paciente;
     public $tip_user;  // 1 = paciente
+    public $barrio ;
+    public $ciudad ;
+    public $pais;
+
 
     protected $rules = [
         'inputNombre' => 'required|string',
@@ -32,6 +39,15 @@ class Registro extends Component
 
     // 'inputPhoto' => 'image|max:2048|mimes:jpeg,jpg'
     // 'inputPhoto' => 'required|image|max:2048|mime:jpg'
+    
+    public function mount()
+    {
+        $this->barrio  = barrios::all();
+        $this->ciudad = ciudades::all();
+        $this->pais = paises::all();
+
+    }
+
 
     public function guardar()
     {

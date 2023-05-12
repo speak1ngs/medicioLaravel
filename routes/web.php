@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
+use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +30,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/inicio', HomeController::class);
-Route::get('paciente/registro', Registro::class)->name('registro');
-
 //  RUTAS DE PACIENTES
+Route::get('paciente/registro', Registro::class)->name('registro');
+Route::get('paciente/profile', Profile::class)->name('profile');
+
 Route::controller(PacienteController::class)->group( function ()
 {
-    Route::get('paciente/profile','profile');
     Route::get('paciente/reservar','reservar');
  
     Route::get('paciente/turnos-reservados','reservados');

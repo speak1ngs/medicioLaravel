@@ -52,57 +52,50 @@
                 <input type="number" class="form-control" id="inputEdad" wire:model="inputEdad" placeholder="Edad">
             </div>
 
-            <!-- <div class="form-group col-md-6">
-                <label for="inputAddress">Calle principal</label>
-                <input type="text" class="form-control" id="inputAddress" wire:model="inputAddress">
-                <x-input-error for="inputAddress" />
-
-            </div>
-            <div class="form-group col-md-6">
-
-                <label for="inputAddress2">Calle secundaria</label>
-                <input type="text" class="form-control" id="inputAddress2"
-                wire:model="inputAddress2">
-          
-
-                
-
-            </div>
-
-            <div class="form-group col-md-6">
-
-                <label for="inputAddress3">Calle terciaria</label>
-                <input type="text" class="form-control" id="inputAddress3"
-                wire:model="inputAddress3">
-            </div>
-        </div> -->
-
         <div class="form-group col-md-6">
             <label>Fecha de nacimiento</label>
             <input type="date" wire:model="inputNac" class="form-control">
         </div>
 
 
+                            <div class="form-group col-md-4">
+                                                        <label for="inputState">Barrio</label>
+                                                        <select id="inputState" class="form-control" wire:model="inputBarrio">
+                                                            <option selected>Seleccionar Barrio</option>
+                                                            @if(count($barrio)>=1)
+                                                            @foreach($barrio as $barr )
+                                                                <option value="{{ $barr->id}}">{{$barr->descripcion}}</option>
+                                                            @endforeach
+                                                            @else
+                                                            <option selected>No hay Barrio</option>
+                                                            @endif
+                                                            </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                                            <label for="inputState">Ciudad</label>
+                                                        <select id="inputState" class="form-control"  wire:model="inputCiudad">
+                                                            <option selected>Seleccionar Ciudad</option>
+                                                            @if(count($ciudad)>=1)
+                                                            @foreach($ciudad as $ciuda )
+                                                                <option value="{{ $ciuda->id}}">{{$ciuda->descripcion}}</option>
+                                                            @endforeach
+                                                            @else
+                                                            <option>No hay Ciudad</option>
+                                                            @endif
+                                                        </select>
+                            </div>
         <div class="form-group col-md-4">
-            <label for="inputBarrio">Barrio</label>
-            <select id="inputBarrio" wire:model="inputBarrio" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="inputCiudad">Ciudad</label>
-            <select id="inputCiudad" wire:model="inputCiudad" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="inputPais">Pais</label>
-            <select id="inputPais" wire:model="inputPais" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-            </select>
+        <label for="inputState">Pais</label>
+									<select id="inputState" class="form-control" wire:model="inputPais">
+										<option selected>Seleccionar Pais</option>
+									@if(count($pais) >= 1)
+											@foreach($pais as $pai )
+												<option value="{{ $pai->id}}">{{$pai->descripcion}}</option>
+										@endforeach
+									@else
+									<option>No hay Pais</option>
+									@endif
+									</select>
         </div>
 
 
