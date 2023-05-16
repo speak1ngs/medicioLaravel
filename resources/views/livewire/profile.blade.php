@@ -5,7 +5,7 @@
 			<x-navigation-menu />
 			<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
-	<div class="container well">
+	<div class="container well" >
 		<div class="row">
 			<div class="align-items-center flex-lg-row-reverse text-center">
 				<div editable="rich">
@@ -51,19 +51,18 @@ disabled
 @else
 regular
 @endif wire:model="inputBarrio">
-                                                            @if($inputBarrio)
-                                                            <option selected>{{ $inputBarrio[0]->descripcion}}</option>
+                                                           
 
-                                                            @else
+                                                      
                                                             <option selected>Seleccionar Barrio</option>
-                                                            @endif
+                                                         
                                                           
                                                             @if(count($barrio)>=1)
-                                                            @foreach($barrio as $barr )
-                                                                @if($barr->descripcion != $inputBarrio[0]->descripcion)
-                                                                <option value="{{ $barr->id}}">{{$barr->descripcion}}</option>
-                                                                @endif
-                                                            @endforeach
+																@foreach($barrio as $barr )
+																
+																	<option value="{{ $barr->id}}" @selected($barr->id == $inputBarrio)>{{$barr->descripcion}}</option>
+																
+																@endforeach
                                                             @else
                                                             <option selected>No hay Barrio</option>
                                                             @endif
@@ -73,26 +72,26 @@ regular
             
             
             </div>
+
+
 			<div class="col-sm-4 form-group">
 				<label for="inputState">Ciudad</label>
-				<select id="inputState" class="form-control" @if ($value ==="false")
+				<select id="inputState" class="form-control" 
+				@if ($value ==="false")
 disabled
 @else
 regular
-@endif  wire:model="inputCiudad">
-                                                        @if($inputCiudad)
-                                                            <option selected>{{ $inputCiudad[0]->descripcion}}</option>
+@endif
+				
+				wire:model="inputCiudad">
 
-                                                            @else
-                                                            <option selected>Seleccionar Barrio</option>
-                                                            @endif
-                                                          
 										@if(count($ciudad)>=1)
-										@foreach($ciudad as $ciuda )
-                                        @if($ciuda->descripcion != $inputCiudad[0]->descripcion)
-                                                                <option value="{{ $ciuda->id}}">{{$ciuda->descripcion}}</option>
-                                                                @endif
-										@endforeach
+										<option selected>Seleccionar Ciudad</option>
+											@foreach($ciudad as $ciuda ) 
+													
+															<option value='{{ $ciuda->id }}' @selected($inputCiudad == $ciuda->id) > {{$ciuda->descripcion}}</option>
+													
+											@endforeach
 										@else
 										<option>No hay Ciudad</option>
 										@endif
@@ -105,17 +104,15 @@ disabled
 @else
 regular
 @endif wire:model="inputPais">
-                                                            @if($inputPais)
-                                                            <option selected>{{ $inputPais[0]->descripcion}}</option>
+                                                          
 
-                                                            @else
+                                                            
                                                             <option selected>Seleccionar Barrio</option>
-                                                            @endif
+                                                           
 									@if(count($pais) >= 1)
 											@foreach($pais as $pai )
-                                                             @if($pai->descripcion != $inputPais[0]->descripcion)
-                                                                <option value="{{ $pai->id}}">{{$pai->descripcion}}</option>
-                                                                @endif
+                                                              <option value="{{ $pai->id}}" @selected($inputPais == $pai->id)  >{{$pai->descripcion}}</option>
+                                                              
 										@endforeach
 									@else
 									<option>No hay Pais</option>
@@ -182,7 +179,7 @@ regular
 
 
 
-		<button type="button" class="btn btn-skin btn-lg" wire:click.defer="$set('value', true)">Editar</button>
+		<button type="button" class="btn btn-skin btn-lg" wire:ignore wire:click.defer="$set('value', true)">Editar</button>
 	
 		<button type="button" class="btn btn-skin btn-lg" @if ($value ==="false")
 disabled
