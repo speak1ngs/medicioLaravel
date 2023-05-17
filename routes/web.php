@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
+use App\Http\Livewire\AltaDoctor;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
@@ -43,11 +44,11 @@ Route::controller(PacienteController::class)->group( function ()
 
 // RUTAS ADM FUNCIONALIDADES
 Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('registro-doctor');
+Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('alta');
 
 Route::controller(AdmFuncController::class) -> group( function ()
 {
     // Route::get('admfunc/registro-doctor', 'registro');
-    Route::get('admfunc/alta-doctor', 'alta');
     Route::get('admfunc/calendario-doctor', 'calendario');
     Route::get('admfunc/importe', 'importe');
     Route::get('admfunc/edit-importe','edit');
