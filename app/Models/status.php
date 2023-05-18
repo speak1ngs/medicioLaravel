@@ -22,7 +22,7 @@ class status extends Model
 
     public function doctores()
     {
-        return $this->hasMany(doctor::class);
+        return $this->hasMany(doctores::class);
     }
 
     protected $fillable  = [ 'descripcion'];

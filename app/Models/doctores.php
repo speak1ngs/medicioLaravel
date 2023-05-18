@@ -18,7 +18,7 @@ class doctores extends Model
 
 
     public function status(){
-        return $this->belongsTo(stat::class);
+        return $this->belongsTo(status::class);
     }
 
     // muchos a muchos

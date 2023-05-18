@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\doctores;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,6 +14,7 @@ class AltaDoctor extends Component
     public $search;
     public $cant;
     public $test= 1;
+    public $stat ;
     protected $listeners = ['render'];
     protected $paginationTheme = 'bootstrap';
     
@@ -29,6 +31,13 @@ class AltaDoctor extends Component
             db::table('doctores')
             ->where('doctores.persona_id', '=', $pers)
             ->update(['doctores.stat_id' => $stat]);
+            if($stat == 2){
+                $this->stat= 'activado';
+            }
+            else
+            {
+                $this->stat = 'inactivado';
+            }
     }
 
 
@@ -36,11 +45,17 @@ class AltaDoctor extends Component
 
     public function render()
     {
-        $datos = DB::table(db::raw('personas'))
-        ->join('doctores', 'personas.id','=', 'doctores.persona_id' )
-        ->select(db::raw('personas.id, personas.nombre, personas.apellido, personas.cedula, doctores.especialidades , (SELECT status.descripcion from status where status.id = doctores.stat_id) AS estado') )
-        ->groupBy('personas.id', 'doctores.persona_id')
-        ->paginate($this->cant);
+        // $datos = DB::table(db::raw('personas'))
+        // ->join('doctores', 'personas.id','=', 'doctores.persona_id' )
+        // ->select(db::raw('personas.id, personas.nombre, personas.apellido, personas.cedula, 
+        // doctores.especialidades , (SELECT status.descripcion from status where status.id = doctores.stat_id) AS estado') )
+        // ->groupBy('personas.id', 'doctores.persona_id')
+        // ->paginate($this->cant);
+         
+        $datos =doctores::with([
+            'personas',
+            'status'
+        ])->paginate( $this->cant);
 
         return view('livewire.alta-doctor', compact('datos'));
     }

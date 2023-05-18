@@ -4,7 +4,7 @@
 	<x-navigation-menu />
 	<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
-
+@dump($datos[0])
 
 <div class="container well">
 
@@ -90,7 +90,7 @@
 					<div class="icon-box">
 						<i class="material-icons">&#xE876;</i>
 					</div>
-					<h4 class="modal-title w-100">Profesional Activado/Inactivado!</h4>
+					<h4 class="modal-title w-100">Profesional {{ $stat }}</h4>
 				</div>
 
 				<div class="modal-footer">

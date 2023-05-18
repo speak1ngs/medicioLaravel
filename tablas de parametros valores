@@ -1,0 +1,43 @@
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'paciente', NULL, NULL) ;
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'doctor', NULL, NULL) ;
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'consutlorio', NULL, NULL) ;
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'adm', NULL, NULL) ;
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'limitadm', NULL, NULL) ;
+
+
+
+
+INSERT INTO `status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'inactivo', NULL, NULL) ;
+INSERT INTO `status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'activo', NULL, NULL) ;
+
+
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Pediatra', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Urologo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Ginecologo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'Clinico', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'Oftalmologo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (6, 'Gastrointerologo', NULL, NULL) ;
+
+
+
+INSERT INTO `paises` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Parguay', NULL, NULL) ;
+INSERT INTO `paises` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Argentina', NULL, NULL) ;
+INSERT INTO `paises` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Brasil', NULL, NULL) ;
+
+
+INSERT INTO `barrios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'San Roque', NULL, NULL) ;
+INSERT INTO `barrios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Palmaloma', NULL, NULL) ;
+
+INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Asuncion', NULL, NULL) ;
+INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Luque', NULL, NULL) ;
+INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Aregua', NULL, NULL) ;
+
+
+INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Tacuary', NULL, NULL) ;
+INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'San Martin', NULL, NULL) ;
+INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'España', NULL, NULL) ;
+INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'Aviadores del Chaco', NULL, NULL) ;
+
+
+INSERT INTO `consultorios` (`id`, `nombre`, `social_instagram`, `social_facebook`, `social_twitter`, `social_web_site`, `ruc`, `telefono`, `intervalo_consulta`, `foto_url`, `latitud`, `longitud`, `pais_id`, `calle_principal_id`, `calle_secundaria_id`, `calle_terciaria_id`, `barrio_id`, `stat_id`, `created_at`, `updated_at`) VALUES (1, 'Medicio', NULL, NULL, NULL, NULL, NULL, '0999999', '15', 'asdadas.jph', '0.5656', '0.564', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) ;
+
