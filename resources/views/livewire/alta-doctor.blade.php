@@ -1,3 +1,4 @@
+<div>
 <x-header />
 <x-body-wrapper>
 	<x-navigation-menu />
@@ -38,7 +39,7 @@
 									<p data-placement="top" data-toggle="tooltip" title="Desactivar"
 										class="bottom-p">
 										<button class="btn btn-danger btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="#doctorActive" ><span
+											data-toggle="modal" data-target="#doctorActive" wire:key="{{$dato->id}}" wire:click="upState({{ $dato->id}}, 1)" ><span
 												class="fa fa-remove"></span></button>
 									</p>
 								</div>
@@ -47,17 +48,11 @@
 
 						</td>
 						<td>
-							<div class="row"  >
-
-								<div class="form-group col-sm-4 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
+					
 										<button class="btn btn-success btn-xs" data-title="doctorActive"
 											data-toggle="modal" data-target="#doctorActive"  wire:key="{{$dato->id}}" wire:click="upState({{ $dato->id}}, 2)" ><span
 												class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
+					
 						</td>
 
 					</tr>
@@ -141,3 +136,4 @@
 </x-body-wrapper>
 <x-footer/>
 
+</div>
