@@ -1,271 +1,147 @@
+<div>
+<x-header/>
+	<x-body-wrapper>
+		<x-navigation-menu/>
+		
 <section id="register " class="home-section paddingtop-130 h-100 h-custom well">
-
-
 
 	<div class="container well">
 		<h3 class="mb-0 text-center">Asignar horarios</h3>
 		<hr>
-		<div class="row">
-			<div class="col-md-4">
-				<label for="inputCedula">Medico</label>
-
-			</div>
-			<div class="col-md-4">
-				<label for="inputState">Especialidades</label>
-
-			</div>
-
-		</div>
 
 		<div class="row">
 			<div class="col-md-4">
-				<input type="text" class="form-control" id="inputCedula" placeholder="Nombre del medico">
+			<label for="inputCedula">Cedula</label>
+				<input type="text" class="form-control" id="inputCedula" placeholder="Cedula del medico" wire:model="inputCedula">
 			</div>
 			<div class="col-md-4">
-				<select id="inputState" class="form-control">
-					<option selected>Choose...</option>
-					<option>...</option>
-				</select>
+		
+			<label for="inputStat">Especialidades</label>
+					<select id="inputStat" class="form-control" wire:model="inputEspecialidades">
+												<option selected value="">Seleccionar Especialidad</option>
+											@if(count($especialidades) >= 1)
+													@foreach($especialidades as $especial )
+														<option value="{{ $especial->descripcion}}">{{$especial->descripcion}}</option>
+												@endforeach
+											@else
+											<option>No hay Especialidades</option>
+											@endif
+											</select>
 			</div>
 			<div class="col-md-4">
-				<button type="submit" class="btn btn-skin btn-sm right">Buscar</button>
+				<label for="">Mostrar</label>
+						<select id="inputCant" class="form-control" wire:model="can">
+								
+								<option value="10">10</option>
+								<option value="25">25</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+						</select>
 			</div>
-
-
 		</div>
-
-
-
 	</div>
-
-
-
-
 
 	<div class="py-5">
 		<div class="container well">
 			<div class="row g-2 hidden-md-up ">
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
+				@if(count($do) >=1)
+					@foreach($do as $doctor)	
+						<div class="col-sm-3 well bg-white">
+							<div class="card card-block">
+								<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
+									style="height: 180px; width: 100%; display: block;">
+								<div class="card-block">
+									<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
 
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
+									<p class="card-text"><strong>Información:</strong> {{ $doctor->descripcion }}</p>
+
+									<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
+									<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
+							data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Asignar Horario</a>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3 well bg-white">
-					<div class="card card-block">
-						<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
-							style="height: 180px; width: 100%; display: block;">
-						<div class="card-block">
-							<h4 class="card-title">Dr. fulano</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk
-								of the card's content.</p>
-							<a href="#" class="btn btn-primary btn-sm" data-title="Reservar" data-toggle="modal"
-								data-target="#Reservar">Asignar Horario</a>
-						</div>
-					</div>
-				</div>
+					@endforeach
+				@else
+					<label for="">No hay registro a mostrar</label>
+				@endif
 			</div>
 		</div>
 	</div>
-
-
-	<div class="container">
-		<div class="modal fade" id="Reservar" tabindex="-1" role="dialog" aria-labelledby="Reservar" aria-hidden="true">
+	
+	
+	<div class="container"  >
+		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Asignar" aria-hidden="true" >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
+				
+					@if($nom)
+					
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-								class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-						<h4 class="modal-title custom_align text-center" id="Heading">Dr. Fulano</h4>
+						
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign" ><span
+						class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						<h4 class="modal-title custom_align text-center" id="Heading">{{ 'Dr. ' . $nom }}</h4>
 					</div>
+					
 					<div class="modal-body">
+						
 						<label class="text-left">Dias de la semana:</label>
 						<div class="frb-group">
 							<div class="row center-block">
+								@foreach($arryDay as $arr)
 								<div class="col-md-4">
 									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-1" name="checkbox" value="1">
-										<label for="checkbox-1">
+										<input type="checkbox" id="checkbox-{{ $arr['id']}}" name="checkbox-{{ $arr['id']}}"  wire:model.defer="inputDias" value="{{ $arr['day']}}">
+										<label for="checkbox-{{ $arr['id']}}">
 								
-											<span class="frb-description">Lunes</span>
+											<span class="frb-description">{{ $arr['day']}}</span>
 										</label>
 									</div>
 
 								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-2" name="checkbox" value="2">
-										<label for="checkbox-2">
-								
-											<span class="frb-description">Martes</span>
-										</label>
-									</div>
-
-								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-3" name="checkbox" value="3">
-										<label for="checkbox-3">
-								
-											<span class="frb-description">Miercoles</span>
-										</label>
-									</div>
-
-								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-4" name="checkbox" value="4">
-										<label for="checkbox-4">
-								
-											<span class="frb-description">Jueves</span>
-										</label>
-									</div>
-
-								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-5" name="checkbox" value="5">
-										<label for="checkbox-5">
-								
-											<span class="frb-description">Viernes</span>
-										</label>
-									</div>
-
-								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-6" name="checkbox" value="6">
-										<label for="checkbox-6">
-								
-											<span class="frb-description">Sabado</span>
-										</label>
-									</div>
-
-								</div>
-								<div class="col-md-4">
-									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-7" name="checkbox" value="7">
-										<label for="checkbox-7">
-								
-											<span class="frb-description">Domingo</span>
-										</label>
-									</div>
-
-								</div>
+								@endforeach
 							</div>
 						</div>
 						<label>Horario de atención</label>
 						<p class="text-left bottom-p">Horario de inicio:</p>
-						<input type="time" class="form-control">
+						<input type="time" class="form-control" wire:model.defer="inputTimeStart">
 						<p class="text-left bottom-p">Horario de fin:</p>
-						<input type="time" class="form-control">
-						<label>Intervalo de cita</label>
-						<p class="text-left bottom-p">Intervalo:</p>
-						<input type="time" class="form-control">
-
+						<input type="time" class="form-control" wire:model.defer="inputTimeEnd">
+				
 						<p class="text-left bottom-p">Importe consulta:</p>
-						<input type="text" class="form-control">
+						<input type="text" class="form-control" wire:model.defer="inputImporte">
+						<label for="inputESp">Consultorios</label>
+					<select id="inputESp" class="form-control" wire:model.defer="inputConsultorios">
+												<option selected>Seleccionar Consultorio</option>
+											
+											@if(count($consultorios) >= 1)
+													@foreach($consultorios as $consul )
+														<option value="{{ $consul->id}}">{{$consul->nombre}}</option>
+												@endforeach
+											@else
+											<option>No hay Consultorios</option>
+											@endif
+											</select>
 					</div>
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-							data-title="asigTime" data-toggle="modal" data-target="#asigTime"
-							data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Asignar</button>
+							data-title="asigTime" data-toggle="modal" data-target="{{ $control }}"
+							data-dismiss="modal" wire:click="asignCalendar()"><span class="glyphicon glyphicon-ok-sign"></span>Asignar</button>
 					</div>
+					@else
+					<label for="">Error al asignar horarios</label>
+					@endif
 				</div>
-				<!-- /.modal-content -->
+			
 			</div>
-			<!-- /.modal-dialog -->
+		
 		</div>
 	</div>
 
 
-	<!-- reserva exitosa -->
+
+	 <!--reserva exitosa -->
 
 	<div class="container">
 		<div class="modal fade" id="asigTime" tabindex="-1" role="dialog" aria-labelledby="asigTime"
@@ -285,11 +161,11 @@
 						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
 					</div>
 				</div>
-				<!-- /.modal-content -->
+				
 			</div>
-			<!-- /.modal-dialog -->
+			
 		</div>
-	</div>
+	</div> 
 
 
 
@@ -322,4 +198,9 @@
 
 
 
-</section>
+	</section>
+	
+	</x-body-wrapper>
+	<x-footer />
+</div>
+

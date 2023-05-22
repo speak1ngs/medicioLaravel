@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class status extends Model
 {
     use HasFactory;
-
+    protected  $table = 'status';
 
     public function consultorios()
     {

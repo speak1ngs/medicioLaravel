@@ -9,7 +9,7 @@ class persona extends Model
 {
     use HasFactory;
 
-    public function doctores(){
+    public function doctor(){
         return $this->hasOne(doctores::class);
     }
 
@@ -30,6 +30,5 @@ class persona extends Model
         return $this->belongsTo(ciudades::class);
     }
 
-    protected $fillable = ['nombre', 'apellido', 'cedula','fecha_nacimiento',
-     'telefono_particular', 'edad','ciudad_id','pais_id', 'barrio_id'];
+    protected $fillable = ['nombre', 'apellido', 'cedula','fecha_nacimiento','telefono_particular', 'edad','ciudad_id','pais_id', 'barrio_id'];
 }

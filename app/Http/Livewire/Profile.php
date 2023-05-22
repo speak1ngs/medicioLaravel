@@ -37,7 +37,7 @@ class Profile extends Component
 
 
 
-        $iden = persona::where('cedula','=', 12312)->get();
+        $iden = persona::where('cedula','=', 12321)->get();
         $this->inputNombre = $iden[0]->nombre;
         $this->inputApellido = $iden[0]->apellido;
         $this->inputCedula = $iden[0]->cedula;

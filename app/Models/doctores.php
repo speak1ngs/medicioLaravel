@@ -8,25 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class doctores extends Model
 {
     use HasFactory;
-    public function personas(){
-        return $this->belongsTo(persona::class);
-    }
+    // public function personas(){
+    //     return $this->belongsTo(persona::class );
+    // }
 
     public function users(){
         return $this->belongsTo(user::class);
     }
 
 
-    public function status(){
-        return $this->belongsTo(status::class);
+    public function statu(){
+        return $this->belongsTo(status::class, 'stat_id', 'id');
     }
 
-    // muchos a muchos
-
-    public function consultorios()
-    {
-        return $this->belongsToMany(consultorio::class);
+    public function persona() {
+        return $this->belongsTo(persona::class,  'persona_id' , 'id');
     }
+
 
 
     protected $fillable = [

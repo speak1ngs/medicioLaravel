@@ -116,21 +116,6 @@
 								<label for="descript">Descripcion:</label>
 								<textarea name="text-description" id="descript" class="form-control"cols="120" rows="5" wire:model="inputDescrip"></textarea>
 							</div>
-							<div class="form-group">
-								<label for="inputState">Consultorio</label>
-								<select id="inputState" class="form-control" wire:model="inputConsultorio">
-									<option selected>Seleccionar Consultorio</option>
-									@if (count($consul)>=1)
-										@foreach($consul as $consu )
-												<option value="{{ $consu->id}}">{{$consu->nombre}}</option>
-										@endforeach
-									@else
-									<option >No hay consultorios</option>
-										
-									@endif
-
-								</select>
-							</div>
 
                             <div class="form-group">
                             <label for="Especialidades">Especialidades:</label>

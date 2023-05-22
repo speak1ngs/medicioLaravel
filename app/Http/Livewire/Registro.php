@@ -7,9 +7,7 @@ use App\Models\ciudades;
 use App\Models\paciente;
 use App\Models\paises;
 use App\Models\persona;
-use App\Models\tipo_usuario;
 use App\Models\User;
-use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithFileUploads;
 
@@ -18,7 +16,7 @@ use Livewire\Component;
 class Registro extends Component
 {
     public $inputNombre, $inputApellido , $inputCedula, $inputEmail, $inputPassword , $inputTelf, $inputEdad,$inputCiudad ,$inputBarrio, $inputPais, $inputNac ,$inputPhoto;
-    public $iden ,$paciente;
+    public $iden ,$pacient;
     public $tip_user;  // 1 = paciente
     public $barrio ;
     public $ciudad ;
@@ -30,7 +28,6 @@ class Registro extends Component
         'inputApellido' => 'required|string',
         'inputCedula' => 'required',
         'inputEmail' => 'required|email',
-        'inputAddress' => 'required',
         'inputTelf' => 'required',
      
 
@@ -68,6 +65,7 @@ class Registro extends Component
             ]
         );
 
+      
         $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
 
        

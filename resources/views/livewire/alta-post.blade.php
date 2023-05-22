@@ -1,5 +1,7 @@
 <section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
+	@dd($datos)
+
 	<div class="container well">
 
 		<div class="col-md-12">

@@ -16,6 +16,23 @@ return new class extends Migration
             $table->time('horario_inicio');
             $table->time('horario_fin');
             $table->integer('costo_consulta');
+            $table->string('dias');
+            $table->unsignedBigInteger('doctores_id')->nullable();
+            $table->unsignedBigInteger('consultorios_id')->nullable();
+    
+
+
+            $table->foreign('doctores_id')
+            ->references('id')
+            ->on('doctores')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('consultorios_id')
+            ->references('id')
+            ->on('consultorios')
+            ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

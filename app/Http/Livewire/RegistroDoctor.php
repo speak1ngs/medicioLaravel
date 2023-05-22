@@ -83,6 +83,7 @@ class RegistroDoctor extends Component
                 );
 
         }
+
             $doctor = doctores::select('id')->where('persona_id', '=', $iden[0]->id)->get();
             $tip_user = 2;
             if( $doctor){
@@ -97,6 +98,7 @@ class RegistroDoctor extends Component
                     ]
                     );
             }
+
 
         $this->reset([
            'inputNombre','inputApellido' , 'inputCedula', 'inputRegistro', 'inputBarrio', 'inputCiudad', 'inputEdad',
