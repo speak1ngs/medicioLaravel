@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('dias');
             $table->unsignedBigInteger('doctores_id')->nullable();
             $table->unsignedBigInteger('consultorios_id')->nullable();
+            $table->unsignedBigInteger('especialidades_id')->nullable();
     
 
 
@@ -32,6 +33,10 @@ return new class extends Migration
             ->references('id')
             ->on('consultorios')
             ->onUpdate('cascade');
+
+            $table->foreign('especialidades_id')
+            ->references('id')
+            ->on('especialidades');
 
             $table->timestamps();
         });

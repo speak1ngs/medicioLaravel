@@ -24,7 +24,7 @@ class CalendarioDoctor extends Component
     public $arryDay = [];
     public $nom, $docid;
     public $control;
-    public $inputConsultorios, $inputTimeStart,    $inputTimeEnd, $inputImporte;
+    public $inputConsultorios, $inputTimeStart, $inputEspecialidad,    $inputTimeEnd, $inputImporte;
     
 
     public function mount()
@@ -53,7 +53,10 @@ class CalendarioDoctor extends Component
             'inputDias',
             'nom',
             'docid',
-            'inputConsultorios', 'open_asign']);
+            'inputConsultorios', 
+            'inputEspecialidad',
+            'open_asign'
+        ]);
     }
 
     public function asignCalendar()
@@ -63,11 +66,12 @@ class CalendarioDoctor extends Component
         calendarios_doctores::create(
             [
                 'horario_inicio' => $this->inputTimeStart,
-                'horario_fin' => 'tesda',
+                'horario_fin' => $this->inputTimeEnd,
                 'costo_consulta' => $this->inputImporte,
                 'dias' => implode(",",$this->inputDias),
                 'doctores_id' => $this->docid,
-                'consultorios_id' => $this->inputConsultorios
+                'consultorios_id' => $this->inputConsultorios,
+                'especialidades_id' => $this->inputEspecialidad
             ]
         );
 
@@ -81,7 +85,9 @@ class CalendarioDoctor extends Component
         'inputImporte',
         'inputDias',
         'dat',
-        'inputConsultorios']);
+        'inputConsultorios',
+        'inputEspecialidad'
+    ]);
     }
 
 

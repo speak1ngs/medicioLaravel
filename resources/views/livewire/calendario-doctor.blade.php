@@ -62,6 +62,12 @@
 							</div>
 						</div>
 					@endforeach
+
+					@if($do->hasPages())
+						<div class="divpag">
+							{{ $do->link()}}
+						</div>
+			@endif
 				@else
 					<label for="">No hay registro a mostrar</label>
 				@endif
@@ -112,15 +118,26 @@
 						<p class="text-left bottom-p">Importe consulta:</p>
 						<input type="text" class="form-control" wire:model.defer="inputImporte">
 						<label for="inputESp">Consultorios</label>
-					<select id="inputESp" class="form-control" wire:model.defer="inputConsultorios">
-												<option selected>Seleccionar Consultorio</option>
-											
-											@if(count($consultorios) >= 1)
-													@foreach($consultorios as $consul )
-														<option value="{{ $consul->id}}">{{$consul->nombre}}</option>
+							<select id="inputESp" class="form-control" wire:model.defer="inputConsultorios">
+														<option selected>Seleccionar Consultorio</option>
+													
+													@if(count($consultorios) >= 1)
+															@foreach($consultorios as $consul )
+																<option value="{{ $consul->id}}">{{$consul->nombre}}</option>
+														@endforeach
+													@else
+													<option>No hay Consultorios</option>
+													@endif
+							</select>
+					<label for="inputSta">Especialidades</label>
+					<select id="inputSta" class="form-control" wire:model.defer="inputEspecialidad">
+												<option selected value="">Seleccionar Especialidad</option>
+											@if(count($especialidades) >= 1)
+													@foreach($especialidades as $especial )
+														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
 												@endforeach
 											@else
-											<option>No hay Consultorios</option>
+											<option>No hay Especialidades</option>
 											@endif
 											</select>
 					</div>
