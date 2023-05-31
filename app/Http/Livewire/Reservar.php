@@ -129,12 +129,7 @@ class Reservar extends Component
    
         //  $this->calenShow = $calen;
         $this->open_calendar = true;
-        if(count($calen) == 1){
-            // $val= json_decode(json_encode($calen[0]), true);
-            // array_push($this->calenShow, (array) $val);
-            array_push($this->calenShow, json_decode(json_encode($calen[0]), true));
-        }
-        elseif(count($calen)>1){
+     if(count($calen)>=1){
             for($i= 0; $i < sizeof($calen); $i++){
                 array_push($this->calenShow, json_decode(json_encode($calen[$i]), true));
             }
