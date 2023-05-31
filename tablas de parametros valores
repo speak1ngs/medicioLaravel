@@ -41,3 +41,19 @@ INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4
 
 INSERT INTO `consultorios` (`id`, `nombre`, `social_instagram`, `social_facebook`, `social_twitter`, `social_web_site`, `ruc`, `telefono`, `intervalo_consulta`, `foto_url`, `latitud`, `longitud`, `pais_id`, `calle_principal_id`, `calle_secundaria_id`, `calle_terciaria_id`, `barrio_id`, `stat_id`, `created_at`, `updated_at`) VALUES (1, 'Medicio', NULL, NULL, NULL, NULL, NULL, '0999999', '15', 'asdadas.jph', '0.5656', '0.564', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) ;
 
+
+
+INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'reservado', NULL, NULL);
+INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'pendiente', NULL, NULL);
+INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'cancelado', NULL, NULL);
+INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'no concretado', NULL, NULL);
+
+
+INSERT INTO `pagos_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'pendiente', NULL, NULL);
+INSERT INTO `pagos_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'pagado', NULL, NULL);
+INSERT INTO `pagos_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'cancelado', NULL, NULL);
+
+
+INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'TIGO MONEY', NULL, NULL);
+INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'MASTER CARD', NULL, NULL);
+INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'BNF', NULL, NULL);

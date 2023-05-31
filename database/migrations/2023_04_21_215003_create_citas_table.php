@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nro_operacion_pago',100);
-            $table->time('fecha_reservada');
+            $table->date('fecha_reservada');
             $table->integer('importe');
             $table->time('horario_reserva');
             $table->unsignedBigInteger('calendario_doctore_id');

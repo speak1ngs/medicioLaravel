@@ -111,12 +111,13 @@
 					@else
 						<label for="">No hay registro a mostrar</label>
 					@endif
-
+					
 					</div>
 				</div>
+			
 			</div>
-	
-
+		
+			
 		
 			<div class="py-5">
 				<div class="container well"  @if( $open_calendar === true )
@@ -161,7 +162,7 @@
 				<label for="">No hay datos del doctor</label>
 				@endif
 					<hr>
-				
+					
 					<div class="row " >
 
 		
@@ -181,10 +182,10 @@
 										<th>Reservar</th>
 									</thead>
 									<tbody>
-							
-									@if(count($calenShow)>0)
+													
+									@if(!empty($calenShow))
 				
-
+							
 										
 									@foreach($calenShow as $calen)
                                                 <tr>
@@ -247,121 +248,123 @@
 							</div>
 							<div class="modal-body" >
 						
-								<label for="inputMes">Mes:</label>
-								<select id="inputMes" class="form-control" wire:model.defer="inputMes"  wire:click.prevent="valMonth()" >
-										<option selected>Seleccionar Mes</option>
-										
-										@if(count($arryDay) >= 1)
-												@foreach($arryDay as $arr )
-													<option value="{{ $arr['id'] }}"  @selected( $inputMes == $arr['id'] )    >{{ $arr['month'] }}</option>
-											@endforeach
-										@else
-										<option>No hay Mes</option>
-										@endif
-								</select>
+										<label for="inputMes">Mes:</label>
+										<select id="inputMes" class="form-control" wire:model.defer="inputMes"  wire:click.prevent="valMonth()" >
+												<option selected value="">Seleccionar Mes</option>
+												
+												@if(count($arryDay) >= 1)
+														@foreach($arryDay as $arr )
+															<option value="{{ $arr['id'] }}" >{{ $arr['month'] }}</option>
+													@endforeach
+												@else
+												<option>No hay Mes</option>
+												@endif
+										</select>
+							
+
+								
+									<label for="inputESp">Año:</label>
+									<select id="inputESp" class="form-control" wire:model.defer="inputYear" wire:click.prevent="valYear()">
+											<option selected value="">Seleccionar Año</option>
+											
+											@if(count($anho) >= 1)
+													@foreach($anho as $ar )
+														<option value="{{ $ar }}" >{{ $ar }}</option>
+												@endforeach
+											@else
+											<option>No hay Año</option>
+											@endif
+									</select>
 					
+									<label for="inpuTDias">Dias:</label>
+									<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click.prevent="calcDias()">
+											<option selected value="">Seleccionar Día</option>
+											
+											@if( !empty($dias))
+											
+													@foreach($dias as $ar )
+														<option value="{{ $ar}}" >{{ $ar}}</option>
+												@endforeach
+											@else
+											<option>No hay Año</option>
+											@endif
+									</select>
 
-						
-							<label for="inputESp">Año:</label>
-							<select id="inputESp" class="form-control" wire:model.defer="inputYear" wire:click.prevent="valYear()">
-									<option selected value="">Seleccionar Año</option>
-									
-									@if(count($anho) >= 1)
-											@foreach($anho as $ar )
-												<option value="{{ $ar }}" @selected($inputYear == $ar )>{{ $ar }}</option>
-										@endforeach
-									@else
-									<option>No hay Año</option>
-									@endif
-							</select>
-							{{ $monCod . '' . $yeaCod}}
-							<label for="inpuTDias">Dias:</label>
-							<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click.prevent="calcDias()">
-									<option selected value="">Seleccionar Día</option>
-									
-									@if( !empty($dias))
-									
-											@foreach($dias as $ar )
-												<option value="{{ $ar}}" >{{ $ar}}</option>
-										@endforeach
-									@else
-									<option>No hay Año</option>
-									@endif
-							</select>
+									<div>
 
-							<div>
+										@if (session()->has('message'))
 
-								@if (session()->has('message'))
+											<div class="alert alert-success">
 
-									<div class="alert alert-success">
+												{{ session('message') }}
 
-										{{ session('message') }}
+											</div>
+
+										@endif
 
 									</div>
-
-								@endif
-
-								</div>
-								
-								<div class="frb-group" @if( $open_day === true )
-									style="display: true;"
-									@else
-									style="display: none;"
-									@endif>
-									<label for="">Dias disponibles:</label>
-									<div class="row">
-									@if(!empty($diasDisp))
-													@foreach($diasDisp as $da)
-										<div class="col-md-4">
-											<div class="frb frb-success">	
-											
-													<input type="radio" id="radio-button-{{ $da}}" name="radio-button{{ $da}}" value="{{ $da}}" wire:model.defer="inputDayse" 
-													wire:click="calcHoras">
-														<label for="radio-button-{{ $da}}">
-															<span class="frb-description">{{ $da}}</span>
-														</label>
-													@endforeach
+										
+										<div class="frb-group" @if( $open_day === true )
+											style="display: true;"
+											@else
+											style="display: none;"
+											@endif>
+											<label for="">Dias disponibles:</label>
+											<div class="row">
+											@if(!empty($diasDisp))
+															@foreach($diasDisp as $da)
+												<div class="col-md-4">
+													<div class="frb frb-success">	
+													
+															<input type="radio" id="radio-button-{{ $da}}" name="radio-button{{ $da}}" value="{{ $da}}" wire:model.defer="inputDayse" 
+															wire:click="calcHoras">
+																<label for="radio-button-{{ $da}}">
+																	<span class="frb-description">{{ $da}}</span>
+																</label>
+													</div>
+												</div>
 												
-												@endif
-											
+												@endforeach
+														
+														@endif
+													
+
 											</div>
 										</div>
-									</div>
-								</div>
 
+										<div 
+										@if( $open_hour === true )
+											style="display: true;"
+											@else
+											style="display: none;"
+											@endif>
+											
+											<label for="inputHourse">Horarios:</label>
+											<select id="inputHourse" class="form-control" wire:model.defer="inputHourse"   >
+												<option selected value="">Seleccionar Horario</option>
+											@if(!empty($timeDoc))
+														
 									
-							
-								<div class="frb-group"
-								@if( $open_hour === true )
-									style="display: true;"
-									@else
-									style="display: none;"
-									@endif
-								>
-								<label for="">Horarios disponibles:</label>
-
-									<div class="row center-block">
-									@if(!empty($timeDoc))
-													@foreach($timeDoc as $da)
-											<div class="col-md-3">
-												<div class="frb frb-success">
-											
-													<input type="radio" id="radio-button-{{ $da }}" name="radio-button{{ $da }}" value="{{ $da }}">
-													<label for="radio-button-{{ $da }}">
-														<span class="frb-description">{{ $da }}</span>
-													</label>
-											
-												</div>
-											</div>
-										@endforeach
+														@foreach($timeDoc as $das)
+														<option value="{{ $das }}"     >{{ $das }}</option>
+														
+																@endforeach
+												
+																@else
+											<option>No hay Horarios</option>
 											@endif
+									</select>
+
+														
+										</div>
+									
+									
+									
+									<div class="modal-footer ">
+										<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
+											data-title="pagarReserva" data-toggle="modal" data-target="#pagarReserva"
+											data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Reservar</button>
 									</div>
-								</div>
-							</div>
-							<div class="modal-footer ">
-								<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-									data-title="pagarReserva" data-toggle="modal" data-target="#pagarReserva"
-									data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Reservar</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->

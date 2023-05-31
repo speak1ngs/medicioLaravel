@@ -13,8 +13,8 @@ use Livewire\WithPagination;
 class Reservar extends Component
 {
     use WithPagination;
-    public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias;
-    public $can, $nom , $calenShow, $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
+    public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse;
+    public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
     public $open_calendar;
     public $timeDoc = [];
     public $arryDay;
@@ -28,7 +28,7 @@ class Reservar extends Component
     public $open_hour;
     public $diasDisp = [];
     public $inputDayse;
-
+    public $calenShow = [];
     public $test ;
 
      public function esBisiesto($anio=null) {
@@ -43,7 +43,7 @@ class Reservar extends Component
 
         $this->open_day = false;
         $this->open_hour = false;
-        $this->inputMes =date('n');
+        // $this->inputMes =date('n');
         $this->inputYear = date("Y");
         $anioLimit = 2119;
         for( $i = $this->inputYear; $i <= $anioLimit ; $i++ ){    
@@ -110,7 +110,7 @@ class Reservar extends Component
             ->where('doctores.stat_id', '=', 2)
             // ->where('calendarios_doctores.dias', 'like', '%' . $dias[date('w')] . '%')
             ->where('calendarios_doctores.especialidades_id', '=', $espId[0]->id )
-            ->get()->toArray();
+            ->get();
 
             
                 // se va mostrar todos los dias y que labura el profesional
@@ -127,13 +127,19 @@ class Reservar extends Component
         $this->apell = $dat[0]->apell;
         $this->descrip = $dat[0]->descripcion;
    
-     //   $this->calenShow = $calen;
+        //  $this->calenShow = $calen;
         $this->open_calendar = true;
-      
-        for($i= 0; $i < sizeof($calen); $i++){
-            array_push($this->calenShow, json_decode(json_encode($calen[$i]), true));
+        if(count($calen) == 1){
+            // $val= json_decode(json_encode($calen[0]), true);
+            // array_push($this->calenShow, (array) $val);
+            array_push($this->calenShow, json_decode(json_encode($calen[0]), true));
         }
-     
+        elseif(count($calen)>1){
+            for($i= 0; $i < sizeof($calen); $i++){
+                array_push($this->calenShow, json_decode(json_encode($calen[$i]), true));
+            }
+        }
+        $this->reset(['inputEspecialidades']);
     }
     
     public function arrReceive( $inicio  )
@@ -144,13 +150,16 @@ class Reservar extends Component
 
     public function calcHoras()
     {
+        $this->reset(['timeDoc','inputHourse','open_hour']);
         $horaInicial =date('H:i',strtotime( $this->datTrans[0]->horario_inicio));
         $horaFinal =  intval(str_replace(' ', '',strtr(date('H:i',strtotime( $this->datTrans[0]->horario_fin)), ':', ' ')));
    
         $this->test = consultorio::select('intervalo_consulta')->where('id', '=', $this->datTrans[0]->consultorios_id)->get();
 
         $time =   intval(str_replace(' ', '',strtr(date('H:i',strtotime( $this->datTrans[0]->horario_inicio)), ':', ' ')));
-        array_push($this->timeDoc, $horaInicial);
+         array_push($this->timeDoc, $horaInicial);
+        // array_push($this->timeDoc, ["id"=> $time, "hora" =>$horaInicial ]);
+        
         while( $time < $horaFinal ){
             
             
@@ -166,7 +175,9 @@ class Reservar extends Component
             $horaInicial =  $nuevaHora;
             $time =intval(str_replace(' ', '',strtr(date('H:i',strtotime($horaInicial)), ':', ' ')));
             
-            array_push($this->timeDoc, $nuevaHora);
+             array_push($this->timeDoc, $nuevaHora);
+            // array_push($this->timeDoc, ["id"=> $time, "hora" =>$nuevaHora ]);
+
         }
 
 
@@ -182,10 +193,12 @@ class Reservar extends Component
 
     public function calcDias()
     {
+        $this->reset(['diasDisp','timeDoc']);
         $val = $this->monCod  . '' . $this->yeaCod;
         $monthActual = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre");
         // $this->inputMes =date('n')-1;
 
+        //busca en base al id el limite de cada mes
         foreach( $this->arryDay as $arr){
             if($arr['id'] == $this->inputMes){
                 $limit = $arr['limit'];
@@ -199,24 +212,28 @@ class Reservar extends Component
 
       
         if($val ==11 ){
-       
-            $start = date("d")-1;
+          
+            $start = date("d");
             //futuro mostrar todos los apartir de la fecha actual los dias disponibles del mes segun dia seleccionado
             // session()->flash('message', 'Limite: ' . $limit . ' Inicio: ' . $start);
-            for($start; $start < $limit; $start++ ){
+            if($start <= $limit){
+                 if( intval(str_replace(' ', '',strtr(date('H:i'), ':', ' '))) <=  intval(str_replace(' ', '',strtr(date('H:i',strtotime( $this->datTrans[0]->horario_fin)), ':', ' ')))){
+                    for($start; $start < $limit; $start++ ){
 
-                $date = date_create(strval(date('Y') . '-' . date('n')  . '-' . $start));
-                $dateFormat = date_format($date, 'Y-m-d');
-                if(!empty($this->inputDias)){
-                    if($this->day[date('w',strtotime($dateFormat))] === $this->inputDias){
-        
-                        array_push($this->diasDisp,  $dateFormat);
-                    
-                        $this->open_day= true;
+                        $date = date_create(strval(date('Y') . '-' . date('n')  . '-' . $start));
+                        $dateFormat = date_format($date, 'Y-m-d');
+                        if(!empty($this->inputDias)){
+                            if($this->day[date('w',strtotime($dateFormat))] === $this->inputDias){
+                
+                                array_push($this->diasDisp,  $dateFormat);
+                            
+                                $this->open_day= true;
+                            }
+                        }
                     }
                 }
             }
-
+        }
             if(empty($this->diasDisp) && !empty($this->inputDias)){
                 session()->flash('message', 'No existen dias disponibles');
             }
@@ -224,15 +241,26 @@ class Reservar extends Component
             if($val == 12 || $val == 21 || $val == 22 || $val == 32 ){
                 //futuro mostrar todos los dias disponibles del mes segun dia seleccionado
                 $start = 1;
-                session()->flash('message', 'Limite: ' . $limit . ' Inicio: ' . $start);
-
+                        for($start; $start < $limit; $start++ ){
+    
+                            $date = date_create(strval($this->inputYear . '-' . $this->inputMes  . '-' . $start));
+                            $dateFormat = date_format($date, 'Y-m-d');
+                            if(!empty($this->inputDias)){
+                                if($this->day[date('w',strtotime($dateFormat))] === $this->inputDias){
+                    
+                                    array_push($this->diasDisp,  $dateFormat);
+                                    $this->open_day= true;
+                                }
+                            }
+                        }
             }
         
-        }
+
     }         
 
     public function valMonth()
     {
+        $this->reset(['diasDisp']);
         $monthActual = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre");
         // $this->inputMes =date('n')-1;
 
@@ -252,6 +280,7 @@ class Reservar extends Component
 
     public function valYear()
     {
+        $this->reset(['diasDisp']);
         if( date("Y") == $this->inputYear ){
             $this->yeaCod = 1;
         }
@@ -266,7 +295,7 @@ class Reservar extends Component
 
     public function resetModalEntries()
     {
-        $this->reset(['inputMes']);
+        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias']);
     }
 
     public function resetShowEntries()
