@@ -81,8 +81,9 @@
 
 
 			<div class="py-5">
-				<div class="container well">
+				<div class="container well" wire:ignore.selft>
 					<div class="row g-2 hidden-md-up ">
+					
 					@if(count($do) >=1)
 							@foreach($do as $doctor)	
 								<div class="col-sm-3 well bg-white">
@@ -114,8 +115,9 @@
 					</div>
 				</div>
 			</div>
+	
 
-
+		
 			<div class="py-5">
 				<div class="container well"  @if( $open_calendar === true )
 				style="display: true;"
@@ -123,13 +125,15 @@
 				style="display: none;"
 				@endif
 				>
-				@if($nom)
-				@foreach($nom as $no)
-					<div class="row mb-4 align-items-center flex-lg-row-reverse">
+
+				
+				@if(!empty($nom))
+	
+					<div class="row mb-4 align-items-center flex-lg-row-reverse"  wire:ignore>
 						<div class="col-md-6 col-xl-5">
 							<div class="lc-block mb-3">
 								<div editable="rich">
-									<h1 class="fw-bolder display-2">{{'Dr. ' . $no->nomb . ' ' . $no->apell }}</h1>
+									<h1 class="fw-bolder display-2">{{'Dr. ' . $nom . ' ' . $apell }}</h1>
 								</div>
 							</div>
 
@@ -137,7 +141,7 @@
 							<div class="lc-block mb-4">
 								<div editable="rich">
 									<label for="">Informacion del Profesional:</label>
-									<p class="lead">{{ $no->descripcion}}</p>
+									<p class="lead">{{ $descrip }}</p>
 
 								</div>
 							</div>
@@ -152,16 +156,15 @@
 						</div>
 
 					</div>
-					@endforeach
+					
 				@else
 				<label for="">No hay datos del doctor</label>
 				@endif
 					<hr>
 				
-					<div class="row ">
+					<div class="row " >
 
-			@dump($timeDoc )
-
+		
 
 						<div class="col-md-12">
 							<h4 class="text-center">Calendario del Profesional</h4>
@@ -178,25 +181,33 @@
 										<th>Reservar</th>
 									</thead>
 									<tbody>
-									@if($calenShow)
-									@foreach($calenShow as $calen)
-										<tr>
+							
+									@if(count($calenShow)>0)
+				
 
-											<td>{{ 'Dr. ' .  $calen->nombre . ' ' . $calen->apellido }} </td>
-											<td>{{  $calen->especialidades }} </td>
-											<td>{{  $calen->consultorio }} </td>
-											<td>{{  $calen->dias }} </td>
-											<td>{{ 'De: ' . $calen->horario_inicio . ' a ' . $calen->horario_fin }} </td>
-											<td>
-												<p data-placement="top" data-toggle="tooltip" title="reservar"><button
-														class="btn btn-primary btn-xs" data-title="Reservar" data-toggle="modal"
-														data-target="#Reservar"><span class="fa fa-calendar"></span></button>
-												</p>
-											</td>
-										</tr>
-									@endforeach
-									@else
-									<label for="">No hay datos a mostrar</label>
+										
+									@foreach($calenShow as $calen)
+                                                <tr>
+
+                                                    <td>{{ 'Dr. ' .  $calen['nombre'] . ' ' . $calen['apellido'] }} </td>
+                                                    <td>{{  $calen['especialidades'] }} </td>
+                                                    <td>{{  $calen['consultorio'] }} </td>
+                                                    <td>{{  $calen['dias'] }} </td>
+                                                    <td>{{ 'De: ' . $calen['horario_inicio'] . ' a ' . $calen['horario_fin'] }} </td>
+                                                    <td>
+                                                        <p data-placement="top" data-toggle="tooltip" title="reservar"><button
+                                                                class="btn btn-primary btn-xs" data-title="Reservar" data-toggle="modal"
+                                                                data-target="#Reservar" wire:click="arrReceive( {{ $calen['calenId'] }})"><span class="fa fa-calendar"></span></button>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                    @else
+							
+									<tr>
+									<td><label for="">No hay datos a mostrar</label></td>
+									</tr>
 									@endif
 									</tbody>	
 
@@ -226,89 +237,124 @@
 			</div>
 
 			<div class="container">
-				<div class="modal fade" id="Reservar" tabindex="-1" role="dialog" aria-labelledby="Reservar" aria-hidden="true">
-					<div class="modal-dialog" role="document">
+				<div class="modal fade" id="Reservar" tabindex="-1" role="dialog" aria-labelledby="Reservar" aria-hidden="true"   wire:ignore.self>
+					<div class="modal-dialog" role="document" >
 						<div class="modal-content modal-content-scroll">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="resetModalEntries"><span
 										class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-								<h4 class="modal-title custom_align" id="Heading">Horarios disponibles fecha:21/03/2023</h4>
+								<h4 class="modal-title custom_align" id="Heading">Horarios disponibles</h4>
 							</div>
-							<div class="modal-body">
-								<div class="frb-group">
+							<div class="modal-body" >
+						
+								<label for="inputMes">Mes:</label>
+								<select id="inputMes" class="form-control" wire:model.defer="inputMes"  wire:click.prevent="valMonth()" >
+										<option selected>Seleccionar Mes</option>
+										
+										@if(count($arryDay) >= 1)
+												@foreach($arryDay as $arr )
+													<option value="{{ $arr['id'] }}"  @selected( $inputMes == $arr['id'] )    >{{ $arr['month'] }}</option>
+											@endforeach
+										@else
+										<option>No hay Mes</option>
+										@endif
+								</select>
+					
+
+						
+							<label for="inputESp">Año:</label>
+							<select id="inputESp" class="form-control" wire:model.defer="inputYear" wire:click.prevent="valYear()">
+									<option selected value="">Seleccionar Año</option>
+									
+									@if(count($anho) >= 1)
+											@foreach($anho as $ar )
+												<option value="{{ $ar }}" @selected($inputYear == $ar )>{{ $ar }}</option>
+										@endforeach
+									@else
+									<option>No hay Año</option>
+									@endif
+							</select>
+							{{ $monCod . '' . $yeaCod}}
+							<label for="inpuTDias">Dias:</label>
+							<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click.prevent="calcDias()">
+									<option selected value="">Seleccionar Día</option>
+									
+									@if( !empty($dias))
+									
+											@foreach($dias as $ar )
+												<option value="{{ $ar}}" >{{ $ar}}</option>
+										@endforeach
+									@else
+									<option>No hay Año</option>
+									@endif
+							</select>
+
+							<div>
+
+								@if (session()->has('message'))
+
+									<div class="alert alert-success">
+
+										{{ session('message') }}
+
+									</div>
+
+								@endif
+
+								</div>
+								
+								<div class="frb-group" @if( $open_day === true )
+									style="display: true;"
+									@else
+									style="display: none;"
+									@endif>
+									<label for="">Dias disponibles:</label>
+									<div class="row">
+									@if(!empty($diasDisp))
+													@foreach($diasDisp as $da)
+										<div class="col-md-4">
+											<div class="frb frb-success">	
+											
+													<input type="radio" id="radio-button-{{ $da}}" name="radio-button{{ $da}}" value="{{ $da}}" wire:model.defer="inputDayse" 
+													wire:click="calcHoras">
+														<label for="radio-button-{{ $da}}">
+															<span class="frb-description">{{ $da}}</span>
+														</label>
+													@endforeach
+												
+												@endif
+											
+											</div>
+										</div>
+									</div>
+								</div>
+
+									
+							
+								<div class="frb-group"
+								@if( $open_hour === true )
+									style="display: true;"
+									@else
+									style="display: none;"
+									@endif
+								>
+								<label for="">Horarios disponibles:</label>
+
 									<div class="row center-block">
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-1" name="radio-button" value="0">
-												<label for="radio-button-1">
-													<span class="frb-description">08:15</span>
-												</label>
+									@if(!empty($timeDoc))
+													@foreach($timeDoc as $da)
+											<div class="col-md-3">
+												<div class="frb frb-success">
+											
+													<input type="radio" id="radio-button-{{ $da }}" name="radio-button{{ $da }}" value="{{ $da }}">
+													<label for="radio-button-{{ $da }}">
+														<span class="frb-description">{{ $da }}</span>
+													</label>
+											
+												</div>
 											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-2" name="radio-button" value="1">
-												<label for="radio-button-2">
-													<span class="frb-description">08:45</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-3" name="radio-button" value="3">
-												<label for="radio-button-3">
-													<span class="frb-description">09:15</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-4" name="radio-button" value="4">
-												<label for="radio-button-4">
-													<span class="frb-description">09:45</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-5" name="radio-button" value="5">
-												<label for="radio-button-5">
-													<span class="frb-description">10:15</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-6" name="radio-button" value="6">
-												<label for="radio-button-6">
-													<span class="frb-description">10:45</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-7" name="radio-button" value="7">
-												<label for="radio-button-7">
-													<span class="frb-description">11:15</span>
-												</label>
-											</div>
-
-										</div>
-										<div class="col-md-3">
-											<div class="frb frb-success">
-												<input type="radio" id="radio-button-8" name="radio-button" value="8">
-												<label for="radio-button-8">
-													<span class="frb-description">11:45</span>
-												</label>
-											</div>
-
-										</div>
+										@endforeach
+											@endif
 									</div>
 								</div>
 							</div>
