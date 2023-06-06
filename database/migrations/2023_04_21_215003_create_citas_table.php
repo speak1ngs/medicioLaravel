@@ -14,19 +14,13 @@ return new class extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nro_operacion_pago',100);
-            $table->date('fecha_reservada');
             $table->integer('importe');
-            $table->time('horario_reserva');
-            $table->unsignedBigInteger('calendario_doctore_id');
             $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('paciente_id')->nullable();
+            $table->unsignedBigInteger('calendarios_deta_id')->nullable();
             $table->unsignedBigInteger('pago_id')->nullable();
             $table->unsignedBigInteger('medio_id')->nullable();
-            
-            $table->foreign('calendario_doctore_id')
-            ->references('id')
-            ->on('calendarios_doctores')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+
 
             $table->foreign('status_id')
             ->references('id')
@@ -44,6 +38,18 @@ return new class extends Migration
             ->references('id')
             ->on('medios_pagos')
             ->onDelete('set null')
+            ->onUpdate('cascade');
+
+            $table->foreign('paciente_id')
+            ->references('id')
+            ->on('pacientes')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('calendarios_deta_id')
+            ->references('id')
+            ->on('calendarios_detalles')
+            ->onDelete('cascade')
             ->onUpdate('cascade');
 
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->time('horario_fin');
             $table->integer('costo_consulta');
             $table->string('dias');
+            $table->string('meses');
             $table->unsignedBigInteger('doctores_id')->nullable();
             $table->unsignedBigInteger('consultorios_id')->nullable();
             $table->unsignedBigInteger('especialidades_id')->nullable();

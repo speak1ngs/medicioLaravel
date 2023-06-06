@@ -15,6 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('descripcion',60);
             $table->timestamps();
+
+
+
+
+
         });
     }
 

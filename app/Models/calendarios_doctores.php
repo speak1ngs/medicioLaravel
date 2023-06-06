@@ -21,5 +21,5 @@ class calendarios_doctores extends Model
 
 
 
-    protected $fillable = ['horario_inicio', 'horario_fin', 'costo_consulta','dias','doctores_id', 'consultorios_id', 'especialidades_id'];
+    protected $fillable = ['horario_inicio', 'horario_fin', 'costo_consulta','dias','meses','doctores_id', 'consultorios_id', 'especialidades_id'];
 }

@@ -91,6 +91,25 @@
 					</div>
 					
 					<div class="modal-body">
+						<label class="text-left">Asignar meses:</label>
+							<div class="frb-group">
+								<div class="row center-block">
+									@foreach($arryMonth as $arr)
+									<div class="col-md-4">
+										<div class="frb frb-success">
+											<input type="checkbox" id="checkbox-{{ $arr['id']}}1" name="checkbox-{{ $arr['id']}}1"  wire:model.defer="inputMes" value="{{ $arr['month']}}">
+											<label for="checkbox-{{ $arr['id']}}1">
+									
+												<span class="frb-description">{{ $arr['month']}}</span>
+											</label>
+										</div>
+
+									</div>
+									@endforeach
+								</div>
+							</div>
+
+
 						
 						<label class="text-left">Dias de la semana:</label>
 						<div class="frb-group">
