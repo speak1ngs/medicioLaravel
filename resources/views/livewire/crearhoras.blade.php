@@ -38,11 +38,10 @@
 
 	<div class="py-5">
 		<div class="container well">
-			<div class="row g-2 hidden-md-up ">
+			<div class="row g-2 hidden-md-up "  wire:ignore.self>
             @if(count($do) >=1)
 					
                     <div class="row " >
-
 		
 
 						<div class="col-md-12">
@@ -57,7 +56,7 @@
 										<th>Consultorio</th>
 										<th>Dias</th>
 										<th>Horario</th>
-										<th>Reservar</th>
+										<th>Opciones</th>
 									</thead>
 									<tbody>
 													
@@ -74,8 +73,8 @@
                                                     <td>{{  $detail->dias }} </td>
                                                     <td>{{ 'De: ' . $detail->horario_inicio . ' a ' . $detail->horario_fin }} </td>
                                                     <td>
-                                                        <p data-placement="top" data-toggle="tooltip" title="Asignar"><button
-                                                                class="btn btn-primary btn-xs" data-title="Asignar" data-toggle="modal"
+                                                        <p data-placement="top" data-toggle="tooltip" title="Generar Horas"><button
+                                                                class="btn btn-primary btn-xs" data-title="Generar Horas" data-toggle="modal"
                                                                 data-target="#Asignar" wire:click="arrReceive('{{ json_encode( $detail, true) }}' )"><span class="fa fa-calendar"></span></button>
                                                         </p>
                                                     </td>
@@ -92,12 +91,13 @@
 
 								</table>
 
+					
 							</div>
 
 						</div>
 					</div>
 	
-			
+				
 
 					@if($do->hasPages())
 						<div class="divpag">
@@ -112,7 +112,7 @@
 	</div>
 
     <div class="container"  >
-		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Asignar" aria-hidden="true" >
+		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Generar Horas" aria-hidden="true"  wire:ignore.self >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
                
@@ -122,7 +122,7 @@
 						
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign" ><span
 						class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-						<h4 class="modal-title custom_align text-center" id="Heading">{{ 'Dr. ' .  $datTrans[0]->nombre }}</h4>
+						<h4 class="modal-title custom_align text-center" id="Heading">{{ 'Dr. ' .  $datTrans[0]["nombre"] }}</h4>
 					</div>
 					
 					<div class="modal-body">
@@ -152,7 +152,7 @@
 								@foreach($dias as $arr)
 								<div class="col-md-4">
 									<div class="frb frb-success">
-										<input type="checkbox" id="checkbox-{{ $arr}}" name="checkbox-{{ $arr}}"  wire:model.defer="inputDias" value="{{ $arr}}">
+										<input type="checkbox" id="checkbox-{{ $arr}}" name="checkbox-{{ $arr}}"  wire:model.defer="inputDias" value="{{ $arr}}" >
 										<label for="checkbox-{{ $arr}}">
 								
 											<span class="frb-description">{{ $arr}}</span>
@@ -163,18 +163,12 @@
 								@endforeach
 							</div>
 						</div>
-						<label>Horario de atención</label>
-						<p class="text-left bottom-p">Horario de inicio:</p>
-						<input type="time" class="form-control" wire:model.defer="inputTimeStart">
-						<p class="text-left bottom-p">Horario de fin:</p>
-						<input type="time" class="form-control" wire:model.defer="inputTimeEnd">
-				
+
 						
-					</div>
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
 							data-title="asigTime" data-toggle="modal" data-target=""
-							data-dismiss="modal" wire:click="asignCalendar()"><span class="glyphicon glyphicon-ok-sign"></span>Generar Turnos</button>
+							data-dismiss="modal" wire:click="genDay()"><span class="glyphicon glyphicon-ok-sign"></span>Generar Turnos</button>
 					</div>
 					@else
 					<label for="">Error al asignar horarios</label>
@@ -186,7 +180,41 @@
 		</div>
 	</div>
 	
+	<div class="frb-group" @if( $open_day === true )
+											style="display: true;"
+											@else
+											style="display: none;"
+											@endif>
+											<label for="">Dias disponibles:</label>
+											<div class="row">
+											@if(!empty($diasDisp))
+															@foreach($diasDisp as $da)
+												<div class="col-md-4">
+													<div class="frb frb-success">	
+													
+															<input type="radio" id="radio-button-{{ $da['horarios']}}" name="radio-button{{$da['horarios']}}" value="{{ $da['horarios']}}" wire:model.defer="inputDayse" 
+															wire:click="calcHoras">
+															<span class="frb-description">{{ $da['dias_laborales']}}</span>
 
+															<label for="radio-button-{{ $da['horarios']}}">
+																	<span class="frb-description">{{ $da['horarios']}}</span>
+																</label>
+													</div>
+												</div>
+												
+												@endforeach
+											@else
+												@foreach($inputDias as $dias)
+													<label for="">{{ $dias }}</label>
+												@endforeach
+											@endif
+													
+
+											</div>
+										</div>
+				
+						
+					</div>
 
 
 
