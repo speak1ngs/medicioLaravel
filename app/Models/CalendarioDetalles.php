@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CalendarioDetalles extends Model
 {
     use HasFactory;
+    protected $table = 'calendarios_detalles';
 
     protected $fillable = ['dias_laborales', 'horarios', 'calendarios_doctores_id','stat_id'];
 

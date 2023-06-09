@@ -179,45 +179,6 @@
 		
 		</div>
 	</div>
-	
-	<div class="frb-group" @if( $open_day === true )
-											style="display: true;"
-											@else
-											style="display: none;"
-											@endif>
-											<label for="">Dias disponibles:</label>
-											<div class="row">
-											@if(!empty($diasDisp))
-															@foreach($diasDisp as $da)
-												<div class="col-md-4">
-													<div class="frb frb-success">	
-													
-															<input type="radio" id="radio-button-{{ $da['horarios']}}" name="radio-button{{$da['horarios']}}" value="{{ $da['horarios']}}" wire:model.defer="inputDayse" 
-															wire:click="calcHoras">
-															<span class="frb-description">{{ $da['dias_laborales']}}</span>
-
-															<label for="radio-button-{{ $da['horarios']}}">
-																	<span class="frb-description">{{ $da['horarios']}}</span>
-																</label>
-													</div>
-												</div>
-												
-												@endforeach
-											@else
-												@foreach($inputDias as $dias)
-													<label for="">{{ $dias }}</label>
-												@endforeach
-											@endif
-													
-
-											</div>
-										</div>
-				
-						
-					</div>
-
-
-
 	</section>
 	
 	</x-body-wrapper>

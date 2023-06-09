@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\CalendarioDetalles;
 use App\Models\calendarios_doctores;
 use App\Models\consultorio;
 use Illuminate\Support\Arr;
@@ -110,9 +111,11 @@ class Crearhoras extends Component
             $time =intval(str_replace(' ', '',strtr(date('H:i',strtotime($horaInicial)), ':', ' ')));
             
             array_push($this->diasDisp, ["dias_laborales" => $day, "horarios" => $nuevaHora, "calendarios_doctores_id" => $this->datTrans[0]["id"], "stat_id" => 1]);
-            // array_push($this->timeDoc, ["id"=> $time, "hora" =>$nuevaHora ]);
-
         }
+
+ 
+
+
     
     }
 
@@ -124,7 +127,21 @@ class Crearhoras extends Component
             $id = $this->getIdMonth($arr);
             $this->calcDias($val, $limit, $id);
         }
-        $this->open_day = true ;
+
+        if(sizeof($this->diasDisp) >= 1){
+            foreach($this->diasDisp as $data){
+                CalendarioDetalles::create(
+                    [
+                        'dias_laborales' => $data["dias_laborales"],
+                        'horarios' => $data["horarios"],
+                        'calendarios_doctores_id' => $data["calendarios_doctores_id"],
+                        'stat_id' => $data["stat_id"],
+                    ]
+                );
+
+            }
+        }
+       
 
         $this->reset([     
             'datTrans',
@@ -132,6 +149,7 @@ class Crearhoras extends Component
             'meses',
             'inputDias',
             'inputMes',
+            'diasDisp',
         ]);
     }
 
@@ -146,8 +164,7 @@ class Crearhoras extends Component
           
             $start = date("d");
             //futuro mostrar todos los apartir de la fecha actual los dias disponibles del mes segun dia seleccionado
-            // session()->flash('message', 'Limite: ' . $limit . ' Inicio: ' . $start);
-            //$this->datTrans[0]["horario_fin"]
+
             if($start <= $limit){
                 if( intval(str_replace(' ', '',strtr(date('H:i'), ':', ' '))) <=  intval(str_replace(' ', '',strtr(date('H:i',strtotime( "22:00:00")), ':', ' ')))){
                     for($start; $start < $limit; $start++ ){
@@ -182,17 +199,10 @@ class Crearhoras extends Component
                                     $this->genHour( $dateFormat);
                                 
                                 }
- 
-
                             }
                         }
             }
-        
-
     }         
-
-
-
 
     public function valMonth( $id)
     {
