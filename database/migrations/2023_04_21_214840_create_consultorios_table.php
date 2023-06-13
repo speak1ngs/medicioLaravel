@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('latitud',60);
             $table->string('longitud',60);
             $table->unsignedBigInteger('pais_id')->nullable();
+            $table->unsignedBigInteger('ciudad_id')->nullable();
             $table->unsignedBigInteger('calle_principal_id')->nullable();
             $table->unsignedBigInteger('calle_secundaria_id')->nullable();
             $table->unsignedBigInteger('calle_terciaria_id')->nullable();
@@ -62,6 +63,12 @@ return new class extends Migration
             $table->foreign('pais_id')
             ->references('id')
             ->on('paises')
+            ->onDelete('set null')
+            ->onUpdate('cascade');
+
+            $table->foreign('ciudad_id')
+            ->references('id')
+            ->on('ciudades')
             ->onDelete('set null')
             ->onUpdate('cascade');
 

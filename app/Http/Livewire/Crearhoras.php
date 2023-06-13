@@ -261,7 +261,7 @@ class Crearhoras extends Component
                             'calendarios_doctores.id','calendarios_doctores.horario_inicio', 'calendarios_doctores.horario_fin', 'calendarios_doctores.dias', 'calendarios_doctores.meses',
        'personas.nombre','personas.apellido', 'consultorios.nombre as consultorio', 'consultorios.intervalo_consulta', 'especialidades.descripcion'
                         )
-                        ->where('calendarios_doctores.doctores_id','=',1)
+                       
                         ->paginate(10);
         return view('livewire.crearhoras', compact('do'));
     }

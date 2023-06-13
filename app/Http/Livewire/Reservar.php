@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\calendarios_doctores;
+use App\Models\ciudades;
 use App\Models\consultorio;
 use App\Models\especialidades;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ use Livewire\WithPagination;
 class Reservar extends Component
 {
     use WithPagination;
-    public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse;
+    public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, $inputCiudades, $inputDayWeek;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
     public $open_calendar;
     public $timeDoc = [];
@@ -30,6 +31,7 @@ class Reservar extends Component
     public $inputDayse;
     public $calenShow = [];
     public $test ;
+    public $hourStart, $hourEnd, $ciudades;
 
      public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -39,7 +41,12 @@ class Reservar extends Component
     {
         $this->can = 10;
         $this->open_calendar = false;
+
+
         $this->especialidades = especialidades::all();
+        $this->hourStart= calendarios_doctores::all()->unique('horario_inicio');
+        $this->hourEnd= calendarios_doctores::all()->unique('horario_fin');
+        $this->ciudades = ciudades::all();
 
         $this->open_day = false;
         $this->open_hour = false;
@@ -65,7 +72,15 @@ class Reservar extends Component
         ["id"=> 11, "month" => 'Noviembre',"limit" => '30'],
         ["id"=> 12, "month" => 'Diciembre',"limit" => '31']
         ];
-        $this->day= array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $this->day= [
+            ["id"=> 1 , "dayWeek" => 'Domingo'],
+            ["id"=> 2, "dayWeek" => 'Lunes'],
+            ["id"=> 3, "dayWeek" => 'Martes'],
+            ["id"=> 4, "dayWeek" => 'Miercoles' ],
+            ["id"=> 5, "dayWeek" => 'Jueves'], 
+            ["id"=> 6, "dayWeek" => 'Viernes'],
+            ["id"=> 7, "dayWeek" => 'Sabado'],
+        ];
         $this->calenShow = [];
        
     }
@@ -301,13 +316,43 @@ class Reservar extends Component
 
     public function render()
     {
-        // preguntar a guille como aplicar busqueda por nombre y apellido 
+    
+        $mes =intval(date("n"));
+
+        if(empty($this->inputHorarioIni) && empty ($this->inputHorarioFin) && empty($this->inputEspecialidades) && empty($this->inputCiudades)){
+            
+            $do = DB::table('personas')
+            ->join('doctores','personas.id','=','doctores.persona_id')
+            ->join('calendarios_doctores','doctores.id','=','calendarios_doctores.doctores_id')
+            ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
+            ->join('calendarios_detalles','calendarios_doctores.doctores_id','=', 'calendarios_detalles.calendarios_doctores_id')
+            ->whereRaw( '"07:00" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+            ->orWhereRaw( '"12:00" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+            ->whereMonth('calendarios_detalles.dias_laborales', $mes)
+            ->where('doctores.stat_id','=',2)
+            ->groupBy( 'personas.id')
+            ->paginate(10);
+
+        }
+        else{
+           
         $do = DB::table('personas')
-        ->join('doctores', 'personas.id','=', 'doctores.persona_id')
-        ->where('doctores.stat_id','=',2)
-        ->where('doctores.especialidades', 'like', '%'. $this->inputEspecialidades . '%')
-        ->where('personas.nombre', 'like', '%' . $this->inputNombre . '%')
-        ->paginate($this->can);
+                ->join('doctores','personas.id','=','doctores.persona_id')
+                ->join('calendarios_doctores','doctores.id','=','calendarios_doctores.doctores_id')
+                ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
+                ->join('calendarios_detalles','calendarios_doctores.doctores_id','=', 'calendarios_detalles.calendarios_doctores_id')
+                ->whereRaw( '"'.$this->inputHorarioIni .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+                ->orWhereRaw( '"'.$this->inputHorarioFin .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+                ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) LIKE '. "'%".$this->inputDayWeek. "%'")
+                ->whereMonth('calendarios_detalles.dias_laborales',$mes)
+                ->where('calendarios_doctores.especialidades_id','=', intval($this->inputEspecialidades))
+                ->where('consultorios.ciudad_id','=', intval($this->inputCiudades))
+                ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
+                ->where('doctores.stat_id','=',2)
+                ->groupBy( 'personas.id')
+                ->paginate(10);
+            }
+
         return view('livewire.reservar', compact('do'));
     }
 }

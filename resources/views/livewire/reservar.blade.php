@@ -6,49 +6,57 @@
 
 
 			<div class="container well">
-				<h3 class="mb-0"> Reservar turno</h3>
-				<hr>
-
-
-				<div class="input-group mb-3">
-
-					<div class="input-group-prepend">
-						<h5> Filtros</h5>
-						<div class="input-group-text">
-							<input type="checkbox" aria-label="Checkbox for following text input">
-							<span>Especialidad</span>
-							<input type="checkbox" aria-label="Checkbox for following text input">
-							<span>Barrio</span>
-							<input type="checkbox" aria-label="Checkbox for following text input">
-							<span>Ubicacion</span>
-							<input type="checkbox" aria-label="Checkbox for following text input">
-							<span>Medico</span>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-
-			<div class="container well">
-
-				<label for="inputCedula">Profesional</label>
+			<h3 class="mb-0 text-center"> Reservar turno</h3>
+			
+			<h5> Filtrar busqueda:</h5>
+			<hr>
+				
 
 				<div class="row">
-					<div class="col-md-4  align-items-start">
-
+					<div class="col-md-3  align-items-start">
+					<label for="inputCedula">Profesional</label>
 						<input type="text" class="form-control" id="inputCedula" placeholder="Nombre del medico" wire:model="inputNombre" wire:click="resetShowEntries">
 					</div>
+				
+					<div class="col-md-3 align-self-center">
+					<label for="inputHorarioIni">Horario Inicial</label>
+					
+					<select id="inputHorarioIni" class="form-control" wire:model="inputHorarioIni" wire:click="resetShowEntries">
+												<option selected value="">Seleccionar Horario</option>
+											@if(count($hourStart) >= 1)
+													@foreach($hourStart as $especial )
+														<option value="{{ $especial['horario_inicio']}}">{{ $especial['horario_inicio'] }}</option>
+												@endforeach
+											@else
+											<option>No hay horario de inicio</option>
+											@endif
+											</select>
+					</div>
+					<div class="col-md-3 align-self-center">
+					<label for="inputHorarioFin">Horario Fin</label>
+					
+					<select id="inputHorarioFin" class="form-control" wire:model="inputHorarioFin" wire:click="resetShowEntries">
+												<option selected value="">Seleccionar Horario</option>
+											@if(count($hourEnd) >= 1)
+													@foreach($hourEnd as $especial )
+														<option value="{{ $especial['horario_inicio']}}">{{ $especial['horario_fin'] }}</option>
+												@endforeach
+											@else
+											<option>No hay horario de inicio</option>
+											@endif
+											</select>
+					</div>
+		
 				</div>
 				<div class="row">
-					<div class="col-md-4 align-items-start">
+					<div class="col-md-3 align-items-start">
 					<label for="inputState">Especialidades</label>
 					
 					<select id="inputStat" class="form-control" wire:model="inputEspecialidades" wire:click="resetShowEntries">
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
-														<option value="{{ $especial->descripcion}}">{{$especial->descripcion}}</option>
+														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
 												@endforeach
 											@else
 											<option>No hay Especialidades</option>
@@ -56,14 +64,36 @@
 											</select>
 					</div>
 
-					<div class="col-md-4 align-self-center">
-						<label for="inputState">Barrio</label>
-						<select id="inputState" class="form-control">
-							<option selected>Choose...</option>
-							<option>...</option>
-						</select>
+					<div class="col-md-3 align-self-center">
+						<label for="inputCiudades">Ciudades</label>
+						<select id="inputCiudades" class="form-control" wire:model="inputCiudades" wire:click="resetShowEntries">
+												<option selected value="">Seleccionar Ciudades</option>
+											@if(count($ciudades) >= 1)
+													@foreach($ciudades as $especial )
+														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
+												@endforeach
+											@else
+											<option>No hay Ciudades</option>
+											@endif
+											</select>
 					</div>
-					<div class="col-md-4 align-selft-center">
+
+					<div class="col-md-3 align-self-center">
+						<label for="inputDayWeek">Dias</label>
+						<select id="inputDayWeek" class="form-control" wire:model="inputDayWeek" wire:click="resetShowEntries">
+												<option selected value="">Seleccionar Dias</option>
+											@if(count($day) >= 1)
+													@foreach($day as $especial )
+														<option value="{{ $especial['id']}}">{{$especial['dayWeek']}}</option>
+												@endforeach
+											@else
+											<option>No hay Dias</option>
+											@endif
+											</select>
+					</div>
+
+
+					<div class="col-md-3 align-selft-center">
 					<label for="">Mostrar</label>
 						<select id="inputCant" class="form-control" wire:model="can" wire:click="resetShowEntries">
 								
@@ -77,8 +107,8 @@
 			</div>
 
 
-
-
+		
+				{{ $inputHorarioFin}}
 
 			<div class="py-5">
 				<div class="container well" wire:ignore.selft>
