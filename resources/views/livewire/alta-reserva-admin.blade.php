@@ -1,4 +1,8 @@
-<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
+<div>
+	<x-header/>
+	<x-body-wrapper>
+		<x-navigation-menu />
+		<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
 	<div class="container well">
 		<h4 class="text-center">Alta Turno Admin </h4>
@@ -16,19 +20,24 @@
 						<th>Activar Turno</th>
 					</tr>
 				</thead>
+
+			
+				
 				<tbody>
+				@if(!empty($db))
+					@foreach($db as $data)
 					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
+						<td>{{$data->nombres}}</td>
+						<td>{{$data->dias_laborales}}</td>
+						<td>{{$data->horarios}}</td>
+						<td>{{$data->descripcion}}</td>
 						<td>
 							<div class="row">
 								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
+									<p data-placement="top" data-toggle="tooltip" title="Cancelar" class="bottom-p">
 										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
+											data-toggle="modal" data-target="{{ $alert }}"><span
+												class="fa fa-remove" wire:click.prevent="cancelCita({{ $data->id }}, {{ $data->idCalenDet}})" ></span></button>
 									</p>
 								</div>
 
@@ -41,644 +50,66 @@
 								<div class="form-group col-sm-6 bottom-p text-center">
 									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
 										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
+											data-target="#asgiOp" wire:click="sendData('{{ json_encode($data, true)}}')" wire:ignore.self><span class="fa fa-check-square-o"></span></button>
 									</p>
 
 								</div>
 							</div>
 						</td>
 					</tr>
+					@endforeach
+				@else
 					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
 						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
+							<label for="">No hay datos para mostrar</label>
 						</td>
 					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tiger Nixon</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Tir Nin</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Manuel Pereira</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Manuel Perez</td>
-						<td>04/04/2023</td>
-						<td>15:30</td>
-						<td>reserva temporal</td>
-						<td>
-							<div class="row">
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Desactivar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
-											data-toggle="modal" data-target="#reservaActive"><span
-												class="fa fa-remove"></span></button>
-									</p>
-								</div>
-
-							</div>
-
-						</td>
-						<td>
-							<div class="row">
-
-								<div class="form-group col-sm-6 bottom-p text-center">
-									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
-										<button class="btn btn-success btn-xs" data-title="asgiOp" data-toggle="modal"
-											data-target="#asgiOp"><span class="fa fa-check-square-o"></span></button>
-									</p>
-
-								</div>
-							</div>
-						</td>
-					</tr>
+				@endif
+					
 				</tbody>
-				<!-- <tfoot>
-					<tr>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Office</th>
-						<th>Age</th>
-						<th>Start date</th>
-						<th>Salary</th>
-					</tr>
-				</tfoot> -->
+				
 			</table>
 		</div>
 		<div class="container">
 			<div class="modal fade" id="asgiOp" tabindex="-1" role="dialog" aria-labelledby="asgiOp" aria-hidden="true">
 				<div class="modal-dialog modal-content-scroll" role="document">
 					<div class="modal-content">
+						@if(!empty($datTemp))
+
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
-									class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign()">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+							</button>
 							<h4 class="modal-title custom_align" id="Heading">Asociar Operacion</h4>
 						</div>
 						<div class="modal-body">
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<p class="text-center">Paciente: <strong>Juan Perez</strong></p>
+										<p class="text-center">Paciente: <strong> {{ $datTemp[0]['nombres']}} </strong></p>
 									</div>
 
 									<div class="col-md-12">
 										<label for="opNumber" class="text-left">Introduzca Nro de transaccion:</label>
-										<input type="text" class="form-control" id="opNumber"
+										<input type="text" class="form-control" id="opNumber" wire:model.defer="inputOpNumber"
 											placeholder="Op. 1239182731">
 									</div>
 
 									<div class="col-md-12">
 										<label for="inputState">Medio de pago</label>
-										<select id="inputState" class="form-control">
-											<option selected>Choose...</option>
-											<option>Giros tigo</option>
-											<option>Transferencia bancaria</option>
+										
+										<select id="inputState" class="form-control" wire:model.defer="inputTypeMethod">
+											@if(!empty($paymentMethod))						
+											<option selected value="">Seleccionar metodo</option>
+											@foreach($paymentMethod as $pay)
+											<option value="{{ $pay->id }}">{{ $pay->descripcion }}</option>
+											@endforeach
+											@else
+												<option value="">no hay datos para mostrar</option>
+											
+											@endif
 										</select>
+									
 									</div>
 								</div>
 							</div>
@@ -687,8 +118,14 @@
 						<div class="modal-footer ">
 							<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
 								class="glyphicon glyphicon-ok-sign" data-title="reservaActive" data-toggle="modal"
-								data-dismiss="modal" data-target="#reservaActive"><span></span>Activar</button>
+								data-dismiss="modal" data-target="{{ $alert }}" wire:click.prevent="activeDate()" ><span></span>Activar</button>
 						</div>
+						@else
+							<div>
+								<label for=""> No hay datos para mostrar</label>
+							</div>
+						@endif
+
 					</div>
 					<!-- /.modal-content -->
 				</div>
@@ -708,7 +145,7 @@
 							<div class="icon-box">
 								<i class="material-icons">&#xE876;</i>
 							</div>
-							<h4 class="modal-title w-100">Turno Activado/Inactivado!</h4>
+							<h4 class="modal-title w-100">{{ $detail }}!</h4>
 						</div>
 
 						<div class="modal-footer">
@@ -751,3 +188,7 @@
 	</div>
 
 </section>
+	</x-body-wrapper>
+	<x-footer/>
+
+</div>

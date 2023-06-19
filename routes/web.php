@@ -10,6 +10,7 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
 use App\Http\Livewire\AltaDoctor;
+use App\Http\Livewire\AltaReservaAdmin;
 use App\Http\Livewire\CalendarioDoctor;
 use App\Http\Livewire\Crearhoras;
 use App\Http\Livewire\EditarImporte;
@@ -52,13 +53,14 @@ Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('registro-doc
 Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('alta');
 Route::get('admfunc/edit-importe', EditarImporte::class)->name('edit');
 Route::get('admfunc/calendario-doctor', CalendarioDoctor::class )->name('calendario');
+Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('altaReser');
 
 Route::controller(AdmFuncController::class) -> group( function ()
 {
     Route::get('admfunc/importe', 'importe');
     Route::get('admfunc/historial-citas','historial');
     Route::get('admfunc/reservar-adm','reserva');
-    Route::get('admfunc/alta-reser-adm','altaReser');
+    // Route::get('admfunc/alta-reser-adm','altaReser');
     
 });
 

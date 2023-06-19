@@ -82,11 +82,7 @@ class Crearhoras extends Component
         ]);
     }
 
-    public function setHours()
-    {
-        
-    }
-
+ 
     public function genHour($day)
     {
         $horaInicial =date('H:i',strtotime( $this->datTrans[0]["horario_inicio"]));

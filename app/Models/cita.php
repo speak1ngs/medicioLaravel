@@ -9,6 +9,9 @@ class cita extends Model
 {
     use HasFactory;
 
+    protected $table = 'citas';
+
+
     public function calendarios_doctores()
     {
         return $this->hasMany(calendario_doctor::class);
@@ -44,4 +47,7 @@ class cita extends Model
     {
         return $this->belongsToMany(paciente::class);
     }
+
+
+    protected $fillable = ['nro_operacion_pago', 'importe', 'status_id', 'paciente_id', 'calendarios_deta_id' , 'pago_id','medio_id'];
 }
