@@ -15,11 +15,31 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nro_operacion_pago',100);
             $table->integer('importe');
+            $table->string('descripcion_doctor')->nullable();
+            $table->string('descripcion_paciente')->nullable();
+            $table->unsignedBigInteger('cal_doc_id')->nullable();
+            $table->unsignedBigInteger('cal_pac_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->unsignedBigInteger('paciente_id')->nullable();
             $table->unsignedBigInteger('calendarios_deta_id')->nullable();
             $table->unsignedBigInteger('pago_id')->nullable();
             $table->unsignedBigInteger('medio_id')->nullable();
+            $table->unsignedBigInteger('calificacion_status_id')->nullable();
+            $table->unsignedBigInteger('paciente_status_id')->nullable();
+
+
+            $table->foreign('cal_doc_id')
+            ->references('id')
+            ->on('evaluaciones_doctores')
+            ->onDelete('set null')
+            ->onUpdate('cascade');
+
+
+            $table->foreign('cal_pac_id')
+            ->references('id')
+            ->on('evaluaciones_pacientes')
+            ->onDelete('set null')
+            ->onUpdate('cascade');
 
 
             $table->foreign('status_id')
@@ -52,6 +72,17 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
+            $table->foreign('calificacion_status_id')
+            ->references('id')
+            ->on('citas_calificacion_status')
+            ->onDelete('set null')
+            ->onUpdate('cascade');
+
+            $table->foreign('paciente_status_id')
+            ->references('id')
+            ->on('pacientes_status')
+            ->onDelete('set null')
+            ->onUpdate('cascade');
 
             $table->timestamps();
         });

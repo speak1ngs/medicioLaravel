@@ -13,8 +13,8 @@
 				<thead>
 					<tr>
 						<th>Paciente</th>
-						<th>Fecha cita</th>
-						<th>Hora</th>
+						<th>Reserva</th>
+						<th>Horario</th>
 						<th>Estado</th>
 						<th>Cancelar turno</th>
 						<th>Activar Turno</th>
@@ -28,8 +28,9 @@
 					@foreach($db as $data)
 					<tr>
 						<td>{{$data->nombres}}</td>
-						<td>{{$data->dias_laborales}}</td>
-						<td>{{$data->horarios}}</td>
+						<td  data-title="detailDate" data-toggle="modal"
+											data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore.self><a >{{$data->dias_laborales}}</a></td>
+						<td >{{$data->horarios}}</td>
 						<td>{{$data->descripcion}}</td>
 						<td>
 							<div class="row">
@@ -70,6 +71,75 @@
 				
 			</table>
 		</div>
+		<div class="container">
+			<div class="modal fade" id="detailDate" tabindex="-1" role="dialog" aria-labelledby="detailDate" aria-hidden="true">
+				<div class="modal-dialog modal-content-scroll" role="document">
+					<div class="modal-content">
+						@if(!empty($datTemp))
+						
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign()">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Detalle del Turno</h4>
+						</div>
+						<div class="modal-body">
+
+							<h6 class="modal-title custom_align" id="Heading">Informacion del Paciente:</h6>
+						<div class="row">
+									
+									<div class="form-group">
+									<div class="col-md-12">
+										<p class="text-center bottom-p">Paciente: <strong> {{ $datTemp[0]['nombres']}} </strong></p>
+										<p class="text-center bottom-p">Telf: <strong> {{ $datTemp[0]['telefono_paciente']}} </strong></p>
+
+									</div>
+									</div>
+									<h6 class="modal-title custom_align" id="Heading">Informacion del Doctor:</h6>
+
+									<div class="form-group">
+									<div class="col-md-12">
+										<p class="text-center bottom-p">Doctor: <strong> {{ $datTemp[0]['doctor']}} </strong></p>
+										<p class="text-center bottom-p">Telf: <strong> {{ $datTemp[0]['telefono_doctor']}} </strong></p>
+									</div>
+									<h6 class="modal-title custom_align" id="Heading">Informacion del consultorio:</h6>
+
+									<div class="form-group">
+									<div class="col-md-12">
+										<p class="text-center bottom-p">Doctor: <strong> {{ $datTemp[0]['consul_nomb']}} </strong></p>
+										<p class="text-center bottom-p">Telf: <strong> {{ $datTemp[0]['consult_telf']}} </strong></p>
+										<p class="text-center bottom-p">Ciudad: <strong> {{ $datTemp[0]['ciudad']}} </strong></p>
+										<p class="text-center bottom-p">Ubicacion: <strong> Agregar link de la Ubicacion </strong></p>
+
+									</div>
+
+
+									</div>
+
+
+									
+							
+								
+							</div>
+						
+						</div>
+				
+						@else
+							<div>
+								<label for=""> No hay datos para mostrar</label>
+							</div>
+						@endif
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+		</div>
+
+
+
+
 		<div class="container">
 			<div class="modal fade" id="asgiOp" tabindex="-1" role="dialog" aria-labelledby="asgiOp" aria-hidden="true">
 				<div class="modal-dialog modal-content-scroll" role="document">

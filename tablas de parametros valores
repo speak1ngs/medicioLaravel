@@ -47,6 +47,7 @@ INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VAL
 INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'pendiente', NULL, NULL);
 INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'cancelado', NULL, NULL);
 INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'no concretado', NULL, NULL);
+INSERT INTO `citas_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'finalizado', NULL, NULL) ;
 
 
 INSERT INTO `pagos_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'pendiente', NULL, NULL);
@@ -57,3 +58,25 @@ INSERT INTO `pagos_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALU
 INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'TIGO MONEY', NULL, NULL);
 INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'MASTER CARD', NULL, NULL);
 INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'BNF', NULL, NULL);
+INSERT INTO `medios_pagos` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('4', 'PENDIENTE', NULL, NULL) ;
+
+
+INSERT INTO `evaluaciones_pacientes` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, '1', NULL, NULL) ;
+INSERT INTO `evaluaciones_pacientes` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, '2', NULL, NULL) ;
+INSERT INTO `evaluaciones_pacientes` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, '3', NULL, NULL) ;
+INSERT INTO `evaluaciones_pacientes` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, '4', NULL, NULL) ;
+INSERT INTO `evaluaciones_pacientes` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, '5', NULL, NULL) ;
+
+
+INSERT INTO `evaluaciones_doctores` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, '1', NULL, NULL) ;
+INSERT INTO `evaluaciones_doctores` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, '2', NULL, NULL) ;
+INSERT INTO `evaluaciones_doctores` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, '3', NULL, NULL) ;
+INSERT INTO `evaluaciones_doctores` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, '4', NULL, NULL) ;
+INSERT INTO `evaluaciones_doctores` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, '5', NULL, NULL) ;
+
+INSERT INTO `citas_calificacion_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('1', 'calificado', NULL, NULL) ;
+INSERT INTO `citas_calificacion_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('2', 'no calificado', NULL, NULL) ;
+
+INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('1', 'ausente', NULL, NULL) ;
+INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('2', 'presente', NULL, NULL) ;
+INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('3', 'pendiente', NULL, NULL) ;

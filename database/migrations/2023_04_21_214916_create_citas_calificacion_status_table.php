@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evaluaciones_pacientes', function (Blueprint $table) {
-            $table->bigIncrements('id');
-        
-            $table->integer('descripcion');
+        Schema::create('citas_calificacion_status', function (Blueprint $table) {
+            $table->id();
+            $table->string('descripcion',60);
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluaciones_pacientes');
+        Schema::dropIfExists('citas_calificacion_status');
     }
 };

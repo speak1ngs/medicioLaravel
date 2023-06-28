@@ -49,5 +49,5 @@ class cita extends Model
     }
 
 
-    protected $fillable = ['nro_operacion_pago', 'importe', 'status_id', 'paciente_id', 'calendarios_deta_id' , 'pago_id','medio_id'];
+    protected $fillable = ['nro_operacion_pago', 'importe','descripcion_doctor', 'descripcion_paciente','cal_doc_id','cal_pac_id', 'status_id', 'paciente_id', 'calendarios_deta_id' , 'pago_id', 'medio_id', 'calificacion_status_id', 'paciente_status_id'];
 }

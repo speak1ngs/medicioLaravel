@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class evaluacion_doctor extends Model
 {
     use HasFactory;
+    protected $table = "evaluaciones_doctores";
+
 
     public function citas()
     {

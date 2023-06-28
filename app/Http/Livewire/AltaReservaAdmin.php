@@ -39,7 +39,7 @@ class AltaReservaAdmin extends Component
 
     public function closeModalAsign()
     {
-        $this->emitTo('alta-reserva-admin', '$render');
+        $this->emitTo('alta-reser-adm', '$render');
         $this->reset([     
             'inputTypeMethod',
             'inputOpNumber'
@@ -64,6 +64,7 @@ class AltaReservaAdmin extends Component
 
     public function sendData( $data ) 
     {
+        // $this->reset(['datTemp']);
         array_push($this->datTemp, json_decode( $data,true));
     }
     protected $listeners = ['render'];
@@ -71,10 +72,16 @@ class AltaReservaAdmin extends Component
     {
         $db= DB::table('citas')
                 ->join('calendarios_detalles', 'citas.calendarios_deta_id','=','calendarios_detalles.id')
+                ->join('calendarios_doctores','calendarios_detalles.calendarios_doctores_id','=','calendarios_doctores.id')
+                ->join('doctores','calendarios_doctores.doctores_id','=','doctores.id')
+                ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
                 ->join('pacientes','citas.paciente_id','=','pacientes.id')
                 ->join('personas','pacientes.persona_id','=', 'personas.id')
                 ->join('citas_status','citas.status_id','=','citas_status.id')
-                ->select('citas.id',DB::raw('CONCAT(personas.nombre," ", personas.apellido) as nombres'),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 'personas.telefono_particular', db::raw('calendarios_detalles.id as idCalenDet'))
+                ->select('citas.id',DB::raw('CONCAT(personas.nombre," ", personas.apellido) as nombres'),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 'personas.telefono_particular as telefono_paciente', db::raw('calendarios_detalles.id as idCalenDet'),
+                        db::raw('(SELECT concat(personas.nombre," ", personas.apellido ) from personas where personas.id = doctores.persona_id) as doctor'),'doctores.telefono_laboral as telefono_doctor',
+                        'consultorios.nombre as consul_nomb', 'consultorios.telefono as consult_telf', db::raw('(SELECT ciudades.descripcion from ciudades WHERE ciudades.id = consultorios.id) as ciudad')
+                        )
                 ->where('citas_status.id','=',2)
                 ->paginate(10);
    

@@ -13,6 +13,7 @@ use App\Http\Livewire\AltaDoctor;
 use App\Http\Livewire\AltaReservaAdmin;
 use App\Http\Livewire\CalendarioDoctor;
 use App\Http\Livewire\Crearhoras;
+use App\Http\Livewire\DoctorAgenda;
 use App\Http\Livewire\EditarImporte;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
@@ -77,7 +78,7 @@ Route::get('/cambiar-pass', [PassController::class, 'cambiar']);
 Route::get('/cambiar-correo', [EmailController::class, 'cambiar']);
 
 //  RUTAS DE DOCTOR 
-Route::get('doctor/agenda',[DoctorController::class, 'agenda']);
+Route::get('doctor/agenda',DoctorAgenda::class)->name('agenda');
 Route::get('doctor/crear-horarios', Crearhoras::class)->name('crear-horarios');
 
 // RUTAS DE AGENDA CONSULTORIO

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluaciones_doctores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('descripcion_doctor',200)->nullable();
-            $table->double('calificacion_doctor', 0,1)->nullable();
+            $table->integer('descripcion');
             $table->timestamps();
         });
     }

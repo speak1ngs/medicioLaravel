@@ -151,17 +151,25 @@ class Reservar extends Component
     public function reserTime() 
     {
         try {
-            db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);
+            // db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);
 
-            cita::create([
-                'nro_operacion_pago' => 0, 
-                'importe' => $this->datTrans[0]->costo_consulta, 
-                'status_id'=> 2,
-                'paciente_id'=> 1,
-                'calendarios_deta_id' => $this->inputHour ,
+            cita::create(
+              [
+                'nro_operacion_pago' => 0,
+                'importe'  =>$this->datTrans[0]->costo_consulta,
+                'descripcion_doctor' => null,
+                'descripcion_paciente' => null,
+                'cal_doc_id' => null,
+                'cal_pac_id' => null,
+                'status_id' => 2,
+                'paciente_id' => 1, 
+                'calendarios_deta_id' => $this->inputHour,
                 'pago_id' => 1,
-                'medio_id' => 4
-            ]);
+                'medio_id' => 4,
+                'calificacion_status_id' => 2,
+                'paciente_status_id' => 3
+            ]
+        );
 
 
         } catch (\Throwable $th) {
@@ -174,11 +182,13 @@ class Reservar extends Component
     {
         $this->reset(['arrDay','arryHour','open_day','inputMes']);
     
-        $mes =intval(date("n"));    
+        // $mes =intval(date("n"));    
+        $mes =intval("7");    
+
         $val = DB::table('calendarios_detalles')
                         ->where('calendarios_doctores_id', '=', $inicio)
                         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-                        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
+                        ->whereMonth('calendarios_detalles.dias_laborales',8)
                         ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
                         ->distinct()
                         ->get('dias_laborales')->toArray();
@@ -194,14 +204,13 @@ class Reservar extends Component
     public function showHoursOfWeek() 
     {
         $this->reset(['arryHour']);
-        $val = DB::table('calendarios_detalles')->where('calendarios_detalles.calendarios_doctores_id', '=', 2)->where('calendarios_detalles.stat_id', '=', 1)->where('calendarios_detalles.dias_laborales', '=', $this->inputMes)->get()->toArray();
+        $val = DB::table('calendarios_detalles')->where('calendarios_detalles.calendarios_doctores_id', '=', 1)->where('calendarios_detalles.stat_id', '=', 1)->where('calendarios_detalles.dias_laborales', '=', $this->inputMes)->get()->toArray();
 
         if(count($val)>=1){
             for($i= 0; $i < sizeof($val); $i++){
                 array_push($this->arryHour,json_decode(json_encode($val[$i]), true));
             }
         }
-       
     }
  
     public function resetModalEntries()
