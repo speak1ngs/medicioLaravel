@@ -104,7 +104,7 @@ class DoctorAgenda extends Component
         ->join('pacientes','citas.paciente_id','=','pacientes.id')
         ->join('personas','pacientes.persona_id','=', 'personas.id')
         ->join('citas_status','citas.status_id','=','citas_status.id')
-        ->select('citas.id',DB::raw('CONCAT(personas.nombre," ", personas.apellido) as nombres'),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 
+        ->select('citas.id',DB::raw('(SELECT CONCAT(personas.nombre," ", personas.apellido) FROM personas where personas.id = pacientes.persona_id ) as nombres'),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 
                 'consultorios.nombre as consul_nomb', 'doctores.id as iddoc', 'citas.paciente_id as idpac'
                 )
         ->where('citas_status.id','=',1)

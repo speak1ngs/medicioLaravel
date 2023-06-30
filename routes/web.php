@@ -10,15 +10,18 @@ use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
 use App\Http\Livewire\AltaDoctor;
+use App\Http\Livewire\AltaPost;
 use App\Http\Livewire\AltaReservaAdmin;
 use App\Http\Livewire\CalendarioDoctor;
 use App\Http\Livewire\Crearhoras;
+use App\Http\Livewire\CrearPosts;
 use App\Http\Livewire\DoctorAgenda;
 use App\Http\Livewire\EditarImporte;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
 use App\Http\Livewire\Reservar;
+use App\Http\Livewire\TurnosReservados;
 use App\Models\CalendarioDetalles;
 use Illuminate\Support\Facades\Route;
 
@@ -42,12 +45,7 @@ Route::get('/inicio', HomeController::class);
 Route::get('paciente/registro', Registro::class)->name('registro');
 Route::get('paciente/profile', Profile::class)->name('profile');
 Route::get('paciente/reservar', Reservar::class)->name('reservar');
-
-Route::controller(PacienteController::class)->group( function ()
-{
-    
-    Route::get('paciente/turnos-reservados','reservados');
-});
+Route::get('paciente/turnos-reservados',TurnosReservados::class)->name('reservados');
 
 // RUTAS ADM FUNCIONALIDADES
 Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('registro-doctor');
@@ -59,18 +57,16 @@ Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('altaReser')
 Route::controller(AdmFuncController::class) -> group( function ()
 {
     Route::get('admfunc/importe', 'importe');
-    Route::get('admfunc/historial-citas','historial');
+    // Route::get('admfunc/historial-citas','historial');
     Route::get('admfunc/reservar-adm','reserva');
     // Route::get('admfunc/alta-reser-adm','altaReser');
     
 });
 
 //  RUTAS DE POST
-Route::controller(PostController::class)->group(function ()
-{
-    Route::get('post/crear', 'crear');
-    Route::get('post/alta', 'alta');
-});
+Route::get('post/crear', CrearPosts::class)->name('crear');
+Route::get('post/alta', AltaPost::class)->name('alta');
+
 
 
 //  RUTAS COMUNES EN TODOS LOS USUARIOS
@@ -82,7 +78,7 @@ Route::get('doctor/agenda',DoctorAgenda::class)->name('agenda');
 Route::get('doctor/crear-horarios', Crearhoras::class)->name('crear-horarios');
 
 // RUTAS DE AGENDA CONSULTORIO
-Route::get('consultorio/agenda',[ConsultorioController::class,'agenda']);
+// Route::get('consultorio/agenda',[ConsultorioController::class,'agenda']);
 
 //  RUTAS DE ADMIN TEMPLATE 
 Route::get('adm/dashboard', [AdmTempController::class,'dashboard']);

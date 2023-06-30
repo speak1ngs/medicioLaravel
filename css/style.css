@@ -3426,3 +3426,19 @@ padding-right: 1.5rem;
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
 }
+
+.div-wid{
+	margin-right:35px ;
+
+	margin-left:35px ;
+	width: 85%;
+}
+
+.div-star{
+		margin: 0px  100px 20px;
+		margin-top: 15px;
+		margin-left: 220px;
+		margin-right: 150px;
+
+
+}

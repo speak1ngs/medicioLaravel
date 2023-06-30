@@ -15,15 +15,19 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('titulo',45);
             $table->text('body');
-            $table->string('extract',45);
-            $table->string('slug',45);
+            $table->string('extract',45)->nullable();
+            $table->string('slug',45)->nullable();
             $table->string('foto_url')->nullable();
             $table->string('tags')->nullable();
-            
             $table->unsignedBigInteger('user_id')->nullable();
-        
-
+            $table->unsignedBigInteger('status_id')->nullable();
+            
             $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('set null');
+
+            $table->foreign('status_id')
                     ->references('id')
                     ->on('posts_stats')
                     ->onDelete('set null');

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class post extends Model
 {
     use HasFactory;
+    protected $table = "posts";
+
 
     public function posts_stats(){
         return $this->belongsTo(post_stat::class);
@@ -19,4 +21,6 @@ class post extends Model
         return $this->hasOne(User::class);
     }
 
+
+    protected $fillable = ['titulo','body','foto_url','user_id','status_id'];
 }

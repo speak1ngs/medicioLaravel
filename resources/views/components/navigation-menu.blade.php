@@ -44,8 +44,8 @@
 				<li><a href="/paciente/turnos-reservados">Turnos reservados</a></li>
 				<li><a href="/doctor/agenda">Citas programadas</a></li>
 				<li><a href="/doctor/crear-horarios">Crear horarios</a></li>
-				<li><a href="/consultorio/agenda">Citas programadas consultorio</a></li>
-				<li><a href="/admfunc/historial-cita">Historial de citas</a></li>
+				<!-- <li><a href="/consultorio/agenda">Citas programadas consultorio</a></li>
+				<li><a href="/admfunc/historial-cita">Historial de citas</a></li> -->
 				<li><a href="#">Salir</a></li>
 			</ul>
 
@@ -72,8 +72,8 @@
 						<li><a href="/paciente/turnos-reservados">Turnos reservados</a></li>
 						<li><a href="/doctor/agenda">Citas programadas</a></li>
 						<li><a href="/doctor/crear-horarios">Crear horarios</a></li>
-						<li><a href="/consultorio/agenda">Citas programadas consultorio</a></li>
-						<li><a href="/admfunc/historial-cita">Historial de citas</a></li>
+						<!-- <li><a href="/consultorio/agenda">Citas programadas consultorio</a></li>
+						<li><a href="/admfunc/historial-cita">Historial de citas</a></li> -->
 						<li><a href="#">Salir</a></li>
 					</ul>
 				</li>
