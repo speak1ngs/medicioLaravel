@@ -16,7 +16,7 @@
 		<x-servicio-pasos />
 		<x-servicios />
 		<x-doctores />
-		<x-blog />
+		@livewire('showposts')
 		<x-partners />
 		<!-- nav-bar
 		<?php

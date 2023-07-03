@@ -9,7 +9,12 @@ class post_stat extends Model
 {
     use HasFactory;
 
+    protected $table ="posts_stats";
+
     public function posts(){
         return $this->belongsTo(post::class);
     }
+
+    protected $fillable = ['descripcion'];
+
 }

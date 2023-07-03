@@ -152,7 +152,7 @@
 						<h4 class="modal-title w-100">Profesional Calificado!</h4>
 					</div>
 					<div class="modal-body">
-						<p class="text-center">Gracias por tu comentario {{ $control }}!!</p>
+						<p class="text-center">Gracias por tu comentario !!</p>
 					</div>
 					@if (session()->has('message'))
 
