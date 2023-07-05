@@ -13,8 +13,8 @@
 							<span class="fa fa-stethoscope fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Medical checkup</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Profesionales</h5>
+							<p>Facilitar profesionales en todos los horarios posibles.</p>
 						</div>
 					</div>
 				</div>
@@ -22,11 +22,11 @@
 				<div class="wow fadeInRight" data-wow-delay="0.2s">
 					<div class="service-box">
 						<div class="service-icon">
-							<span class="fa fa-wheelchair fa-3x"></span>
+							<span class="fa fa-plus-square fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Nursing Services</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Experiencia</h5>
+							<p>Una nueva forma de asistencia a los usuarios.</p>
 						</div>
 					</div>
 				</div>
@@ -36,8 +36,8 @@
 							<span class="fa fa-plus-square fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Pharmacy</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Doctores</h5>
+							<p>Ofrecer visibilidad a los profesionales.</p>
 						</div>
 					</div>
 				</div>
@@ -46,11 +46,12 @@
 				<div class="wow fadeInRight" data-wow-delay="0.1s">
 					<div class="service-box">
 						<div class="service-icon">
-							<span class="fa fa-h-square fa-3x"></span>
+							<span class="fa fa-plus-square fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Gyn Care</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Meta</h5>
+							<p>La mayor disponibilidad de profesionales.</p>
+						
 						</div>
 					</div>
 				</div>
@@ -58,11 +59,11 @@
 				<div class="wow fadeInRight" data-wow-delay="0.2s">
 					<div class="service-box">
 						<div class="service-icon">
-							<span class="fa fa-filter fa-3x"></span>
+							<span class="fa fa-plus-square fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Neurology</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Futuro</h5>
+							<p>Agregar nuevos servicios y mejorar la experiencia.</p>
 						</div>
 					</div>
 				</div>
@@ -72,8 +73,8 @@
 							<span class="fa fa-user-md fa-3x"></span>
 						</div>
 						<div class="service-desc">
-							<h5 class="h-light">Sleep Center</h5>
-							<p>Vestibulum tincidunt enim in pharetra malesuada.</p>
+							<h5 class="h-light">Usuarios</h5>
+							<p>A la larga brindar beneficios a los usuarios recurrentes.</p>
 						</div>
 					</div>
 				</div>

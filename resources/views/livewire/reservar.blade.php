@@ -113,7 +113,7 @@
 			<div class="py-5">
 				<div class="container well">
 					<div class="row g-2 hidden-md-up ">
-					
+					@dump($do)
 					@if(count($do) >=1)
 							@foreach($do as $doctor)	
 								<div class="col-sm-3 well bg-white">

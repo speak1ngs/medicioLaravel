@@ -11,12 +11,12 @@ class Showposts extends Component
 
     protected $listeners = ['render'];
 
-    public function setData($id, $title,$body, $fotourl) 
+    public function setData($id, $title,$body) 
     {
         $this->iden = $id;
         $this->titulo = $title;
         $this->bod =$body;
-        $this->photo = $fotourl;
+       
     }
 
     public function unsetData() 

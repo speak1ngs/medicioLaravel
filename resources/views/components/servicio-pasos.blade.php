@@ -5,10 +5,9 @@
 				<div class="wow fadeInUp" data-wow-delay="0.2s">
 					<div class="box text-center">
 						<i class="fa fa-check fa-3x circled bg-skin"></i>
-						<h4 class="h-bold">Make an appoinment</h4>
+						<h4 class="h-bold">Reservar</h4>
 						<p>
-							Lorem ipsum dolor sit amet, nec te mollis utroque honestatis,
-							ut utamur molestiae vix, graecis eligendi ne.
+							Busque un profesional y elija el horario a convenir.
 						</p>
 					</div>
 				</div>
@@ -17,10 +16,9 @@
 				<div class="wow fadeInUp" data-wow-delay="0.2s">
 					<div class="box text-center">
 						<i class="fa fa-list-alt fa-3x circled bg-skin"></i>
-						<h4 class="h-bold">Choose your package</h4>
+						<h4 class="h-bold">Elegir</h4>
 						<p>
-							Lorem ipsum dolor sit amet, nec te mollis utroque honestatis,
-							ut utamur molestiae vix, graecis eligendi ne.
+							Tendrá a su disposición los mejores horarios con cada profesional.
 						</p>
 					</div>
 				</div>
@@ -29,10 +27,9 @@
 				<div class="wow fadeInUp" data-wow-delay="0.2s">
 					<div class="box text-center">
 						<i class="fa fa-user-md fa-3x circled bg-skin"></i>
-						<h4 class="h-bold">Help by specialist</h4>
+						<h4 class="h-bold">Buscar</h4>
 						<p>
-							Lorem ipsum dolor sit amet, nec te mollis utroque honestatis,
-							ut utamur molestiae vix, graecis eligendi ne.
+							Puede filtrar por especialidades, horarios y/o la zona que le quede más cerca.
 						</p>
 					</div>
 				</div>
@@ -41,10 +38,9 @@
 				<div class="wow fadeInUp" data-wow-delay="0.2s">
 					<div class="box text-center">
 						<i class="fa fa-hospital-o fa-3x circled bg-skin"></i>
-						<h4 class="h-bold">Get diagnostic report</h4>
+						<h4 class="h-bold">Personalizado</h4>
 						<p>
-							Lorem ipsum dolor sit amet, nec te mollis utroque honestatis,
-							ut utamur molestiae vix, graecis eligendi ne.
+							Una vez que realice un prereserva un asesor se comunicará con usted para darle una mejor asistencia.
 						</p>
 					</div>
 				</div>

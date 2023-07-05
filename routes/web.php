@@ -9,10 +9,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PassController;
 use App\Http\Controllers\PostController;
+use App\Http\Livewire\Altaconsultorio;
 use App\Http\Livewire\AltaDoctor;
 use App\Http\Livewire\AltaPost;
 use App\Http\Livewire\AltaReservaAdmin;
 use App\Http\Livewire\CalendarioDoctor;
+use App\Http\Livewire\Crearconsultorio;
 use App\Http\Livewire\Crearhoras;
 use App\Http\Livewire\CrearPosts;
 use App\Http\Livewire\DoctorAgenda;
@@ -21,6 +23,7 @@ use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
 use App\Http\Livewire\Reservar;
+use App\Http\Livewire\ReservarAdmin;
 use App\Http\Livewire\TurnosReservados;
 use App\Models\CalendarioDetalles;
 use Illuminate\Support\Facades\Route;
@@ -53,12 +56,16 @@ Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('alta');
 Route::get('admfunc/edit-importe', EditarImporte::class)->name('edit');
 Route::get('admfunc/calendario-doctor', CalendarioDoctor::class )->name('calendario');
 Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('altaReser');
+Route::get('admfunc/crear-consult', Crearconsultorio::class)->name('consulCreate');
+Route::get('admfunc/alta-consult', Altaconsultorio::class)->name('consulAlt');
+Route::get('admfunc/reservar-adm',ReservarAdmin::class)->name('reserva');
+
 
 Route::controller(AdmFuncController::class) -> group( function ()
 {
     Route::get('admfunc/importe', 'importe');
     // Route::get('admfunc/historial-citas','historial');
-    Route::get('admfunc/reservar-adm','reserva');
+    // Route::get('admfunc/reservar-adm','reserva');
     // Route::get('admfunc/alta-reser-adm','altaReser');
     
 });

@@ -4,9 +4,9 @@
 			<div class="col-lg-8 col-lg-offset-2">
 				<div class="wow fadeInDown" data-wow-delay="0.1s">
 					<div class="section-heading text-center">
-						<h2 class="h-bold">Doctors</h2>
+						<h2 class="h-bold">Profesionales</h2>
 						<p>
-							Ea melius ceteros oportere quo, pri habeo viderer facilisi ei
+							Nuestros mejores profesionales según nuestros usuarios.
 						</p>
 					</div>
 				</div>

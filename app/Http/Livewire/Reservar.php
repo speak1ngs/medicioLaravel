@@ -182,13 +182,13 @@ class Reservar extends Component
     {
         $this->reset(['arrDay','arryHour','open_day','inputMes']);
     
-        // $mes =intval(date("n"));    
-        $mes =intval("7");    
+        $mes =intval(date("n"));    
+        //$mes =intval("7");    
 
         $val = DB::table('calendarios_detalles')
                         ->where('calendarios_doctores_id', '=', $inicio)
                         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-                        ->whereMonth('calendarios_detalles.dias_laborales',8)
+                        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
                         ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
                         ->distinct()
                         ->get('dias_laborales')->toArray();
@@ -238,7 +238,7 @@ class Reservar extends Component
         ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '12:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '. "'%".$this->inputDayWeek. "%'")
         ->whereMonth('calendarios_detalles.dias_laborales',$mes)
-        ->where('calendarios_doctores.especialidades_id','like', (empty(intval($this->inputEspecialidades)) ? '%4%': '%'.$this->inputEspecialidades . '%' ))
+        ->where('calendarios_doctores.especialidades_id','=', (empty(intval($this->inputEspecialidades)) ? '4': $this->inputEspecialidades  ))
         ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : '%'. intval($this->inputCiudades) .'%') )
         ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
         ->where('doctores.stat_id','=',2)

@@ -16,8 +16,8 @@
 		<x-servicio-pasos />
 		<x-servicios />
 		<x-doctores />
-		@livewire('showposts')
-		<x-partners />
+			<livewire:showposts />
+		<!-- <x-partners /> -->
 		<!-- nav-bar
 		<?php
 			//  include('./nav-bar.php');
@@ -49,24 +49,7 @@
 		?> -->
 	</div>
 
-	<script>
 
-	let modifHomeZ = document.getElementsByClassName("home-section");
 
-	jq(document).ready(function(){
-		$("#blogRead").on('show.bs.modal', function() {
-			modifHomeZ.partner.style.zIndex = "0";
-			console.log('test1');
-		});
-	
 
-		$("#blogRead").on('hide.bs.modal', function() {
-			modifHomeZ.partner.style.zIndex = "120";
-			console.log('test');
-		});
-	
-
-	});
-
-	</script>
 </body>

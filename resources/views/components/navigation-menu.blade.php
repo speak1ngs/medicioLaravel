@@ -30,7 +30,9 @@
 			<ul class="nav navbar-nav hid-burguer">
 				<li><a href="/paciente/profile">Perfil</a></li>
 				<li><a href="/admfunc/registro-doctor">Registrar Doctor</a></li>
+				<li><a href="/admfunc/crear-consult">Registrar Consultorio</a></li>
 				<li><a href="/admfunc/alta-doctor">Alta Doctor</a></li>
+				<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 				<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
 				<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
 				<li><a href="/admfunc/edit-importe">Editar monto de consultas</a></li>
@@ -58,7 +60,9 @@
 					<ul class="dropdown-menu">
 						<li><a href="/paciente/profile">Perfil</a></li>
 						<li><a href="/admfunc/registro-doctor">Registrar Doctor</a></li>
+						<li><a href="/admfunc/crear-consult">Registrar Consultorio</a></li>
 						<li><a href="/admfunc/alta-doctor">Alta Doctor</a></li>
+						<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 						<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
 						<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
 						<li><a href="/admfunc/edit-importe">Editar monto de consultas</a></li>

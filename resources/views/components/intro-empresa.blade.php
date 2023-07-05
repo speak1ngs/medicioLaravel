@@ -15,7 +15,7 @@
 						data-wow-offset="0"
 						data-wow-delay="0.1s"
 					>
-						<h4 class="h-light">Provide best quality healthcare for you</h4>
+						<h4 class="h-light">Te acercamos a los mejores profesionales medicos</h4>
 					</div>
 					<div class="well well-trans">
 						<div class="wow fadeInRight" data-wow-delay="0.1s">
@@ -23,25 +23,22 @@
 								<li>
 									<span class="fa fa-check fa-2x icon-success"></span>
 									<span class="list"
-										><strong>Affordable monthly premium packages</strong
-										><br />Lorem ipsum dolor sit amet, in verterem persecuti
-										vix, sit te meis</span
+										><strong>Profesionales Altamente calificadaos</strong
+										><br />Te proveemos de Profesionales de varias especialidades.</span
 									>
 								</li>
 								<li>
 									<span class="fa fa-check fa-2x icon-success"></span>
 									<span class="list"
-										><strong>Choose your favourite doctor</strong
-										><br />Lorem ipsum dolor sit amet, in verterem persecuti
-										vix, sit te meis</span
+										><strong>Elige el Profesional</strong
+										><br />Puedes elegir el profesional que mejor te agrade.</span
 									>
 								</li>
 								<li>
 									<span class="fa fa-check fa-2x icon-success"></span>
 									<span class="list"
-										><strong>Only use friendly environment</strong
-										><br />Lorem ipsum dolor sit amet, in verterem persecuti
-										vix, sit te meis</span
+										><strong>Te ofrecemos los mejores horarios</strong
+										><br />Tu eliges el turno y nuestros asesores se comunicarán<br/>contigo para una atención más personalizada.</span
 									>
 								</li>
 							</ul>
@@ -59,7 +56,7 @@
 						data-wow-duration="2s"
 						data-wow-delay="0.2s"
 					>
-						<img src="{{ mix('img/dummy/img-1.png')}}" class="img-responsive" alt="" />
+						<img src="{{ mix('img/dummy/img-1.png')}}" class="img-responsive hid-img" alt="" />
 					</div>
 				</div>
 			</div>

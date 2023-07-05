@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('social_twitter',60)->nullable();
             $table->string('social_web_site',100)->nullable();
             $table->string('ruc',15)->nullable();
+            $table->string('map',200)->nullable();
             $table->integer('telefono');
             $table->integer('intervalo_consulta');
-            $table->string('foto_url',200);
-            $table->string('latitud',60);
-            $table->string('longitud',60);
+            $table->string('foto_url',200)->nullable();
+            $table->string('latitud',60)->nullable();
+            $table->string('longitud',60)->nullable();
             $table->unsignedBigInteger('pais_id')->nullable();
             $table->unsignedBigInteger('ciudad_id')->nullable();
             $table->unsignedBigInteger('calle_principal_id')->nullable();

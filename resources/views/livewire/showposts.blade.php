@@ -28,11 +28,6 @@
 				</ol>
 					@endif
 				@endif
-				<!-- <ol class="carousel-indicators">
-					<li data-target="#slider" role="button" data-slide="prev" class="left carousel-control active"></li>
-					<li data-target="#slider" role="button" data-slide="next" class="right carousel-control"></li>
-				</ol> -->
-
 
 				<!-- Carousel items -->
 				<div class="carousel-inner">
@@ -78,6 +73,27 @@
 					
 								@endfor
 
+								@foreach($db as $data)
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+										<div class="card text-center well">
+											<img class="card-img-top"
+												src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?h=350&auto=compress&cs=tinysrgb"
+												alt="" width="100%">
+											<div class="card-block">
+												<h4 class="card-title">{{$data->titulo}}</h4>
+												<p class="card-text line-clamp">{{$data->body}}</p>
+												<a class="btn btn-skin btn-sm"  data-title="blogRead" data-toggle="modal"
+													data-target="#blogRead" wire:click="setData('1', 'asda', 'asdadsada')" >
+													Leer más</a>
+												
+											</div>
+										
+										</div>
+										
+									</div>
+					
+								@endforeach
+
 							@endif
 				
 					
@@ -114,7 +130,7 @@
 					
 
 						@else
-							<a href="">no hay post a mostrar</a>
+							<span >no hay post a mostrar</span>
 						@endif
 
 						</div> <!-- row -->
@@ -166,18 +182,11 @@
 								</div>
 
 							</div>
-
-					
-						<!-- <div class="modal-footer ">
-						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;" data-title="asigTime"
-							data-toggle="modal" data-target="#asigTime" data-dismiss="modal"><span
-								class="glyphicon glyphicon-ok-sign"></span>Asignar</button>
-					</div> -->
 					</div>
 					<!-- /.modal-content -->
 				</div>
 				@else
-					<a href=""> no hay texto</a>
+					<span> no hay texto</span>
 				@endif
 				<!-- /.modal-dialog -->
 			</div>

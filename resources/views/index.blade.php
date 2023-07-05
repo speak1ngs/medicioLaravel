@@ -1,3 +1,3 @@
 <x-header />
-<x-body />
+	<x-body />
 <x-footer />
