@@ -14,6 +14,7 @@ use App\Http\Livewire\AltaDoctor;
 use App\Http\Livewire\AltaPost;
 use App\Http\Livewire\AltaReservaAdmin;
 use App\Http\Livewire\CalendarioDoctor;
+use App\Http\Livewire\Cambiarpass;
 use App\Http\Livewire\Crearconsultorio;
 use App\Http\Livewire\Crearhoras;
 use App\Http\Livewire\CrearPosts;
@@ -77,8 +78,8 @@ Route::get('post/alta', AltaPost::class)->name('alta');
 
 
 //  RUTAS COMUNES EN TODOS LOS USUARIOS
-Route::get('/cambiar-pass', [PassController::class, 'cambiar']);
-Route::get('/cambiar-correo', [EmailController::class, 'cambiar']);
+Route::get('/cambiar-pass', Cambiarpass::class)->name('cambiar');
+// Route::get('/cambiar-correo', [EmailController::class, 'cambiar']);
 
 //  RUTAS DE DOCTOR 
 Route::get('doctor/agenda',DoctorAgenda::class)->name('agenda');

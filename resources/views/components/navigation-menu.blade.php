@@ -39,7 +39,7 @@
 				<li><a href="/post/crear">Crear post</a></li>
 				<li><a href="/post/alta">Dar de alta post</a></li>
 				<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>
-				<li><a href="/cambiar-correo">Cambiar Correo</a></li>
+				<!-- <li><a href="/cambiar-correo">Cambiar Correo</a></li> -->
 				<li><a href="/paciente/reservar">Reservar Turno</a></li>
 				<li><a href="/admfunc/reservar-adm">Reservar Turno Admin</a></li>
 				<li><a href="/admfunc/alta-reser-adm">Alta Turno Reservados Admin</a></li>
@@ -69,7 +69,7 @@
 						<li><a href="/post/crear">Crear post</a></li>
 						<li><a href="/post/alta">Dar de alta post</a></li>
 						<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>
-						<li><a href="/cambiar-correo">Cambiar Correo</a></li>
+						<!-- <li><a href="/cambiar-correo">Cambiar Correo</a></li> -->
 						<li><a href="/paciente/reservar">Reservar Turno</a></li>
 						<li><a href="/admfunc/reservar-adm">Reservar Turno Admin</a></li>
 						<li><a href="/admfunc/alta-reser-adm">Alta Turno Reservados Admin</a></li>

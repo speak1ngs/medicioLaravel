@@ -233,18 +233,18 @@ class Reservar extends Component
         ->join('doctores','personas.id','=','doctores.persona_id')
         ->join('calendarios_doctores','doctores.id','=','calendarios_doctores.doctores_id')
         ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
-        ->join('calendarios_detalles','calendarios_doctores.doctores_id','=', 'calendarios_detalles.calendarios_doctores_id')
-        ->whereRaw( '"'.(empty($this->inputHorarioIni) ? '07:00:00': $this->inputHorarioIni) .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
-        ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '12:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+        ->join('calendarios_detalles','calendarios_doctores.id','=', 'calendarios_detalles.calendarios_doctores_id')
+        ->whereRaw( '"'.(empty($this->inputHorarioIni) ? '09:30:00': $this->inputHorarioIni) .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+        ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '10:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '. "'%".$this->inputDayWeek. "%'")
         ->whereMonth('calendarios_detalles.dias_laborales',$mes)
-        ->where('calendarios_doctores.especialidades_id','=', (empty(intval($this->inputEspecialidades)) ? '4': $this->inputEspecialidades  ))
-        ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : '%'. intval($this->inputCiudades) .'%') )
+        ->where('calendarios_doctores.especialidades_id','like', (empty(intval($this->inputEspecialidades)) ? '%4%': "'%".$this->inputEspecialidades . "%'" ))
+        ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : "'%". intval($this->inputCiudades) ."%'") )
         ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
-        ->where('doctores.stat_id','=',2)
+        ->where('doctores.stat_id','like', "'%" . 2 ."%'")
         ->groupBy( 'personas.id')
         ->paginate($this->can);
 
-        return view('livewire.reservar', compact('do'));
+        return view('livewire.reservar', compact('do','mes'));
     }
 }
