@@ -279,7 +279,7 @@
 							<div class="modal-body" >
 							
 									<label for="inpuTDias">Dias:</label>
-									<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek(1)">
+									<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek()">
 											<option selected value="">Seleccionar Día</option>
 											
 											@if( !empty($dias))

@@ -35,7 +35,7 @@ class Reservar extends Component
     public $arryHour = [];
     public $test ;
     public $hourStart, $hourEnd, $ciudades;
-    public $alert;
+    public $alert,$idenDetail;
 
      public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -144,6 +144,7 @@ class Reservar extends Component
     public function arrReceive( $inicio  )
     {
         $this->datTrans = calendarios_doctores::where('id', '=', $inicio)->get();
+        $this->idenDetail = $this->datTrans[0]->id;
     
         $this->dias = explode(',',$this->datTrans[0]->dias);
     }
@@ -151,7 +152,7 @@ class Reservar extends Component
     public function reserTime() 
     {
         try {
-            // db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);
+            db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);
 
             cita::create(
               [
@@ -178,7 +179,7 @@ class Reservar extends Component
         $this->resetModalEntries();
     }
     
-    public function showDatesOfWeek($inicio) 
+    public function showDatesOfWeek() 
     {
         $this->reset(['arrDay','arryHour','open_day','inputMes']);
     
@@ -186,7 +187,7 @@ class Reservar extends Component
         //$mes =intval("7");    
 
         $val = DB::table('calendarios_detalles')
-                        ->where('calendarios_doctores_id', '=', $inicio)
+                        ->where('calendarios_doctores_id', '=', $this->idenDetail)
                         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
                         ->whereMonth('calendarios_detalles.dias_laborales',$mes)
                         ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
@@ -197,14 +198,17 @@ class Reservar extends Component
                 array_push($this->arrDay,json_decode(json_encode($val[$i]), true));
                 }
                 $this->open_day= true;
-        }    
+        }else{
+            if(!empty($this->inputDias))
+                session()->flash('message', 'El profesional no tiene turnos disponible en ese día.');
+        }
 
     }
 
     public function showHoursOfWeek() 
     {
         $this->reset(['arryHour']);
-        $val = DB::table('calendarios_detalles')->where('calendarios_detalles.calendarios_doctores_id', '=', 1)->where('calendarios_detalles.stat_id', '=', 1)->where('calendarios_detalles.dias_laborales', '=', $this->inputMes)->get()->toArray();
+        $val = DB::table('calendarios_detalles')->where('calendarios_detalles.calendarios_doctores_id', '=',  $this->idenDetail)->where('calendarios_detalles.stat_id', '=', 1)->where('calendarios_detalles.dias_laborales', '=', $this->inputMes)->get()->toArray();
 
         if(count($val)>=1){
             for($i= 0; $i < sizeof($val); $i++){
@@ -215,7 +219,7 @@ class Reservar extends Component
  
     public function resetModalEntries()
     {
-        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes']);
+        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail']);
     }
 
     public function resetShowEntries()
