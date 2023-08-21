@@ -25,6 +25,7 @@ use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
 use App\Http\Livewire\Reservar;
 use App\Http\Livewire\ReservarAdmin;
+use App\Http\Livewire\Showposts;
 use App\Http\Livewire\TurnosReservados;
 use App\Models\CalendarioDetalles;
 use Illuminate\Support\Facades\Route;
@@ -44,7 +45,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });
 
-Route::get('/inicio', HomeController::class);
+Route::get('/inicio', function (){
+    return view('index');
+});
 //  RUTAS DE PACIENTES
 Route::get('paciente/registro', Registro::class)->name('registro');
 Route::get('paciente/profile', Profile::class)->name('profile');

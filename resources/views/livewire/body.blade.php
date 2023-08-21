@@ -17,7 +17,8 @@
     <x-servicio-pasos />
     <x-servicios />
     <x-doctores />
-    @livewire('showposts')
+        @livewire('showposts');
+        @livewireScripts
     <x-partners />
     <!-- nav-bar
     <?php

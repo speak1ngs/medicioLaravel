@@ -7,15 +7,18 @@ use App\Models\post_stat;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class AltaPost extends Component
 {   
-    public $inputTitle, $inputBody, $inputFotoUrl, $cant, $inputState;
+    public $inputTitle, $inputBody, $inputFotoUrl, $cant, $inputState, $inputFotoUrlNew;
     public $control,  $idp, $search;
     public $statPost ;
     public $state = [];
     public $flag = 0; 
     use WithPagination;
+    use WithFileUploads;
+
     public function mount()
     {   
         $this->statPost = "activar";
@@ -25,27 +28,43 @@ class AltaPost extends Component
         $this->state = post_stat::all();
         $this->inputState = 3;
     }
+    public function upload() 
+    {   
+            $this->validate(
+            ['inputFotoUrlNew' => 'image',]);
+            
+            return $this->inputFotoUrlNew->store('postimage', 'public');
+    }
+
+
 
     public function dataSet($iden ,$val, $titulo, $body ,$foto_url) 
     {
+  
+
         $this->statPost = $val;
         $this->idp = $iden;
         $this->inputTitle = $titulo;
         $this->inputBody = $body;
         $this->inputFotoUrl = $foto_url;
+        
     }
 
     public function editData() 
     {
         try {
-         
+            if(!empty($this->inputFotoUrlNew)){
+
+
+            $image=$this->upload();
             post::where('id','=', $this->idp)->update([
                 'titulo' => $this->inputTitle,
                 'body' => $this->inputBody,
-                'foto_url' => 'prueba',
+                'foto_url' => $image,
                 'status_id'=> 1,
             ]);
             session()->flash('message', 'Post activado'); 
+        }
         } catch (\Throwable $th) {
             session()->flash('message', 'Error al conectar a la BD');
         }
@@ -54,7 +73,7 @@ class AltaPost extends Component
 
     public function resetData() 
     {
-        $this->reset(['statPost' ,'idp','inputTitle','inputBody','inputFotoUrl']);
+        $this->reset(['statPost' ,'idp','inputTitle','inputBody','inputFotoUrl','inputFotoUrlNew']);
     }
 
 
@@ -70,10 +89,8 @@ class AltaPost extends Component
             }
             else{
                 $db= post::where('id','=', $this->idp)->update([
-                    'status_id'=> 4,
+                    'status_id'=> 2,
                 ]);
-           
-
                 session()->flash('message', 'Post desactivado'); 
                 
             }

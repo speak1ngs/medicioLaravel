@@ -37,11 +37,11 @@
 						@if(!empty($db))
 							@if(count($db) >=10)
 								@for ($i = 0; $i < 5; $i++)
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
 										<div class="card text-center well">
 											<img class="card-img-top"
-												src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?h=350&auto=compress&cs=tinysrgb"
-												alt="" width="100%">
+												src="{{  mix('./public/storage/'. $db[$i]->foto_url) }}"
+												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
@@ -53,19 +53,23 @@
 								@endfor
 							@elseif( count($db) < 5)
 								@for ($i = 0; $i < count($db); $i++)
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
 										<div class="card text-center well">
-											<img class="card-img-top"
-												src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?h=350&auto=compress&cs=tinysrgb"
-												alt="" width="100%">
+										<img class="card-img-top"
+												src="{{ mix('./public/storage/'. $db[$i]->foto_url) }}"
+												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
-												<a class="btn btn-skin btn-sm"  data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" >
+										
+											</div>
+											<a class="btn btn-skin btn-sm"  wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" id="{{$db[$i]->id}}" 
+											data-title="blogRead" data-toggle="modal"
+													data-target="#blogRead"
+											
+											>
 													Leer más</a>
 												
-											</div>
 										
 										</div>
 										
@@ -73,28 +77,7 @@
 					
 								@endfor
 
-								@foreach($db as $data)
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-										<div class="card text-center well">
-											<img class="card-img-top"
-												src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?h=350&auto=compress&cs=tinysrgb"
-												alt="" width="100%">
-											<div class="card-block">
-												<h4 class="card-title">{{$data->titulo}}</h4>
-												<p class="card-text line-clamp">{{$data->body}}</p>
-												<a class="btn btn-skin btn-sm"  data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" wire:click="setData('1', 'asda', 'asdadsada')" >
-													Leer más</a>
-												
-											</div>
-										
-										</div>
-										
-									</div>
-					
-								@endforeach
-
-							@endif
+						@endif
 				
 					
 
@@ -110,11 +93,11 @@
 						@if(!empty($db))
 							@if(count($db) >=10)
 								@for ($i = 5; $i < 10; $i++)
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
 										<div class="card text-center well">
 											<img class="card-img-top"
-												src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?h=350&auto=compress&cs=tinysrgb"
-												alt="" width="100%">
+												src="{{  mix('./public/storage/'. $db[$i]->foto_url) }}"
+												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
@@ -175,7 +158,7 @@
 
 									<div class="lc-block position-relative img-thumbnail">
 										<!-- <img class="img-fluid rounded shadow" src="./img/team/1.jpg"> -->
-										<img class="card-img-top" alt="100%x180" src="./img/team/1.jpg"
+										<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $photo)}}"
 											data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 									</div>

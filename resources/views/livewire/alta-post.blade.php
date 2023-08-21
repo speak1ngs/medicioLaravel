@@ -50,11 +50,11 @@
 					<th>Activar</th>
 				</thead>
 				<tbody>
-
-					<tr>
-					@if(!empty($db))
+				@if(!empty($db))
 				
-						@foreach($db as $data)
+				@foreach($db as $data)
+					<tr>
+					
 						<td>{{ $data->titulo}}</td>
 						<td>{{ date('d-m-Y',strtotime($data->created_at)) }}</td>
 						<td>{{ $data->estado }}</td>
@@ -87,14 +87,14 @@
 								</div>
 							</div>
 						</td>
-						@endforeach
+					
+					</tr>
+					@endforeach
 					@else
 						<tb>
 							<span>No hay posts</span>
 						</tb>
 					@endif
-					</tr>
-					
 
 
 
@@ -126,7 +126,7 @@
 					<label>{{ $inputTitle }}</label>
 				</div>
 				<div class="modal-body">
-					<img src="{{ mix('./img/team/1.jpg')}}" alt="foto post" class="img-responsive img-thumbnail">
+					<img src="{{  mix('./public/storage/'. $inputFotoUrl )}}" alt="foto post" class="card-img-top img-thumbnail" alt="" height="350"  style="auto:compress; cs:tinysrgb;" width="50%">
 					<p>{{ $inputBody }}</p>
 				</div>
 				<div class="modal-footer">
@@ -151,7 +151,7 @@
 </div>
 
 <div class="container">
-	<div class="modal fade" id="editPost" tabindex="-1" role="dialog" aria-labelledby="editPost" aria-hidden="true">
+	<div class="modal fade" id="editPost" tabindex="-1" role="dialog" aria-labelledby="editPost" aria-hidden="true" wire:ignore.self>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content ">
 				<div class="modal-header">
@@ -162,7 +162,7 @@
 				</div>
 				<div class="modal-body">
 					<label for="">Foto del post:</label>
-					<input type="file" id="exampleInputFile" accept=".jpg, .jpeg, .png" value="{{ $inputFotoUrl }}" wire:model.defer="inputFotoUrl">
+					<input type="file" id="exampleInputFile" accept=".jpg, .jpeg, .png" value="{{$inputFotoUrl}}" wire:model.defer="inputFotoUrlNew">
 					<label for="">Contenido del post:</label>
 					<textarea
 						class="form-control" wire:model.defer="inputBody" value="inputBody" > </textarea>
@@ -283,21 +283,25 @@
 
 
 
-<script>
+	<script>
 // Get a reference to our file input
-const fileInput = document.querySelector('input[type="file"]');
+// const fileInput = document.querySelector('input[type="file"]');
+// const fil= @js($inputFotoUrl);
 
-// Create a new File object
-const myFile = new File(['Selecciona un Archivo'], '1.jpg', {
-	type: 'text/plain',
-	lastModified: new Date(),
-});
+// console.log(fil);
+// // Create a new File object
+// const myFile = new File(['Selecciona un Archivo'], fil.files[0], {
+// 	type: 'text/plain',
+// 	lastModified: new Date(),
+// });
 
 // Now let's create a DataTransfer to get a FileList
-const dataTransfer = new DataTransfer();
-dataTransfer.items.add(myFile);
-fileInput.files = dataTransfer.files;
+// const dataTransfer = new DataTransfer();
+// dataTransfer.items.add(myFile);
+// fileInput.files = dataTransfer.files;
 </script>
+
+
 
 
 </section>

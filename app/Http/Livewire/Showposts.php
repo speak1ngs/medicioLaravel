@@ -9,14 +9,13 @@ class Showposts extends Component
 {    
     public $iden,$titulo, $bod, $photo, $post;
 
-    protected $listeners = ['render'];
-
-    public function setData($id, $title,$body) 
+    public function setData($id, $title,$body, $pic) 
     {
+    
         $this->iden = $id;
         $this->titulo = $title;
         $this->bod =$body;
-       
+        $this->photo = $pic;
     }
 
     public function unsetData() 
