@@ -3455,4 +3455,10 @@ padding-right: 1.5rem;
 	display: -webkit-box;
 	-webkit-line-clamp: 5;
 	-webkit-box-orient: vertical;
-  }
+}
+
+.img-normalizada{
+	width: 400px;
+	height: 400px;
+	object-fit: cover;
+}

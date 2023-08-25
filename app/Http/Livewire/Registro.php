@@ -16,13 +16,13 @@ use Livewire\Component;
 class Registro extends Component
 {
     public $inputNombre, $inputApellido , $inputCedula, $inputEmail, $inputPassword , $inputTelf, $inputEdad,$inputCiudad ,$inputBarrio, $inputPais, $inputNac ,$inputPhoto;
-    public $iden ,$pacient;
+    public $iden ,$pacient, $idpho;
     public $tip_user;  // 1 = paciente
     public $barrio ;
     public $ciudad ;
     public $pais;
 
-
+    use WithFileUploads;
     protected $rules = [
         'inputNombre' => 'required|string',
         'inputApellido' => 'required|string',
@@ -32,6 +32,16 @@ class Registro extends Component
      
 
     ];
+
+    public function upload() 
+    {   
+            $this->validate(
+            ['inputPhoto' => 'image',]);
+            
+            return $this->inputPhoto->store('pacimg', 'public');
+    }
+
+
     // 'inputPassword' => 'required|min:8|max:256|regex:/^(?=.[a-z])(?=.[A-Z])(?=.*\d).+$/',
 
     // 'inputPhoto' => 'image|max:2048|mimes:jpeg,jpg'
@@ -39,6 +49,7 @@ class Registro extends Component
     
     public function mount()
     {
+        $this->idpho = rand();
         $this->barrio  = barrios::all();
         $this->ciudad = ciudades::all();
         $this->pais = paises::all();
@@ -70,10 +81,10 @@ class Registro extends Component
 
        
         if($iden){
-           
+            $image=$this->upload();
             paciente::create(
                 [
-                    'foto_url' => 'test',
+                    'foto_url' => $image,
                     'calificacion' =>  0,
                     'cantidad_consultas_reservadas' => 0,
                     'cantidad_consultas_canceladas' => 0,
@@ -99,6 +110,7 @@ class Registro extends Component
 
            }
 
+        $this->idpho = rand();
 
 
         $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);

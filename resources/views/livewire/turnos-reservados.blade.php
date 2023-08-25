@@ -21,27 +21,26 @@
 								</select>
 							</div>
 
-						<table id="mytable" class="table table-bordred table-striped">
+						<table id="mytable" class="table table-bordered table-striped">
 
 							<thead>
-                            <th>Doctor</th>
+                            <th>Profesional</th>
 						    <th>Especialidad</th>
-						    <th>Fecha cita</th>
-						    <th>Horario</th>
-						    <th>Calificar Doctor</th>
+						    <th>Reserva</th>
+						    <th>Calificar</th>
 							</thead>
 							<tbody>
 
 
+								@if(!empty($db))
+								
+								
+								@foreach($db as $data)
 								<tr>
-									@if(!empty($db))
-                                  
-
-										@foreach($db as $data)
 									<td>{{ $data->nombres }} </td>
                                     <td>{{ $data->especialidad }}</td>
-									<td>{{ $data->dias_laborales}}</td>
-									<td>{{ $data->horarios}}</td>
+									<td><a href="#" data-title="detailDate" data-toggle="modal"
+											data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore>Ver detalle</a></td>
 									<td>
 										
 										<span data-title="calf" data-toggle="modal" data-target="#calf"
@@ -53,9 +52,9 @@
 
 									</td>
 									
-										@endforeach
+									@endforeach
 									@else
-										<td> No hay datos a mostrar</td>
+									<td> No hay datos a mostrar</td>
 									@endif
 								</tr>
 
@@ -85,7 +84,7 @@
 					<div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
 								class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-						<h4 class="modal-title custom_align" id="Heading">Calificar al Doctor </h4>
+						<h4 class="modal-title custom_align" id="Heading">Calificar al Profesional </h4>
 						<h6> {{ $nom }}</h6>
 							<div class="row">
 								<h5 class="text-center">Deje un comentario:</h5>
@@ -220,6 +219,78 @@
 			<!-- /.modal-dialog -->
 		</div>
 	</div>
+
+
+
+	<div class="container" >
+			<div class="modal fade" id="detailDate" tabindex="-1" role="dialog" aria-labelledby="detailDate" aria-hidden="true">
+				<div class="modal-dialog modal-content-scroll" role="document">
+					<div class="modal-content">
+					
+						@if(!empty($datTemp))
+
+						
+						
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign()">
+								<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Reserva</h4>
+						</div>
+						<div class="modal-body">
+
+						<div class="row">
+									<h6 class="modal-title custom_align" id="Heading">Información del Profesional:</h6>
+
+									<div class="form-group">
+										<div class="col-md-12">
+											<p class="text-center bottom-p">Doctor: <strong> {{ $datTemp[0]['doctor']}} </strong></p>
+										</div>
+										
+										<h6 class="modal-title custom_align" id="Heading">Información del consultorio:</h6>
+
+										<div class="form-group">
+											<div class="col-md-12">
+												<p class="text-center bottom-p">Consultorio: <strong> {{ $datTemp[0]['consul_nomb']}} </strong></p>
+												<p class="text-center bottom-p">Telf: <strong> {{ $datTemp[0]['consult_telf']}} </strong></p>
+												<p class="text-center bottom-p">Ciudad: <strong> {{ $datTemp[0]['ciudad']}} </strong></p>
+												<p class="text-center bottom-p">Ubicación: <strong> <a href="{{ $datTemp[0]['ubi'] }}">Google Map</a> </strong></p>
+
+											</div>
+
+
+										</div>
+										<h6 class="modal-title custom_align" id="Heading">Detalle:</h6>
+										<div class="form-group">
+											<div class="col-md-12">
+												<p class="text-center bottom-p">Fecha: <strong> {{ date('d-m-Y', strtotime($datTemp[0]['dias_laborales'])) }} </strong></p>
+												<p class="text-center bottom-p">Horario: <strong> {{ $datTemp[0]['horarios']}} </strong></p>
+											</div>
+
+
+										</div>
+
+
+									
+							
+								
+									</div>
+						
+						</div>
+				
+						@else
+							<div>
+								<label for=""> No hay datos para mostrar</label>
+							</div>
+						@endif
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+		</div>
+
 
 
 	<script>

@@ -13,8 +13,10 @@ class TurnosReservados extends Component
     public $nom, $ide, $control, $val, $buttonState ,$statPaciente, $idpacen;
     public $cant = 10;
     public $stat = 1;
+    public $datTemp = [];
+
     use WithPagination;
-    
+
     public function mount() 
     {
         $this->control = "successComent";
@@ -46,6 +48,7 @@ class TurnosReservados extends Component
                 db::table('citas')->where('id','=',$this->ide)->update([
                 'descripcion_paciente' => $this->inputComent,
                 'cal_pac_id' => $this->inputRating
+                
             ]);
                 $this->control = "successComent";
                 session()->flash('message', 'Se califico al doctor.');    
@@ -66,25 +69,44 @@ class TurnosReservados extends Component
  
     }
 
+    public function closeModalAsign()
+    {
+
+        $this->emitSelf('turnos-reservados');
+        $this->reset(['datTemp']);
+        
+    }
+
+
+    public function sendData( $data ) 
+    {
+        // $this->reset(['datTemp']);
+        array_push($this->datTemp, json_decode( $data,true));
+    }
+
     public function render()
     {
                // agregar id del paciente a nivel global
-               $db= DB::table('citas')
-               ->join('calendarios_detalles', 'citas.calendarios_deta_id','=','calendarios_detalles.id')
-               ->join('calendarios_doctores','calendarios_detalles.calendarios_doctores_id','=','calendarios_doctores.id')
-               ->join('doctores','calendarios_doctores.doctores_id','=','doctores.id')
-               ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
-               ->join('pacientes','citas.paciente_id','=','pacientes.id')
-               ->join('personas','pacientes.persona_id','=', 'personas.id')
-               ->join('citas_status','citas.status_id','=','citas_status.id')
-               ->select('citas.id',DB::raw('(SELECT CONCAT(personas.nombre," ", personas.apellido) FROM personas where personas.id = doctores.persona_id )  as nombres, (select especialidades.descripcion from especialidades where especialidades.id = calendarios_doctores.especialidades_id) as especialidad' ),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 
-                       'doctores.id as iddoc', 'citas.paciente_id as idpac'
-                       )
-               ->where('citas_status.id','=',1)
-               ->where('calendarios_detalles.dias_laborales', '<', '2023-08-08')
-               ->where('citas.paciente_status_id','=',3)
-               ->where('citas.paciente_id','=', 1)
-               ->paginate($this->cant);
+            $db= DB::table('citas')
+            ->join('calendarios_detalles', 'citas.calendarios_deta_id','=','calendarios_detalles.id')
+            ->join('calendarios_doctores','calendarios_detalles.calendarios_doctores_id','=','calendarios_doctores.id')
+            ->join('doctores','calendarios_doctores.doctores_id','=','doctores.id')
+            ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
+            ->join('pacientes','citas.paciente_id','=','pacientes.id')
+            ->join('personas','pacientes.persona_id','=', 'personas.id')
+            ->join('citas_status','citas.status_id','=','citas_status.id')
+            ->select('citas.id',DB::raw('(SELECT CONCAT(personas.nombre," ", personas.apellido) FROM personas where personas.id = doctores.persona_id )  as nombres, (select especialidades.descripcion from especialidades where especialidades.id = calendarios_doctores.especialidades_id) as especialidad' ),
+                    'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 
+                    'doctores.id as iddoc', 'citas.paciente_id as idpac',  db::raw('(SELECT concat(personas.nombre," ", personas.apellido ) from personas where personas.id = doctores.persona_id) as doctor'),
+                    'consultorios.nombre as consul_nomb',
+                    'consultorios.telefono as consult_telf', db::raw('(SELECT ciudades.descripcion from ciudades WHERE ciudades.id = consultorios.ciudad_id) as ciudad'),
+                    'consultorios.map as ubi'
+                    )
+            ->where('citas_status.id','=',1)
+            ->where('calendarios_detalles.dias_laborales', '<', '2023-09-08')
+            ->where('citas.paciente_status_id','=',3)
+            ->where('citas.paciente_id','=', 1)
+            ->paginate($this->cant);
 
 
         return view('livewire.turnos-reservados',compact('db'));

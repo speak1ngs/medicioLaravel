@@ -11,12 +11,12 @@
 				<div editable="rich">
 					<h1 class="fw-bolder display-2 ">Paciente Fulano</h1>
 				</div>
-          
+				
 				<div class="text-center">
 
 					<div class="img-thumbnail">
 
-						<img class="card-img-top" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
+						<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $inputPhoto)}}" data-holder-rendered="true"
 							style="height: 180px; width: 100%; display: block;">
 					</div>
 				</div>

@@ -40,7 +40,7 @@
 											@endif
 											</select>
 							</div>
-			<table id="mytable" class="table table-bordred table-striped">
+			<table id="mytable" class="table table-bordered table-striped">
 		
 				<thead>
 					<th>Titulo</th>

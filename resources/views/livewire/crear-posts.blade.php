@@ -16,7 +16,7 @@
 						@endif
 
                         <label>Suba una foto: </label>
-                        <input type="file" class="form-control" wire:model="inputPhoto" id={{ $iden }}>
+                        <input type="file" class="form-control" wire:model="inputPhoto" id="{{ $iden }}">
 
                         <label >Titulo: </label>
                         <input type="text" placeholder="Ej:Cura para una nueva enfermedad..." class="form-control" wire:model="inputTittle">

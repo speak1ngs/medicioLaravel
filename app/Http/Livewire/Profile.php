@@ -37,14 +37,14 @@ class Profile extends Component
 
 
 
-        $iden = persona::where('cedula','=', 12321)->get();
+        $iden = persona::where('cedula','=', 123131)->with('pacientes')->get();
         $this->inputNombre = $iden[0]->nombre;
         $this->inputApellido = $iden[0]->apellido;
         $this->inputCedula = $iden[0]->cedula;
         $this->inputEdad = $iden[0]->edad;
         $this->inputNac = $iden[0]->fecha_nacimiento;
         $this->inputTelf = $iden[0]->telefono_particular;
-        $this->inputPhoto = 'test.jpg';
+        $this->inputPhoto = $iden[0]['pacientes']['foto_url'];
         $this->inputBarrio =  $iden[0]->barrio_id;
         $this->inputCiudad =  $iden[0]->ciudad_id; 
         $this->inputPais =$iden[0]->pais_id;
@@ -81,7 +81,7 @@ class Profile extends Component
     }
 
     public function render()
-    {
+    {   
         return view('livewire.profile');
     }
 }

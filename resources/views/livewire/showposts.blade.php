@@ -35,44 +35,40 @@
 					<div class="item active">
 						<div class="row">
 						@if(!empty($db))
-							@if(count($db) >=10)
-								@for ($i = 0; $i < 5; $i++)
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
+							@if(count($db) == 10)
+								@for ($i = 0; $i < 4; $i++)
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"  wire:ignore.self>
 										<div class="card text-center well">
+										
+
 											<img class="card-img-top"
 												src="{{  mix('./public/storage/'. $db[$i]->foto_url) }}"
-												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
+												alt=""   style="auto:compress; cs:tinysrgb;"  width="100%">
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
-												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" data-title="blogRead" data-toggle="modal"
+												<a class="btn btn-skin btn-sm" wire:click.prevent="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" data-title="blogRead" data-toggle="modal"
 													data-target="#blogRead" >Leer más</a>
 											</div>
 										</div>
 									</div>
 								@endfor
-							@elseif( count($db) < 5)
-								@for ($i = 0; $i < count($db); $i++)
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
+							@elseif( count($db) <=5)
+								@for ($i = 0; $i < 4; $i++)
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"  wire:ignore.self>
 										<div class="card text-center well">
-										<img class="card-img-top"
-												src="{{ mix('./public/storage/'. $db[$i]->foto_url) }}"
-												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
+									
+
+											<img class="card-img-top"
+												src="{{  mix('./public/storage/'. $db[$i]->foto_url) }}"
+												alt=""   style="auto:compress; cs:tinysrgb;"  >
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
-										
+												<a class="btn btn-skin btn-sm" wire:click.prevent="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" data-title="blogRead" data-toggle="modal"
+													data-target="#blogRead" >Leer más</a>
 											</div>
-											<a class="btn btn-skin btn-sm"  wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" id="{{$db[$i]->id}}" 
-											data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead"
-											
-											>
-													Leer más</a>
-												
-										
 										</div>
-										
 									</div>
 					
 								@endfor
@@ -91,18 +87,18 @@
 						<div class="row">
 
 						@if(!empty($db))
-							@if(count($db) >=10)
-								@for ($i = 5; $i < 10; $i++)
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-										<div class="card text-center well">
+							@if(count($db) ==10)
+								@for ($i = 5; $i < 9; $i++)
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" wire:ignore.self>
+										<div class="card  text-center well">
 											<img class="card-img-top"
 												src="{{  mix('./public/storage/'. $db[$i]->foto_url) }}"
-												alt="" height="350"  style="auto:compress; cs:tinysrgb;"  width="100%">
+												alt=""   style="auto:compress; cs:tinysrgb;"  width="100%">
 											<div class="card-block">
 												<h4 class="card-title">{{$db[$i]->titulo}}</h4>
 												<p class="card-text line-clamp">{{$db[$i]->body}}</p>
 												<a class="btn btn-skin btn-sm" data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')">Leer más</a>
+													data-target="#blogRead" wire:click.prevent="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')">Leer más</a>
 											</div>
 										</div>
 									</div>

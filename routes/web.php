@@ -64,16 +64,6 @@ Route::get('admfunc/crear-consult', Crearconsultorio::class)->name('consulCreate
 Route::get('admfunc/alta-consult', Altaconsultorio::class)->name('consulAlt');
 Route::get('admfunc/reservar-adm',ReservarAdmin::class)->name('reserva');
 
-
-Route::controller(AdmFuncController::class) -> group( function ()
-{
-    Route::get('admfunc/importe', 'importe');
-    // Route::get('admfunc/historial-citas','historial');
-    // Route::get('admfunc/reservar-adm','reserva');
-    // Route::get('admfunc/alta-reser-adm','altaReser');
-    
-});
-
 //  RUTAS DE POST
 Route::get('post/crear', CrearPosts::class)->name('crear');
 Route::get('post/alta', AltaPost::class)->name('alta');

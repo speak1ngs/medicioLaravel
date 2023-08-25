@@ -115,10 +115,11 @@
 					<div class="row g-2 hidden-md-up ">
 					
 					@if(count($do) >=1)
+
 							@foreach($do as $doctor)	
 								<div class="col-sm-3 well bg-white">
 									<div class="card card-block">
-										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
+										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
 											<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
@@ -181,7 +182,7 @@
 
 							<div class="lc-block position-relative img-thumbnail ">
 								<!-- <img class="img-fluid rounded shadow" src="{{ mix('./img/team/1.jpg')}}"> -->
-								<img class="card-img-top " alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
+								<img class="card-img-top " alt="100%x180" src="{{ mix('./public/storage/'. $fot)}}" data-holder-rendered="true"
 									style="height: 180px; width: 100%; display: block;">
 							</div>
 						</div>
@@ -461,7 +462,7 @@
 								<h4 class="modal-title w-100">Reserva Exitosa!</h4>
 							</div>
 							<div class="modal-body">
-								<p class="text-center">Un operador se comunicara con usted para confirmar
+								<p class="text-center">Un operador se comunicará con usted para confirmar
 													su horario!!.</p>
 							</div>
 							<div class="modal-footer">
@@ -491,7 +492,7 @@
 								<h4 class="modal-title w-100">Reserva fallida!</h4>
 							</div>
 							<div class="modal-body">
-								<p class="text-center">El horario que eligio ya esta ocupado!!.</p>
+								<p class="text-center">El horario que eligió ya esta ocupado!!.</p>
 								<p class="text-center">Intente nuevamente</p>
 							</div>
 							<div class="modal-footer">

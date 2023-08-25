@@ -20,7 +20,7 @@ class ReservarAdmin extends Component
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, 
     $inputCiudades, $inputDayWeek, $inputDia, $inputHour,$inputCedula, $inputName, $inputLastName, $inputCi, $inputEmail, $inputTelf;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
-    public $open_calendar;
+    public $open_calendar,$fot;
     public $timeDoc = [];
     public $arrDay = [];
     public $anho = [];
@@ -109,7 +109,7 @@ class ReservarAdmin extends Component
 
         $dat = db::table(db::raw('personas'))
         ->join('doctores', 'personas.id','=', 'doctores.persona_id')
-        ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion')
+        ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion', 'doctores.foto_url as fotdoc')
         ->where('personas.cedula', '=', $data)->get();
         // $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         if(empty($this->inputEspecialidades)){
@@ -152,10 +152,11 @@ class ReservarAdmin extends Component
 
         }
 
-
+        $this->reset(['calenShow']);
         $this->nom = $dat[0]->nomb;
         $this->apell = $dat[0]->apell;
         $this->descrip = $dat[0]->descripcion;
+        $this->fot = $dat[0]->fotdoc;
    
         //  $this->calenShow = $calen;
         $this->open_calendar = true;

@@ -48,7 +48,7 @@
 					@foreach($do as $doctor)	
 						<div class="col-sm-3 well bg-white">
 							<div class="card card-block">
-								<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{ mix('./img/team/1.jpg')}}" data-holder-rendered="true"
+								<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 									style="height: 180px; width: 100%; display: block;">
 								<div class="card-block">
 									<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>

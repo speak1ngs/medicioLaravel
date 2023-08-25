@@ -10,9 +10,9 @@ use Livewire\WithPagination;
 class AltaReservaAdmin extends Component
 {   
     use WithPagination;
-    public $alert, $detail, $paymentMethod, $inputTypeMethod, $inputOpNumber;
+    public $alert, $detail, $paymentMethod, $inputTypeMethod, $inputOpNumber, $search, $searchCI, $ide , $ideCalen, $namPac;
     public $datTemp = [];
-    
+    public $cant = 10;
 
   
     public function mount() 
@@ -22,14 +22,27 @@ class AltaReservaAdmin extends Component
         $this->paymentMethod = medio_pago::all();
     }
 
-    public function cancelCita($idCita, $idCalen)
+    public function dataSet($iden ,$idCalen , $name) 
+    {
+        $this->ide = $iden;
+        $this->ideCalen = $idCalen;
+        $this->namPac = $name;
+        
+    }
+    public function resetData() 
+    {
+        $this->reset(['ideCalen' ,'ide', 'namPac']);
+    }
+
+
+    public function cancelCita()
     {
         try {
             
-            db::table('citas')->where('id','=', $idCita)->update(['status_id'=> 3,
+            db::table('citas')->where('id','=', $this->ide)->update(['status_id'=> 3,
                                                                     'pago_id' => 3
                                                                 ]);
-            db::table('calendarios_detalles')->where('id','=', $idCalen)->update(['stat_id' => 1]);
+            db::table('calendarios_detalles')->where('id','=',  $this->ideCalen)->update(['stat_id' => 1]);
             $this->detail = "Turno Cancelado";
 
         } catch (\Throwable $th) {
@@ -80,10 +93,12 @@ class AltaReservaAdmin extends Component
                 ->join('citas_status','citas.status_id','=','citas_status.id')
                 ->select('citas.id',DB::raw('CONCAT(personas.nombre," ", personas.apellido) as nombres'),'calendarios_detalles.dias_laborales', 'calendarios_detalles.horarios', 'citas_status.descripcion', 'personas.telefono_particular as telefono_paciente', db::raw('calendarios_detalles.id as idCalenDet'),
                         db::raw('(SELECT concat(personas.nombre," ", personas.apellido ) from personas where personas.id = doctores.persona_id) as doctor'),'doctores.telefono_laboral as telefono_doctor',
-                        'consultorios.nombre as consul_nomb', 'consultorios.telefono as consult_telf', db::raw('(SELECT ciudades.descripcion from ciudades WHERE ciudades.id = consultorios.id) as ciudad')
+                        'consultorios.nombre as consul_nomb', 'consultorios.telefono as consult_telf', db::raw('(SELECT ciudades.descripcion from ciudades WHERE ciudades.id = consultorios.ciudad_id) as ciudad'), 'consultorios.map as ubi'
                         )
                 ->where('citas_status.id','=',2)
-                ->paginate(10);
+                ->where('personas.cedula','LIKE', '%' . $this->searchCI . '%')
+                ->whereRaw('CONCAT(personas.nombre," ", personas.apellido) LIKE ?', '%'. $this->search . '%')
+                ->paginate($this->cant);
    
    
         return view('livewire.alta-reserva-admin', compact('db'));

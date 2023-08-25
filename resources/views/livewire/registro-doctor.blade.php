@@ -108,7 +108,7 @@
 							<div class="form-group">
 								<span class="control-fileupload">
 									<label for="file">Sube una foto :</label>
-									<input type="file" class="form-control" id="file" wire:model="inputPhoto">
+									<input type="file" class="form-control" id="{{ $idpho }}" wire:model="inputPhoto">
 								</span>
 							</div>
 

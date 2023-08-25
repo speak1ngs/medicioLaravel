@@ -9,6 +9,7 @@ use App\Models\consultorio;
 use App\Models\especialidades;
 use App\Models\paises;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Crearconsultorio extends Component
 {   
@@ -18,6 +19,7 @@ class Crearconsultorio extends Component
 
     public $barrio, $ciudad, $consul, $pais,  $calle;
 
+    use WithFileUploads;
 
     public function mount() 
     {
@@ -28,8 +30,17 @@ class Crearconsultorio extends Component
 
     }
 
+    public function upload() 
+    {   
+            $this->validate(
+            ['inputFoto' => 'image',]);
+            
+            return $this->inputFoto->store('consimg', 'public');
+    }
+
     public function regConsul() 
     {
+        $image=$this->upload();
         consultorio::create([
             'nombre' => $this->inputNombre, 
             'social_instagram' => $this->inputInsta,
@@ -40,7 +51,7 @@ class Crearconsultorio extends Component
             'map' => $this->inputMap,
             'telefono' =>$this->inputTelf,
             'intervalo_consulta' => $this->inputIntervalo,
-            'foto_url' => 'test',
+            'foto_url' => $image,
             'latitud' => null,
             'longitud'=> null,
             'pais_id' => $this->inputPais, 
@@ -54,8 +65,8 @@ class Crearconsultorio extends Component
         $this->reset(['inputNombre' , 'inputInsta', 'inputFace',  'inputTwi', 'inputWeb', 'inputMap',
         'inputBarr', 'inputCiud', 'inputPais', 'inputTelf', 'inputIntervalo', 'inputRuc', 'inputFoto', 'inputPrinc',
         'inputSecu', 'inputTerc']);
-
-        $this->emit('alert','Consultorio registrado');
+        $this->emitSelf('crearconsultorio');
+        // $this->emit('alert','Consultorio registrado');
     }
 
 

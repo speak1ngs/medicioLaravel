@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\CalendarioDetalles;
 use App\Models\calendarios_doctores;
 use App\Models\consultorio;
+use App\Models\especialidades;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -13,7 +14,8 @@ use Livewire\WithPagination;
 class Crearhoras extends Component
 {
     use WithPagination;
-    public $inputCan, $inputYear;
+    public $inputYear, $especialidades, $inputEspecialidades, $inputCedula;
+    public $inputCan = 10 ;
     public $datTrans= [];
     public $inputDias = [];
     public $inputMes= [];
@@ -67,6 +69,7 @@ class Crearhoras extends Component
         $this->inputYear = date("Y");
         $this->val =$this->getLimit("Setiembre");
         $this->test =  $this->valMonth($this->getIdMonth("Junio"));
+        $this->especialidades = especialidades::all();
         
     }
     
@@ -257,8 +260,9 @@ class Crearhoras extends Component
                             'calendarios_doctores.id','calendarios_doctores.horario_inicio', 'calendarios_doctores.horario_fin', 'calendarios_doctores.dias', 'calendarios_doctores.meses',
        'personas.nombre','personas.apellido', 'consultorios.nombre as consultorio', 'consultorios.intervalo_consulta', 'especialidades.descripcion'
                         )
-                       
-                        ->paginate(10);
+                        ->where('personas.cedula','LIKE','%' . $this->inputCedula . '%')
+                        ->where('calendarios_doctores.especialidades_id', 'like', '%' . $this->inputEspecialidades . '%')
+                        ->paginate($this->inputCan);
         return view('livewire.crearhoras', compact('do'));
     }
 }

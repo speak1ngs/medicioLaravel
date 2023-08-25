@@ -12,12 +12,14 @@ use App\Models\persona;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+
 
 class RegistroDoctor extends Component
 {
     public $inputNombre, $inputApellido , $inputCedula, $inputRegistro, $inputBarrio, $inputCiudad, $inputEdad,
     $inputPais ,$inputFechNac, $inputFechaExpReg, $inputTelfLab, $inputEmail, $inputPass, $inputPhoto, $inputDescrip,$inputConsultorio;
-    public $iden ,$paciente;
+    public $iden ,$paciente, $idpho;
     public $especialidades;
     public $barrio ;
     public $ciudad ;
@@ -28,6 +30,9 @@ class RegistroDoctor extends Component
     public $manyStuff;
     public $tip_user ;  // 1 = doctor
 
+
+    use WithFileUploads;
+
     protected $rules = [
         'inputNombre' => 'required|string',
         'inputApellido' => 'required|string',
@@ -36,10 +41,19 @@ class RegistroDoctor extends Component
         'inputRegistro' => 'required',
         'inputPass' => 'required',
         'inputTelfLab' => 'required',
+        'inputPhoto' => 'required'
         ];
-    
+    public function upload() 
+    {   
+            $this->validate(
+            ['inputPhoto' => 'image',]);
+            
+            return $this->inputPhoto->store('doctimg', 'public');
+    }
+
     public function mount(Especialidades $especialidades)
     {
+        $this->idpho= rand();
         $this->barrio  = barrios::all();
         $this->ciudad = ciudades::all();
         $this->consul = consultorio::all();
@@ -67,11 +81,14 @@ class RegistroDoctor extends Component
         $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
 
         if($iden){
+
+
+            $image=$this->upload();
             
             doctores::create(
                 [
                     'registro' => $this->inputRegistro,
-                    'foto_url' => 'test',
+                    'foto_url' => $image,
                     'telefono_laboral' => $this->inputTelfLab,
                     'registro_expericacion_fecha' => $this->inputFechaExpReg,
                     'descripcion' => $this->inputDescrip,
@@ -104,6 +121,7 @@ class RegistroDoctor extends Component
            'inputNombre','inputApellido' , 'inputCedula', 'inputRegistro', 'inputBarrio', 'inputCiudad', 'inputEdad',
             'inputPais' ,'inputFechNac', 'inputFechaExpReg', 'inputTelfLab', 'inputEmail', 'inputPass', 'inputPhoto', 'inputDescrip','inputConsultorio', 'inputEspecial'
         ]);
+        $this->idpho = rand();
 
     }
 

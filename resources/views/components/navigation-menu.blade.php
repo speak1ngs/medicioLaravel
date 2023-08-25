@@ -35,7 +35,6 @@
 				<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 				<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
 				<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
-				<li><a href="/admfunc/edit-importe">Editar monto de consultas</a></li>
 				<li><a href="/post/crear">Crear post</a></li>
 				<li><a href="/post/alta">Dar de alta post</a></li>
 				<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>
@@ -65,7 +64,6 @@
 						<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 						<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
 						<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
-						<li><a href="/admfunc/edit-importe">Editar monto de consultas</a></li>
 						<li><a href="/post/crear">Crear post</a></li>
 						<li><a href="/post/alta">Dar de alta post</a></li>
 						<li><a href="/cambiar-pass">Cambiar Contraseña</a></li>

@@ -17,9 +17,15 @@
 			<div class="col-md-4">
 		
 			<label for="inputStat">Especialidades</label>
-					<select id="inputStat" class="form-control" wire:model="inputEspecialidades">
+			<select id="inputStat" class="form-control" wire:model="inputEspecialidades">
 												<option selected value="">Seleccionar Especialidad</option>
-										
+											@if(count($especialidades) >= 1)
+													@foreach($especialidades as $especial )
+														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
+												@endforeach
+											@else
+											<option>No hay Especialidades</option>
+											@endif
 											</select>
 			</div>
 			<div class="col-md-4">

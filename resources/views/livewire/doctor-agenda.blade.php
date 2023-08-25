@@ -20,7 +20,7 @@
 								</select>
 							</div>
 
-						<table id="mytable" class="table table-bordred table-striped">
+						<table id="mytable" class="table table-bordered table-striped">
 
 							<thead>
 								<th>Pacientes</th>
@@ -33,17 +33,18 @@
 							<tbody>
 
 
+								@if(!empty($db))
+								@foreach($db as $data)
 								<tr>
-									@if(!empty($db))
-										@foreach($db as $data)
-									<td>{{ $data->nombres }} </td>
-									<td>{{ $data->dias_laborales}}</td>
+								<td>{{ $data->nombres }} </td>
+									<td>{{  date('d-m-Y', strtotime($data->dias_laborales))}}</td>
 									<td>{{ $data->horarios}}</td>
 									<td>{{ $data->consul_nomb }}</td>
 									<td>
 										
 										<span data-title="calf" data-toggle="modal" data-target="#calf"
-									data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self>Calificar</span>
+									data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
+									<a href="">Calificar</a></span>
 							
 
 									</td>
@@ -69,11 +70,11 @@
 										</div>
 
 									</td>
-										@endforeach
-									@else
-										<td> No hay datos a mostrar</td>
-									@endif
 								</tr>
+									@endforeach
+									@else
+									<td> No hay datos a mostrar</td>
+									@endif
 
 
 
@@ -97,21 +98,19 @@
 		<div class="modal fade" id="calf" tabindex="-1" role="dialog" aria-labelledby="calf" aria-hidden="true" wire:ignore.self>
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+					<div class="modal-body">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
 								class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 						<h4 class="modal-title custom_align" id="Heading">Calificar al Paciente </h4>
 						<h6> {{ $nom }}</h6>
-					</div>
-					<div class="modal-body">
 							<div class="row">
 								<h5 class="text-center">Deje un comentario:</h5>
-								<div class="form-group">
-									<textarea class="form-control col-sm-8" id="message-text" wire:model.defer="inputComent"></textarea>
-								</div>
 								<div class="form-group text-center">
-								<h5 class="text-left bottom-p">Calificar:</h5>
-									<div class="rate ">
+									<textarea class="form-control div-wid" id="message-text" wire:model.defer="inputComent"></textarea>
+								</div>
+								<div class="form-group">
+								<h5 class="text-center bottom-p">Calificar:</h5>
+									<div class="rate div-star">
 										@foreach(range(5,1) as $id )
 											<input type="radio" id="star{{$id}}" name="rate" value="{{$id}}"  wire:model.defer="inputRating"/>
 											<label for="star{{$id}}" title="{{$id}}">{{$id}} stars</label>

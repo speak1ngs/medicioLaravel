@@ -28,7 +28,7 @@
 					</div>
 
 		@if(count($datos))
-			<table id="mytable" class="table table-bordred table-striped">
+			<table id="mytable" class="table table-bordered table-striped">
 			
 				<thead>
 					<th>Profesional</th>
@@ -39,7 +39,7 @@
 					<th>Activar</th>
 				</thead>
 				<tbody>
-				@foreach($datos as $dato)
+					@foreach($datos as $dato)
 					<tr>
 
 						<td>{{ $dato->nombre . ' ' . $dato->apellido }}</td>
@@ -53,7 +53,7 @@
 									<p data-placement="top" data-toggle="tooltip" title="Desactivar"
 										class="bottom-p">
 										<button class="btn btn-danger btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="{{ $control }}" wire:key="{{$dato->id}}" wire:click="upState({{ $dato->id}}, 1)" ><span
+											data-toggle="modal" data-target="{{ $control }}"  wire:click="upState({{ $dato->id}}, 1)" ><span
 												class="fa fa-remove"></span></button>
 									</p>
 								</div>
@@ -64,7 +64,7 @@
 						<td>
 					
 										<button class="btn btn-success btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="{{ $control }}"  wire:key="{{$dato->id}}" wire:click="upState({{ $dato->id}}, 2)" ><span
+											data-toggle="modal" data-target="{{ $control }}"  wire:click="upState({{ $dato->id}}, 2)" ><span
 												class="fa fa-check-square-o"></span></button>
 					
 						</td>

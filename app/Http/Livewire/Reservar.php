@@ -18,7 +18,7 @@ class Reservar extends Component
     use WithPagination;
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, $inputCiudades, $inputDayWeek, $inputDia, $inputHour;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
-    public $open_calendar;
+    public $open_calendar,$fot;
     public $timeDoc = [];
     public $arrDay = [];
     public $anho = [];
@@ -39,6 +39,11 @@ class Reservar extends Component
 
      public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+
+    public function resetModalEntries()
+    {
+        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail']);
     }
 
     public function mount()
@@ -78,12 +83,14 @@ class Reservar extends Component
     
     public function asig($data)
     {   
+
+
         $this->ced = $data;
         $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
 
         $dat = db::table(db::raw('personas'))
         ->join('doctores', 'personas.id','=', 'doctores.persona_id')
-        ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion')
+        ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion', 'doctores.foto_url as docfoto')
         ->where('personas.cedula', '=', $data)->get();
         // $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         if(empty($this->inputEspecialidades)){
@@ -126,10 +133,12 @@ class Reservar extends Component
 
         }
 
+        $this->reset(['calenShow']);
 
         $this->nom = $dat[0]->nomb;
         $this->apell = $dat[0]->apell;
         $this->descrip = $dat[0]->descripcion;
+        $this->fot = $dat[0]->docfoto;
    
         //  $this->calenShow = $calen;
         $this->open_calendar = true;
@@ -217,10 +226,7 @@ class Reservar extends Component
         }
     }
  
-    public function resetModalEntries()
-    {
-        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail']);
-    }
+
 
     public function resetShowEntries()
     {
@@ -241,7 +247,7 @@ class Reservar extends Component
         ->whereRaw( '"'.(empty($this->inputHorarioIni) ? '09:30:00': $this->inputHorarioIni) .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
         ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '10:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
         ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '. "'%".$this->inputDayWeek. "%'")
-        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
+        ->whereMonth('calendarios_detalles.dias_laborales','8')
         ->where('calendarios_doctores.especialidades_id','like', (empty(intval($this->inputEspecialidades)) ? '%4%': "'%".$this->inputEspecialidades . "%'" ))
         ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : "'%". intval($this->inputCiudades) ."%'") )
         ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
