@@ -17,7 +17,7 @@
 				<x-intro-empresa />
 				<x-servicio-pasos />
 				<x-servicios />
-				<x-doctores />
+					<livewire:show-doctors/>
 					<livewire:showposts />
 					@livewireScripts
 				<x-partners />

@@ -9,7 +9,7 @@ class persona extends Model
 {
     use HasFactory;
 
-    public function doctor(){
+    public function doctores(){
         return $this->hasOne(doctores::class);
     }
 

@@ -25,6 +25,7 @@ use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
 use App\Http\Livewire\Reservar;
 use App\Http\Livewire\ReservarAdmin;
+use App\Http\Livewire\ShowDoctorDescrip;
 use App\Http\Livewire\Showposts;
 use App\Http\Livewire\TurnosReservados;
 use App\Models\CalendarioDetalles;
@@ -87,6 +88,8 @@ Route::get('adm/dashboard', [AdmTempController::class,'dashboard']);
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('show-doc/{data}', ShowDoctorDescrip::class)->name('show-doc');
 
 
 // Route::middleware([

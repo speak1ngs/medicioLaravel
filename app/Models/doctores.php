@@ -25,7 +25,10 @@ class doctores extends Model
         return $this->belongsTo(persona::class,  'persona_id' , 'id');
     }
 
-
+    public function calendarios_doctores() {
+        return $this->hasMany(calendarios_doctores::class);
+    }
+    
 
     protected $fillable = [
         'registro',

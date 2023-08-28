@@ -9,7 +9,7 @@
 		<div class="row">
 			<div class="align-items-center flex-lg-row-reverse text-center">
 				<div editable="rich">
-					<h1 class="fw-bolder display-2 ">Paciente Fulano</h1>
+					<h1 class="fw-bolder display-2 ">Perfil Usuario</h1>
 				</div>
 				
 				<div class="text-center">

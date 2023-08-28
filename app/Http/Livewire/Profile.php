@@ -9,6 +9,7 @@ use App\Models\paises;
 use App\Models\persona;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Profile extends Component
 {   
@@ -27,6 +28,8 @@ class Profile extends Component
      
 
     ];
+
+    use WithFileUploads;
 
     public function mount()
     {
@@ -53,6 +56,14 @@ class Profile extends Component
     
        
     }
+    public function upload() 
+    {   
+            $this->validate(
+            ['inputPhoto' => 'image',]);
+            
+            return $this->inputPhoto->store('pacimg', 'public');
+    }
+
 
     public function edit()
     {
@@ -72,10 +83,11 @@ class Profile extends Component
         'pais_id' => $this->inputPais ,
         'barrio_id' => $this->inputBarrio]);
         if($this->inputPhoto){
-            
+            $image = $this->upload();
+
             DB::table('pacientes')
             ->where('persona_id', $iden[0]->id)
-            ->update(['foto_url', $this->inputPhoto]);
+            ->update(['foto_url', $image]);
         }
     
     }

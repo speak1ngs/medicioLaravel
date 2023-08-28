@@ -10,7 +10,7 @@ class especialidades extends Model
     use HasFactory;
 
 
-    public function calendario_doctore(){
+    public function calendario_doctores(){
         return $this->hasMany(calendarios_doctores::class);
     }
 
