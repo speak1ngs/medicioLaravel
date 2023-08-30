@@ -10,7 +10,7 @@ class paciente extends Model
     use HasFactory;
 
     public function personas(){
-        return $this->belongsTo(persona::class);
+        return $this->belongsTo(persona::class,'persona_id','id');
     }
 
     public function users(){

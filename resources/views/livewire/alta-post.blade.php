@@ -127,7 +127,7 @@
 				</div>
 				<div class="modal-body">
 					<img src="{{  mix('./public/storage/'. $inputFotoUrl )}}" alt="foto post" class="card-img-top img-thumbnail" alt="" height="350"  style="auto:compress; cs:tinysrgb;" width="50%">
-					<p>{{ $inputBody }}</p>
+					<p>{{ substr( $inputBody,0,100) }}</p>
 				</div>
 				<div class="modal-footer">
 					<div class="row">
@@ -169,7 +169,7 @@
 				</div>
 				<div class="modal-footer">
 					<button class="btn btn-success btn-block" data-dismiss="modal" data-title="#{{ $control }}"
-								data-toggle="modal" data-target="#{{ $control }}" wire:click.prevent="editData()">Editar y Activar <i class="glyphicon glyphicon-ok-sign"></i></button>
+								data-toggle="modal" data-target="#{{ $control }}" wire:click="editData()">Editar y Activar <i class="glyphicon glyphicon-ok-sign"></i></button>
 				</div>
 			</div>
 			<!-- /.modal-content -->

@@ -20,7 +20,8 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('paciente_id')->nullable();
             $table->unsignedBigInteger('doctor_id')->nullable();
-            $table->unsignedBigInteger('tipo_usaurio_id')->nullable();
+            $table->unsignedBigInteger('tipo_usuario_id')->nullable();
+            $table->unsignedBigInteger('persona_id')->nullable();
 
 
             $table->foreign('paciente_id')
@@ -36,7 +37,15 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
 
-            $table->foreign('tipo_usaurio_id')
+            
+            $table->foreign('persona_id')
+            ->references('id')
+            ->on('personas')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+
+            $table->foreign('tipo_usuario_id')
             ->references('id')
             ->on('tipos_usuarios')
             ->onDelete('set null')

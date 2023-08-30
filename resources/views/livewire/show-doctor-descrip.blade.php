@@ -1,4 +1,4 @@
-<div>
+<div wire:key="{{ $iden }}">
 
     @foreach($dat as $doc)
     <div class="cbp-l-member-img">

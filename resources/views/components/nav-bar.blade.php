@@ -61,7 +61,7 @@
 					</li> -->
 					<div class="navbar-right hid" style="margin-top: 10px">
 							<p class="text-right">
-									<a href="./login.php" class="btn btn-skin btn-xs" >Reservar Turno <i
+									<a href="./login" class="btn btn-skin btn-xs" >Reservar Turno <i
 								class="fa fa-angle-right"></i></a>
 							</p>
 						</div> 

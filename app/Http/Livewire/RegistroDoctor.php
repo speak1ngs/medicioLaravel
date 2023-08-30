@@ -111,7 +111,8 @@ class RegistroDoctor extends Component
                         'password' => Hash::make($this->inputPass),
                         'paciente_id' => null,
                         'doctor_id' =>  $doctor[0]->id,
-                        'tipo_usaurio_id' => $tip_user  
+                        'tipo_usuario_id' => $tip_user,
+                        'persona_id' =>  $iden[0]->id 
                     ]
                     );
             }

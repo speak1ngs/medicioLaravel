@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
+    use HasRoles;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -26,7 +28,8 @@ class User extends Authenticatable
         'password',
         'paciente_id',
         'doctor_id',
-        'tipo_usaurio_id'
+        'tipo_usaurio_id',
+        'persona_id'
     ];
 
     /**
@@ -52,17 +55,29 @@ class User extends Authenticatable
 
     function pacientes()
     {
-        return $this->hasOne(paciente::class);
+        return $this->hasOne(paciente::class,'id','paciente_id');
     }
 
     function doctores()
     {
-        return $this->hasOne(doctor::class);
+        return $this->hasOne(doctores::class, 'id', 'doctor_id');
     }
+
+
+    function personas()
+    {
+        return $this->hasOne(persona::class, 'id', 'persona_id');
+    }
+
 
     function posts()
     {
         return $this->hasOne(post::class);
+    }
+
+    function tipos_usuarios(){
+
+        return $this->hasOne(tipos_usuarios::class,'id', 'tipo_usuario_id');
     }
 
 

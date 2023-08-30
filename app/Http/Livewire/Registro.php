@@ -104,7 +104,8 @@ class Registro extends Component
                         'password' => Hash::make($this->inputPassword),
                         'paciente_id' => $paciente[0]->id,
                         'doctor_id' => null,
-                        'tipo_usaurio_id' => $tip_user  
+                        'tipo_usuario_id' => $tip_user,
+                        'persona_id' => $iden[0]->id
                     ]
                     );
 

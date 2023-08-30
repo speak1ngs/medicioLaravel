@@ -13,11 +13,14 @@ use App\Http\Livewire\Altaconsultorio;
 use App\Http\Livewire\AltaDoctor;
 use App\Http\Livewire\AltaPost;
 use App\Http\Livewire\AltaReservaAdmin;
+use App\Http\Livewire\AsigPerm;
 use App\Http\Livewire\CalendarioDoctor;
 use App\Http\Livewire\Cambiarpass;
 use App\Http\Livewire\Crearconsultorio;
 use App\Http\Livewire\Crearhoras;
 use App\Http\Livewire\CrearPosts;
+use App\Http\Livewire\CreateRol;
+use App\Http\Livewire\CreatPermission;
 use App\Http\Livewire\DoctorAgenda;
 use App\Http\Livewire\EditarImporte;
 use App\Http\Livewire\Profile;
@@ -30,7 +33,7 @@ use App\Http\Livewire\Showposts;
 use App\Http\Livewire\TurnosReservados;
 use App\Models\CalendarioDetalles;
 use Illuminate\Support\Facades\Route;
-
+use Spatie\Permission\Commands\CreatePermission;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,14 +59,17 @@ Route::get('paciente/reservar', Reservar::class)->name('reservar');
 Route::get('paciente/turnos-reservados',TurnosReservados::class)->name('reservados');
 
 // RUTAS ADM FUNCIONALIDADES
-Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('registro-doctor');
-Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('alta');
-Route::get('admfunc/edit-importe', EditarImporte::class)->name('edit');
-Route::get('admfunc/calendario-doctor', CalendarioDoctor::class )->name('calendario');
-Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('altaReser');
-Route::get('admfunc/crear-consult', Crearconsultorio::class)->name('consulCreate');
-Route::get('admfunc/alta-consult', Altaconsultorio::class)->name('consulAlt');
-Route::get('admfunc/reservar-adm',ReservarAdmin::class)->name('reserva');
+Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('admin.registro-doctor');
+Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('admin.alta-doctor');
+Route::get('admfunc/edit-importe', EditarImporte::class)->name('admin.edit');
+Route::get('admfunc/calendario-doctor', CalendarioDoctor::class )->name('admin.calendario');
+Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('admin.altaReser');
+Route::get('admfunc/crear-consult', Crearconsultorio::class)->name('admin.consulCreate');
+Route::get('admfunc/alta-consult', Altaconsultorio::class)->name('admin.consulAlt');
+Route::get('admfunc/reservar-adm',ReservarAdmin::class)->name('admin.reserva');
+Route::get('admfunc/create-rol', CreateRol::class)->name('admin.crear-rol');
+Route::get('admfunc/create-permission', CreatPermission::class)->name('admin.crear-permisos');
+Route::get('admfunc/asig-permission', AsigPerm::class)->name('admin.asig-permisos');
 
 //  RUTAS DE POST
 Route::get('post/crear', CrearPosts::class)->name('crear');

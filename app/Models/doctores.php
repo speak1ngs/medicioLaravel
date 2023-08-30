@@ -21,7 +21,7 @@ class doctores extends Model
         return $this->belongsTo(status::class, 'stat_id', 'id');
     }
 
-    public function persona() {
+    public function personas() {
         return $this->belongsTo(persona::class,  'persona_id' , 'id');
     }
 

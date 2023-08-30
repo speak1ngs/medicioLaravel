@@ -56,15 +56,25 @@ class AltaPost extends Component
             if(!empty($this->inputFotoUrlNew)){
 
 
-            $image=$this->upload();
-            post::where('id','=', $this->idp)->update([
-                'titulo' => $this->inputTitle,
-                'body' => $this->inputBody,
-                'foto_url' => $image,
-                'status_id'=> 1,
-            ]);
-            session()->flash('message', 'Post activado'); 
-        }
+                $image=$this->upload();
+                post::where('id','=', $this->idp)->update([
+                    'titulo' => $this->inputTitle,
+                    'body' => $this->inputBody,
+                    'foto_url' => $image,
+                    'status_id'=> 1,
+                ]);
+                session()->flash('message', 'Post activado'); 
+            }
+            else{
+                
+                post::where('id','=', $this->idp)->update([
+                    'titulo' => $this->inputTitle,
+                    'body' => $this->inputBody,
+                    'foto_url' => $this->inputFotoUrl,
+                    'status_id'=> 1,
+                ]);
+     
+            }
         } catch (\Throwable $th) {
             session()->flash('message', 'Error al conectar a la BD');
         }

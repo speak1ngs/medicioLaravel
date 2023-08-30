@@ -18,6 +18,12 @@ class persona extends Model
         return $this->hasOne(paciente::class);
     }
 
+    
+    public function users(){
+        return $this->hasOne(User::class);
+    }
+
+
     public function paises(){
         return $this->belongsTo(paises::class);
     }

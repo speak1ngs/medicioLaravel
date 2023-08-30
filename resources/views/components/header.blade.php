@@ -7,7 +7,7 @@
 	<meta name="description" content="" />
 	<meta name="author" content="" />
 
-	<title>Medicio landing page template for Health niche</title>
+	<title>{{ env('APP_NAME') }}</title>
 
 	<!-- css -->
 	<link href="{{ mix('css/bootstrap.min.css')}}" rel="stylesheet" />
