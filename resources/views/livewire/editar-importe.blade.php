@@ -1,7 +1,7 @@
 <div>
 <x-header />
 	<x-body-wrapper>
-			<x-navigation-menu />
+    <x-navigation-menu-list />
 			<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
             <div class="py-5">

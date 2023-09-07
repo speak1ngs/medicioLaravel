@@ -53,7 +53,7 @@
 										</div>
 									</div>
 								@endfor
-							@elseif( count($db) <=5)
+							@elseif( count($db) >= 1 && count($db) <=5)
 								@for ($i = 0; $i < 4; $i++)
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" >
 										<div class="card text-center well">

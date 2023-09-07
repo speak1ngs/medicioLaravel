@@ -8,6 +8,7 @@ use App\Models\cita;
 use App\Models\ciudades;
 use App\Models\consultorio;
 use App\Models\especialidades;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Livewire;
@@ -172,7 +173,7 @@ class Reservar extends Component
                 'cal_doc_id' => null,
                 'cal_pac_id' => null,
                 'status_id' => 2,
-                'paciente_id' => 1, 
+                'paciente_id' => Auth::user()->paciente_id, 
                 'calendarios_deta_id' => $this->inputHour,
                 'pago_id' => 1,
                 'medio_id' => 4,

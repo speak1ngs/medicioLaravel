@@ -77,7 +77,7 @@ class Registro extends Component
         );
 
       
-        $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
+        $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->where('nombre','=', $this->inputNombre)->get();
 
        
         if($iden){
@@ -107,15 +107,19 @@ class Registro extends Component
                         'tipo_usuario_id' => $tip_user,
                         'persona_id' => $iden[0]->id
                     ]
-                    );
+                    )->syncRoles(3);
+
+                    $this->idpho = rand();
+
+                    $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
+                    redirect()->route('login');
 
            }
+           else{
+            $this->idpho = rand();
 
-        $this->idpho = rand();
-
-
-        $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
-       
+            $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
+            }
     }
 
     public function render()

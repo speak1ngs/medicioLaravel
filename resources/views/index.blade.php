@@ -3,17 +3,17 @@
 			<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 
 			<!-- BOTONES FLOTANTES -->
-			<a href="https://api.whatsapp.com/send?phone=595961567118&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202."
+			<a href="https://api.whatsapp.com/send?phone={{env('PHONE')}}&text=Hola provengo del sitio web necesito ayuda."
 				class="flotante" target="_blank">
 				<i class="fa fa-whatsapp my-flotante"></i>
 			</a>
 
-			<a href="#" class="flotante-turn hid" target="_blank">
+			<!-- <a href="#" class="flotante-turn hid" target="_blank">
 				<i class="fa fa-calendar my-flotante-turn"></i>
-			</a>
+			</a> -->
 
 			<div id="wrapper">
-				<x-nav-bar />
+				<livewire:navbar />
 				<x-intro-empresa />
 				<x-servicio-pasos />
 				<x-servicios />

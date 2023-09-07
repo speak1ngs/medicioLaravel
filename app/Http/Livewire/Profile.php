@@ -7,6 +7,7 @@ use App\Models\ciudades;
 use App\Models\paciente;
 use App\Models\paises;
 use App\Models\persona;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -37,10 +38,10 @@ class Profile extends Component
         $this->barrio  = barrios::all();
         $this->ciudad = ciudades::all();
         $this->pais = paises::all();
+       
 
-
-
-        $iden = persona::where('cedula','=', 123131)->with('pacientes')->get();
+      
+        $iden = persona::where('id','=',Auth::user()->persona_id )->with('pacientes')->get();
         $this->inputNombre = $iden[0]->nombre;
         $this->inputApellido = $iden[0]->apellido;
         $this->inputCedula = $iden[0]->cedula;
@@ -68,11 +69,10 @@ class Profile extends Component
     public function edit()
     {
      
-        $this->validate();
-        $iden = persona::where('cedula','=', 12312)->get();
+    
         
         DB::table('personas')
-        ->where('id', $iden[0]->id)
+        ->where('id',Auth::user()->persona_id)
         ->update(['nombre' => $this->inputNombre,
         'apellido' => $this->inputApellido,
         'cedula' => $this->inputCedula , 
@@ -86,7 +86,7 @@ class Profile extends Component
             $image = $this->upload();
 
             DB::table('pacientes')
-            ->where('persona_id', $iden[0]->id)
+            ->where('persona_id',Auth::user()->persona_id)
             ->update(['foto_url', $image]);
         }
     

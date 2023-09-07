@@ -2,6 +2,8 @@
 
 use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
+use Spatie\Permission\Models\Role;
+
 
 return [
 
@@ -60,7 +62,6 @@ return [
     | and the user is authenticated. You are free to change this value.
     |
     */
-
     'home' => RouteServiceProvider::HOME,
 
     /*

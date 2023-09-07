@@ -114,7 +114,7 @@ class RegistroDoctor extends Component
                         'tipo_usuario_id' => $tip_user,
                         'persona_id' =>  $iden[0]->id 
                     ]
-                    );
+                    )->syncRoles(2);
             }
 
 

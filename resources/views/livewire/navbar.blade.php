@@ -1,3 +1,9 @@
+<div>
+<a  data-title="confirmModal"
+											data-toggle="modal" data-target="#confirmModal" data-dismiss="modal" class="flotante-turn hid" target="_blank">
+				<i class="fa fa-calendar my-flotante-turn"></i>
+			</a>
+
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 	<div class="top-area">
 		<!-- <div class="container">
@@ -17,7 +23,6 @@
 		</div> -->
 	</div>
 	<div class="container navigation">
-
 		<div class="row">
 
 			<div class="navbar-header page-scroll">
@@ -62,7 +67,7 @@
 					<div class="navbar-right hid" style="margin-top: 10px">
 							<p class="text-right">
 									<a class="btn btn-skin btn-xs"  data-title="confirmModal"
-											data-toggle="modal" data-target="#confirmModal">Reservar Turno <i
+											data-toggle="modal" data-target="#confirmModal" data-dismiss="modal">Reservar Turno <i
 								class="fa fa-angle-right"></i></a>
 							</p>
 						</div> 
@@ -75,7 +80,7 @@
 	<!-- /.container -->
 </nav>
 
-<div class="container">
+    <div class="container">
 		<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModal"
 			aria-hidden="true" >
 			<div class="modal-dialog " role="document">
@@ -89,12 +94,12 @@
 							
 									<span>Desea acceder como?</span>
 							
-							
+                     
 							
 							
 							<div class="mt-5">
-								<a class="btn btn-primary btn-lg" wire:click="{{ }}" href="{{ env('APP_URL') . '/home'}}">INVITADO</a>	
-								<a class="btn btn-success btn-lg" href="{{ env('APP_URL') . '/login'}}"
+								<a class="btn btn-primary btn-lg" wire:click="logGuest()" data-dismiss="modal">INVITADO</a>	
+								<a class="btn btn-success btn-lg" wire:click="logUser()" data-dismiss="modal"
 								>USUARIOS</a>
 										
 							</div>
@@ -106,3 +111,4 @@
 			<!-- /.modal-dialog -->
 		</div>
 	</div>
+</div>

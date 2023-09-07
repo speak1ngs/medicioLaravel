@@ -1,7 +1,7 @@
 <div>
 <x-header />
 <x-body-wrapper >
-	<x-navigation-menu />
+<x-navigation-menu-list />
 	<section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
 
@@ -127,8 +127,19 @@
 											<p class="card-text"><strong>Información:</strong> {{ $doctor->descripcion }}</p>
 
 											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
+											@role('Invitado')
+
+											<a href="https://api.whatsapp.com/send?phone={{env('PHONE')}}&text=Hola quisiera reservar turno con el Dr. {{ $doctor->nombre . ' ' . $doctor->apellido  }} su especialidad es  {{ $doctor->especialidades }}, soy un usuario invitado."
+												target="_blank" class="btn btn-success ">Whatsapp
+											
+											</a>
+
+											@endrole
+
+											@role('Paciente')
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-									data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Ver calendario</a>
+											@endrole
 										</div>
 									</div>
 								</div>

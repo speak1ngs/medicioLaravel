@@ -40,7 +40,7 @@
 
 
 				</div>
-                
+                @if(!empty($doctores))
 				<div id="grid-container" class="cbp-l-grid-team">
 					<ul>
                         @foreach($doctores as $doc)
@@ -65,7 +65,7 @@
 							<a
                             href="{{ route('show-doc', $doc->id) }}" 
 								class="cbp-singlePage cbp-l-grid-team-name"
-								>{{ $doc['persona']->nombre . ' ' . $doc['persona']->apellido }}</a
+								>{{ $doc['personas']->nombre . ' ' . $doc['personas']->apellido }}</a
 							>
 							<div class="cbp-l-grid-team-position">{{ $doc->calendarios_doctores->first()->especialidad->descripcion }}</div>
 						</li>
@@ -73,6 +73,13 @@
 						
 					</ul>
 				</div>
+				@else
+				<ul>
+					<li>
+						no hay profesionales a mostrar 
+					</li>
+				</ul>
+				@endif
 			</div>
 		</div>
 	</div>
