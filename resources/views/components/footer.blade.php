@@ -123,3 +123,9 @@
 <script src="{{ mix('js/nivo-lightbox.min.js')}}"></script>
 <script src="{{ mix('js/custom.js')}}"></script>
 <script src="{{ mix('contactform/contactform.js')}}"></script>
+<script>
+                window.addEventListener('swal:modal',function(e){
+                    Swal.fire(e.detail);
+                });
+        </script>
+

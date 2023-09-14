@@ -37,10 +37,13 @@
 				<li><a href="/admfunc/alta-doctor">Alta Doctor</a></li>
 				<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 				<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
-				<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
+				<li><a href="/admfunc/edit-imp-doctor">Modificar Importe Doctor</a></li>
+				<!-- <li><a href="/admfunc/edit-importe">Cargar monto de consulta</a></li> -->
 				<li><a href="/admfunc/reservar-adm">Reservar Turno Admin</a></li>
 				<li><a href="/admfunc/alta-reser-adm">Alta Turno Reservados Admin</a></li>
 				<li><a href="/admfunc/crear-horarios">Crear horarios</a></li>
+				<li><a href="/admfunc/create-rol">Crear roles</a></li>
+				<li><a href="/admfunc/asig-permission">Asignar roles</a></li>
 
 				@endrole
 				
@@ -92,10 +95,13 @@
 					<li><a href="/admfunc/alta-doctor">Alta Doctor</a></li>
 					<li><a href="/admfunc/alta-consult">Alta Consultorio</a></li>
 					<li><a href="/admfunc/calendario-doctor">Asignar horarios</a></li>
-					<li><a href="/admfunc/importe">Cargar monto de consulta</a></li>
+					<li><a href="/admfunc/edit-imp-doctor">Modificar Importe Doctor</a></li>
+					<!-- <li><a href="/admfunc/edit-importe">Cargar monto de consulta</a></li> -->
 					<li><a href="/admfunc/reservar-adm">Reservar Turno Admin</a></li>
 					<li><a href="/admfunc/alta-reser-adm">Alta Turno Reservados Admin</a></li>
 					<li><a href="/admfunc/crear-horarios">Crear horarios</a></li>
+					<li><a href="/admfunc/create-rol">Crear roles</a></li>
+					<li><a href="/admfunc/asig-permission">Asignar roles</a></li>
 
 					@endrole
 					

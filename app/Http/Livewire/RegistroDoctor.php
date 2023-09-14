@@ -102,9 +102,9 @@ class RegistroDoctor extends Component
         }
 
             $doctor = doctores::select('id')->where('persona_id', '=', $iden[0]->id)->get();
-            $tip_user = 2;
+         
             if( $doctor){
-
+                $tip_user = 2;
                 User::create(
                     [
                         'email' => $this->inputEmail,

@@ -32,6 +32,7 @@
 
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 	<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css">
+	
 	<!-- <link rel="stylesheet" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css"> -->
 
 	<!-- <script src="./js/dataTables.editor.min.js"></script> -->
@@ -45,6 +46,7 @@
 
 	<script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js" type="text/javascript"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<!-- boxed bg -->
 	<link id="bodybg" href="{{ mix('bodybg/bg1.css')}}" rel="stylesheet" type="text/css" />

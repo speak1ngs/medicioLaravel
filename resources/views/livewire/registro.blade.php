@@ -3,7 +3,7 @@
 <div>
 <x-header />
 	<x-body-wrapper >
-		<x-nav-bar /> 
+		<livewire:navbar />
         <section id="register " class="home-section paddingtop-130 h-100 h-custom well">
 
 

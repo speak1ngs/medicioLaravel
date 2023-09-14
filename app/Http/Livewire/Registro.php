@@ -95,9 +95,9 @@ class Registro extends Component
 
         }
            $paciente = paciente::select('id')->where('persona_id', '=', $iden[0]->id)->get();
-            $tip_user = 1;
+           
            if( $paciente){
-
+            $tip_user = 1;
                 User::create(
                     [
                         'email' => $this->inputEmail,
@@ -114,12 +114,8 @@ class Registro extends Component
                     $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
                     redirect()->route('login');
 
-           }
-           else{
-            $this->idpho = rand();
-
-            $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
             }
+
     }
 
     public function render()

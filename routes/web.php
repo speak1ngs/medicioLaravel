@@ -23,6 +23,7 @@ use App\Http\Livewire\CreateRol;
 use App\Http\Livewire\CreatPermission;
 use App\Http\Livewire\DoctorAgenda;
 use App\Http\Livewire\EditarImporte;
+use App\Http\Livewire\Editimportdoc;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Registro;
 use App\Http\Livewire\RegistroDoctor;
@@ -86,7 +87,8 @@ Route::middleware(['role:Admin',
 ])->group(function () {
     Route::get('admfunc/registro-doctor', RegistroDoctor::class)->name('admin.registro-doctor');
     Route::get('admfunc/alta-doctor', AltaDoctor::class)->name('admin.alta-doctor');
-    Route::get('admfunc/edit-importe', EditarImporte::class)->name('admin.edit');
+    // Route::get('admfunc/edit-importe', EditarImporte::class)->name('admin.edit');
+    Route::get('admfunc/edit-imp-doctor',Editimportdoc::class)->name('admin.edit.imp.doc');
     Route::get('admfunc/calendario-doctor', CalendarioDoctor::class )->name('admin.calendario');
     Route::get('admfunc/alta-reser-adm', AltaReservaAdmin::class)->name('admin.altaReser');
     Route::get('admfunc/crear-consult', Crearconsultorio::class)->name('admin.consulCreate');

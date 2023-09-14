@@ -11,7 +11,7 @@ class ShowDoctorDescrip extends Component
 
     public function mount($data){
         $this->iden = $data;
-        $especial = doctores::with(['persona','calendarios_doctores'=> fn($q) => $q->with('especialidad')]);
+        $especial = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with('especialidad')]);
         $especial->whereHas('calendarios_doctores.doctores');
         $this->dat = $especial->where('id','=',$data)->get();
 

@@ -19,6 +19,7 @@ class AltaDoctor extends Component
     public $control;
     public $consu;
     public $stat ;
+    public $statAlert ,$title, $text;
     protected $listeners = ['render'];
     protected $paginationTheme = 'bootstrap';
     
@@ -38,20 +39,39 @@ class AltaDoctor extends Component
             db::table('doctores')
             ->where('doctores.persona_id', '=', $pers)
             ->update(['doctores.stat_id' => $stat]);
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+           
         } catch (\Throwable $th) {
-            $this->control ='#failAlt';
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
     
-            if($stat == 2){
-                $this->stat= 'activado';
+            if($stat === 2){
+                $this->text = 'Profesional Activado';
             }
             else
             {
-                $this->stat = 'inactivado';
+                $this->text = 'Profesional Inactivado';
             }
+
+            $this->alert();
     }
 
+    public function alert()
+    {
 
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+        
+       
+    }
     
 
     public function render()
