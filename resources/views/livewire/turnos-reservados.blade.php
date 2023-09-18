@@ -109,7 +109,7 @@
 					</div>
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;" wire:click="calificar()"
-							data-title="{{ $control }}" data-toggle="modal" data-target="#{{ $control }}"
+							data-title="{{ $control }}" data-toggle="modal" 
 							data-dismiss="modal"  ><span class="glyphicon glyphicon-ok-sign" ></span>Calificar</button>
 					</div>
 				</div>
@@ -223,7 +223,7 @@
 
 
 	<div class="container" >
-			<div class="modal fade" id="detailDate" tabindex="-1" role="dialog" aria-labelledby="detailDate" aria-hidden="true">
+			<div class="modal fade" id="detailDate" tabindex="-1" role="dialog" aria-labelledby="detailDate" aria-hidden="true" wire:ignore.self>
 				<div class="modal-dialog modal-content-scroll" role="document">
 					<div class="modal-content">
 					

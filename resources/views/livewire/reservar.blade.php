@@ -290,9 +290,9 @@
 							</div>
 							<div class="modal-body" >
 							
-									<label for="inpuTDias">Dias:</label>
-									<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek()">
-											<option selected value="">Seleccionar Día</option>
+									<label for="inpuDias">Dias:</label>
+									<select id="inpuDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek()">
+										<option selected value="">Seleccionar Día</option>
 											
 											@if( !empty($dias))
 											
@@ -369,7 +369,7 @@
 									
 									<div class="modal-footer ">
 										<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-											data-title="pagarReserva" data-toggle="modal" data-target="{{ $alert }}"
+											data-title="pagarReserva" data-toggle="modal" 
 											data-dismiss="modal" wire:click.prevent="reserTime()"><span class="glyphicon glyphicon-ok-sign"></span>Reservar</button>
 									</div>
 							</div>

@@ -16,6 +16,7 @@ class CalendarioDoctor extends Component
 {
     use WithPagination;
     public $especialidades, $consultorios;
+    public $statAlert ,$title, $text;
     public $open_asign = false;
     public $dat ;
     public $inputEspecialidades, $inputCedula ;
@@ -31,6 +32,18 @@ class CalendarioDoctor extends Component
     
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
     public function mount()
@@ -85,8 +98,8 @@ class CalendarioDoctor extends Component
 
     public function asignCalendar()
     {
-     
-      try {
+    
+    try {
         calendarios_doctores::create(
             [
                 'horario_inicio' => $this->inputTimeStart,
@@ -99,11 +112,17 @@ class CalendarioDoctor extends Component
                 'especialidades_id' => $this->inputEspecialidad
             ]
         );
+        $this->statAlert = 'success';
+        $this->title = 'Exitoso';
+        $this->text = 'Se modifico el importe';
 
-      } catch (\Throwable $th) {
-        $this->control ='#asigTimeFail';
-      }
+    } catch (\Throwable $th) {
+        $this->statAlert = 'error';
+        $this->title = 'Error';
+        $this->text = 'No se pudo acceder a la base de datos';
+    }
 
+    $this->alert();
         $this->reset([     
         'inputTimeStart',
         'inputTimeEnd',

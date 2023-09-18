@@ -18,6 +18,7 @@ class Profile extends Component
     public $value = 'false';
     public $iden, $paciente;
     public $ciudId, $ciudDescrip ;
+    public $statAlert ,$title, $text;
     public $pais,$barrio, $ciudad;
 
     protected $rules = [
@@ -31,6 +32,18 @@ class Profile extends Component
     ];
 
     use WithFileUploads;
+    
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+    }
 
     public function mount()
     {
@@ -69,26 +82,34 @@ class Profile extends Component
     public function edit()
     {
      
+        try {
+            DB::table('personas')
+            ->where('id',Auth::user()->persona_id)
+            ->update(['nombre' => $this->inputNombre,
+            'apellido' => $this->inputApellido,
+            'cedula' => $this->inputCedula , 
+            'fecha_nacimiento' => $this->inputNac ,
+            'telefono_particular' => $this->inputTelf , 
+            'edad' => $this->inputEdad,
+            'ciudad_id' => $this->inputCiudad ,
+            'pais_id' => $this->inputPais ,
+            'barrio_id' => $this->inputBarrio]);
+            if($this->inputPhoto){
+                $image = $this->upload();
     
-        
-        DB::table('personas')
-        ->where('id',Auth::user()->persona_id)
-        ->update(['nombre' => $this->inputNombre,
-        'apellido' => $this->inputApellido,
-        'cedula' => $this->inputCedula , 
-        'fecha_nacimiento' => $this->inputNac ,
-        'telefono_particular' => $this->inputTelf , 
-        'edad' => $this->inputEdad,
-        'ciudad_id' => $this->inputCiudad ,
-        'pais_id' => $this->inputPais ,
-        'barrio_id' => $this->inputBarrio]);
-        if($this->inputPhoto){
-            $image = $this->upload();
-
-            DB::table('pacientes')
-            ->where('persona_id',Auth::user()->persona_id)
-            ->update(['foto_url', $image]);
+                DB::table('pacientes')
+                ->where('persona_id',Auth::user()->persona_id)
+                ->update(['foto_url', $image]);
+            }
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Perfil actualizado';
+        } catch (\Throwable $th) {
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
+       
     
     }
 

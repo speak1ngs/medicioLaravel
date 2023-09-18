@@ -14,6 +14,7 @@ class AltaPost extends Component
     public $inputTitle, $inputBody, $inputFotoUrl, $cant, $inputState, $inputFotoUrlNew;
     public $control,  $idp, $search;
     public $statPost ;
+    public $statAlert ,$title, $text;
     public $state = [];
     public $flag = 0; 
     use WithPagination;
@@ -36,6 +37,18 @@ class AltaPost extends Component
             return $this->inputFotoUrlNew->store('postimage', 'public');
     }
 
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+    }
+
 
 
     public function dataSet($iden ,$val, $titulo, $body ,$foto_url) 
@@ -56,29 +69,55 @@ class AltaPost extends Component
             if(!empty($this->inputFotoUrlNew)){
 
 
-                $image=$this->upload();
-                post::where('id','=', $this->idp)->update([
-                    'titulo' => $this->inputTitle,
-                    'body' => $this->inputBody,
-                    'foto_url' => $image,
-                    'status_id'=> 1,
-                ]);
-                session()->flash('message', 'Post activado'); 
+                // session()->flash('message', 'Post activado'); 
+
+
+                try {
+               
+                    $image=$this->upload();
+                    post::where('id','=', $this->idp)->update([
+                        'titulo' => $this->inputTitle,
+                        'body' => $this->inputBody,
+                        'foto_url' => $image,
+                        'status_id'=> 1,
+                    ]);
+                    $this->statAlert = 'success';
+                    $this->title = 'Exito';
+                    $this->text = 'Post editado y activado';
+
+                } catch (\Throwable $th) {
+                    $this->statAlert = 'error';
+                    $this->title = 'Error';
+                    $this->text = 'No se pudo acceder a la base de datos';
+                }
+
             }
             else{
                 
-                post::where('id','=', $this->idp)->update([
-                    'titulo' => $this->inputTitle,
-                    'body' => $this->inputBody,
-                    'foto_url' => $this->inputFotoUrl,
-                    'status_id'=> 1,
-                ]);
-     
+
+                try {
+                    post::where('id','=', $this->idp)->update([
+                        'titulo' => $this->inputTitle,
+                        'body' => $this->inputBody,
+                        'foto_url' => $this->inputFotoUrl,
+                        'status_id'=> 1,
+                    ]);
+                    $this->statAlert = 'success';
+                    $this->title = 'Exito';
+                    $this->text = 'Post editado y activado';
+                } catch (\Throwable $th) {
+                    $this->statAlert = 'error';
+                    $this->title = 'Error';
+                    $this->text = 'No se pudo acceder a la base de datos';
+                }
+
             }
         } catch (\Throwable $th) {
-            session()->flash('message', 'Error al conectar a la BD');
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
-
+        $this->alert();
     }
 
     public function resetData() 
@@ -94,25 +133,29 @@ class AltaPost extends Component
                 $db= post::where('id','=', $this->idp)->update([
                     'status_id'=> 1,
                 ]);
-                session()->flash('message', 'Post activado'); 
+                $this->statAlert = 'success';
+                $this->title = 'Exito';
+                $this->text = 'Post Activado';
                 
             }
             else{
                 $db= post::where('id','=', $this->idp)->update([
                     'status_id'=> 2,
                 ]);
-                session()->flash('message', 'Post desactivado'); 
+                $this->statAlert = 'success';
+                $this->title = 'Exito';
+                $this->text = 'Post Desactivado';
                 
             }
         
         } catch (\Throwable $th) {
-            $this->control = 'failComment';
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
             
         }
 
-        if($this->control === "failComment"){
-            session()->flash('message', 'Error al conectar a la BD');
-        }
+        $this->alert();
    
 
     }

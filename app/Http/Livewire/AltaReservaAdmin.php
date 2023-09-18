@@ -9,17 +9,26 @@ use Livewire\WithPagination;
 
 class AltaReservaAdmin extends Component
 {   
-    use WithPagination;
-    public $alert, $detail, $paymentMethod, $inputTypeMethod, $inputOpNumber, $search, $searchCI, $ide , $ideCalen, $namPac;
+  
+    public $alert, $detail, $paymentMethod, $inputMethod, $inputOpNumber, $search, $searchCI, $ide , $ideCalen, $namPac;
     public $datTemp = [];
     public $cant = 10;
-
-  
+    public $statAlert ,$title, $text;
+    use WithPagination;
     public function mount() 
     {
         $this->alert = "#reservaActive";
         $this->detail = "Turno Activado";
         $this->paymentMethod = medio_pago::all();
+    }
+
+    public function alert()
+    {
+        $this->dispatchBrowserEvent('swal:modal', [
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
     }
 
     public function dataSet($iden ,$idCalen , $name) 
@@ -31,7 +40,7 @@ class AltaReservaAdmin extends Component
     }
     public function resetData() 
     {
-        $this->reset(['ideCalen' ,'ide', 'namPac']);
+        $this->reset(['ideCalen' ,'ide', 'namPac','datTemp']);
     }
 
 
@@ -43,18 +52,24 @@ class AltaReservaAdmin extends Component
                                                                     'pago_id' => 3
                                                                 ]);
             db::table('calendarios_detalles')->where('id','=',  $this->ideCalen)->update(['stat_id' => 1]);
-            $this->detail = "Turno Cancelado";
+    
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Turno Cancelado';
 
         } catch (\Throwable $th) {
-            $this->alert ="#failAlt";
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
+        $this->alert();
     }
 
     public function closeModalAsign()
     {
         $this->emitTo('alta-reser-adm', '$render');
         $this->reset([     
-            'inputTypeMethod',
+            'inputMethod',
             'inputOpNumber'
         ]);
 
@@ -64,14 +79,21 @@ class AltaReservaAdmin extends Component
     public function activeDate()
     {
         try {
-            db::table('citas')->where('id','=',$this->datTemp[0]['id'])->update(['nro_operacion_pago' => $this->inputOpNumber ,
+            db::table('citas')->where('id','=',$this->datTemp[0]['id'])->update(['nro_operacion_pago' => $this->inputOpNumber,
                                                                             'status_id' => 1,
                                                                             'pago_id' => 2,
-                                                                            'medio_id' => $this->inputTypeMethod
+                                                                            'medio_id' => $this->inputMethod
                                                                         ]);
+                
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Turno Activado';
         } catch (\Throwable $th) {
-            $this->alert ="#failAlt";
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
+        $this->alert();
     }
 
 

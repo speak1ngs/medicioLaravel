@@ -11,8 +11,21 @@ use Livewire\WithPagination;
 class Altaconsultorio extends Component
 {
     public $cant, $control, $stat, $state, $search;
+    public $statAlert ,$title, $text;
     public $inputState;
     use WithPagination;
+    
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+    }
 
     public function mount()
     {
@@ -29,17 +42,24 @@ class Altaconsultorio extends Component
             db::table('consultorios')
             ->where('consultorios.id', '=', $consu)
             ->update(['consultorios.stat_id' => $stat]);
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+          
         } catch (\Throwable $th) {
-            $this->control ='#failAlt';
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
     
             if($stat == 2){
-                $this->stat= 'activado';
+             
+                $this->text = 'Consultorio Activado';
             }
             else
             {
-                $this->stat = 'inactivado';
+                $this->text = 'Consultorio Inactivado';
             }
+            $this->alert();
     }
 
 

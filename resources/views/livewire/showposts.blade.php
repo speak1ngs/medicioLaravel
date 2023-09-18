@@ -34,9 +34,10 @@
 
 					<div class="item active">
 						<div class="row">
+						
 						@if(!empty($db))
 							@if(count($db) == 10)
-								@for ($i = 0; $i < 4; $i++)
+								@for ($i = 0; $i < sizeof($db); $i++)
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" >
 										<div class="card text-center well">
 										
@@ -54,7 +55,7 @@
 									</div>
 								@endfor
 							@elseif( count($db) >= 1 && count($db) <=5)
-								@for ($i = 0; $i < 4; $i++)
+								@for ($i = 0; $i < sizeof($db); $i++)
 								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" >
 										<div class="card text-center well">
 									

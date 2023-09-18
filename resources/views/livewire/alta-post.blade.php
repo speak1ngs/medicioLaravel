@@ -63,7 +63,7 @@
 								<div class="form-group col-sm-4 bottom-p text-center">
 									<p data-placement="top" data-toggle="tooltip" title="Desactivar"
 										class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="confirmModal"
+										<button class="btn btn-danger btn-xs" data-title="confirmModal" wire:ignore.self
 											data-toggle="modal" data-target="#confirmModal" wire:click.prevent="dataSet('{{ $data->id }}', 'desactivar','{{ $data->titulo }}', '{{ $data->body }}', '{{ $data->foto_url }}')">
 											<span class="fa fa-remove"></span>
 										</button>
@@ -76,7 +76,7 @@
 						<td>
 							<div class="row">
 
-								<div class="form-group col-sm-4 bottom-p text-center">
+								<div class="form-group col-sm-4 bottom-p text-center" wire:ignore.self>
 									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
 										<button class="btn btn-success btn-xs" data-title="previewPost"
 											data-toggle="modal" data-target="#previewPost"  wire:click.prevent="dataSet('{{ $data->id }}', 'activar','{{ $data->titulo }}', '{{ $data->body }}', '{{ $data->foto_url }}')"> 
@@ -137,8 +137,8 @@
 						</div>
 						<div class="col-md-6">
 							<button class="btn btn-success btn-block" data-dismiss="modal" wire:click="setPost()"
-							data-title="#{{$control}}"
-								data-toggle="modal" data-target="#{{$control}}"
+							
+								data-toggle="modal" 
 							>Activar</button>
 						</div>
 					</div>
@@ -168,8 +168,8 @@
 						class="form-control" wire:model.defer="inputBody" value="inputBody" > </textarea>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-success btn-block" data-dismiss="modal" data-title="#{{ $control }}"
-								data-toggle="modal" data-target="#{{ $control }}" wire:click="editData()">Editar y Activar <i class="glyphicon glyphicon-ok-sign"></i></button>
+					<button class="btn btn-success btn-block" data-dismiss="modal" 
+								data-toggle="modal"  wire:click="editData()">Editar y Activar <i class="glyphicon glyphicon-ok-sign"></i></button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -177,78 +177,6 @@
 		<!-- /.modal-dialog -->
 	</div>
 </div>
-
-	<!-- se guardo el review -->
-
-	<div class="container">
-		<div class="modal fade" id="successComent" tabindex="-1" role="dialog" aria-labelledby="successComent"
-			aria-hidden="true" >
-			<div class="modal-dialog modal-confirm" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box">
-							<i class="material-icons">&#xE876;</i>
-						</div>
-						<h4 class="modal-title w-100">Post!</h4>
-					</div>
-					<div class="modal-body">
-					@if (session()->has('message'))
-
-<div class="alert alert-success">
-
-	{{ session('message') }}
-
-</div>
-
-@endif
-					</div>
-				
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
-
-	<!-- comentario fallido  -->
-
-	<div class="container">
-		<div class="modal fade" id="failComment" tabindex="-1" role="dialog" aria-labelledby="failComment"
-			aria-hidden="true" >
-			<div class="modal-dialog modal-confirm-red" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box-red">
-							<span class="material-symbols-outline">
-								disabled_by_default
-							</span>
-						</div>
-						<h4 class="modal-title w-100">Error!</h4>
-					</div>
-					<div class="modal-body">
-						<p class="text-center">Intente nuevamente</p>
-						@if (session()->has('message'))
-
-							<div class="alert alert-success">
-
-								{{ session('message') }}
-
-							</div>
-
-							@endif
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
 
 
 	<div class="container">
@@ -267,8 +195,8 @@
 							<div class="mt-5">
 								<button class="btn btn-danger btn-lg" data-dismiss="modal"  wire:click="resetData()">Cancelar</button>	
 								<button class="btn btn-success btn-lg" wire:click="setPost()" data-dismiss="modal" 
-								data-dismiss="modal" data-title="{{$control}}"
-								data-toggle="modal" data-target="#{{$control}}" 
+								data-dismiss="modal"
+								data-toggle="modal" 
 								>Confirmar</button>
 										
 							</div>

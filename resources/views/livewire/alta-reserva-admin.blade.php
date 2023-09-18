@@ -53,9 +53,9 @@
 							<div class="row">
 								<div class="form-group col-sm-6 bottom-p text-center">
 									<p data-placement="top" data-toggle="tooltip" title="Cancelar" class="bottom-p">
-										<button class="btn btn-danger btn-xs" data-title="reservaActive"
+										<button class="btn btn-danger btn-xs" 
 											data-toggle="modal" data-target="#confirmModal"><span
-												class="fa fa-remove" wire:click.prevent="dataSet({{ $data->id }}, {{ $data->idCalenDet}} , '{{ $data->nombres }}')" wire:ignore.self></span></button>
+												class="fa fa-remove" wire:click.prevent="dataSet({{ $data->id }}, {{ $data->idCalenDet}} , '{{ $data->nombres }}')" ></span></button>
 									</p>
 								</div>
 
@@ -197,10 +197,11 @@
 	</div>
 
 
-		<div class="container">
+		<div class="container"  wire:ignore.self>
 			<div class="modal fade" id="asgiOp" tabindex="-1" role="dialog" aria-labelledby="asgiOp" aria-hidden="true">
 				<div class="modal-dialog modal-content-scroll" role="document">
 					<div class="modal-content">
+					
 						@if(!empty($datTemp))
 
 						<div class="modal-header">
@@ -223,16 +224,18 @@
 									</div>
 
 									<div class="col-md-12">
-										<label for="inputState">Medio de pago</label>
+										<label for="inputMethodPay">Medio de pago</label>
 										
-										<select id="inputState" class="form-control" wire:model.defer="inputTypeMethod">
+										<select id="inputMethodPay" class="form-control" wire:model.defer="inputMethod">
+										<option selected>Seleccionar metodo</option>
+											
 											@if(!empty($paymentMethod))						
-											<option selected value="">Seleccionar metodo</option>
-											@foreach($paymentMethod as $pay)
-											<option value="{{ $pay->id }}">{{ $pay->descripcion }}</option>
-											@endforeach
+											
+												@foreach($paymentMethod as $pay)
+												<option value="{{ $pay->id }}">{{ $pay->descripcion }}</option>
+												@endforeach
 											@else
-												<option value="">no hay datos para mostrar</option>
+												<option selected >no hay datos para mostrar</option>
 											
 											@endif
 										</select>
@@ -244,8 +247,8 @@
 						</div>
 						<div class="modal-footer ">
 							<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-								class="glyphicon glyphicon-ok-sign" data-title="reservaActive" data-toggle="modal"
-								data-dismiss="modal" data-target="{{ $alert }}" wire:click.prevent="activeDate()" ><span></span>Activar</button>
+								class="glyphicon glyphicon-ok-sign" data-toggle="modal"
+								data-dismiss="modal" wire:click.prevent="activeDate()" ><span></span>Activar</button>
 						</div>
 						@else
 							<div>
@@ -253,59 +256,6 @@
 							</div>
 						@endif
 
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
-		</div>
-
-
-		<!-- se guardo el review -->
-
-		<div class="container">
-			<div class="modal fade" id="reservaActive" tabindex="-1" role="dialog" aria-labelledby="reservaActive"
-				aria-hidden="true">
-				<div class="modal-dialog modal-confirm" role="document">
-					<div class="modal-content ">
-						<div class="modal-header">
-							<div class="icon-box">
-								<i class="material-icons">&#xE876;</i>
-							</div>
-							<h4 class="modal-title w-100">{{ $detail }}!</h4>
-						</div>
-
-						<div class="modal-footer">
-							<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-						</div>
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
-		</div>
-
-		<!-- comentario fallido  -->
-
-		<div class="container">
-			<div class="modal fade" id="failAlt" tabindex="-1" role="dialog" aria-labelledby="failAlt"
-				aria-hidden="true">
-				<div class="modal-dialog modal-confirm-red" role="document">
-					<div class="modal-content ">
-						<div class="modal-header">
-							<div class="icon-box-red">
-								<span class="material-symbols-outline">
-									disabled_by_default
-								</span>
-							</div>
-							<h4 class="modal-title w-100">Error!</h4>
-						</div>
-						<div class="modal-body">
-							<p class="text-center">Intente nuevamente</p>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-						</div>
 					</div>
 					<!-- /.modal-content -->
 				</div>

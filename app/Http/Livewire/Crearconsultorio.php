@@ -16,7 +16,7 @@ class Crearconsultorio extends Component
     public $inputNombre , $inputInsta, $inputFace,  $inputTwi, $inputWeb, $inputMap,
             $inputBarr, $inputCiud, $inputPais, $inputTelf, $inputIntervalo, $inputRuc, $inputFoto, $inputPrinc,
             $inputSecu, $inputTerc;
-
+            public $statAlert ,$title, $text;
     public $barrio, $ciudad, $consul, $pais,  $calle;
 
     use WithFileUploads;
@@ -30,6 +30,18 @@ class Crearconsultorio extends Component
 
     }
 
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+    }
+
     public function upload() 
     {   
             $this->validate(
@@ -40,28 +52,37 @@ class Crearconsultorio extends Component
 
     public function regConsul() 
     {
-        $image=$this->upload();
-        consultorio::create([
-            'nombre' => $this->inputNombre, 
-            'social_instagram' => $this->inputInsta,
-            'social_facebook' => $this->inputFace,
-            'social_twitter' => $this->inputTwi,
-            'social_web_site' => $this->inputWeb,
-            'ruc' => $this->inputRuc,
-            'map' => $this->inputMap,
-            'telefono' =>$this->inputTelf,
-            'intervalo_consulta' => $this->inputIntervalo,
-            'foto_url' => $image,
-            'latitud' => null,
-            'longitud'=> null,
-            'pais_id' => $this->inputPais, 
-            'calle_principal_id' => $this->inputPrinc,
-            'calle_secundaria_id' => $this->inputSecu, 
-            'calle_terciaria_id' => $this->inputTerc,
-            'barrio_id' => $this->inputBarr,
-            'stat_id' => 1
-        ]);
-
+        try {
+            $image=$this->upload();
+            consultorio::create([
+                'nombre' => $this->inputNombre, 
+                'social_instagram' => $this->inputInsta,
+                'social_facebook' => $this->inputFace,
+                'social_twitter' => $this->inputTwi,
+                'social_web_site' => $this->inputWeb,
+                'ruc' => $this->inputRuc,
+                'map' => $this->inputMap,
+                'telefono' =>$this->inputTelf,
+                'intervalo_consulta' => $this->inputIntervalo,
+                'foto_url' => $image,
+                'latitud' => null,
+                'longitud'=> null,
+                'pais_id' => $this->inputPais, 
+                'calle_principal_id' => $this->inputPrinc,
+                'calle_secundaria_id' => $this->inputSecu, 
+                'calle_terciaria_id' => $this->inputTerc,
+                'barrio_id' => $this->inputBarr,
+                'stat_id' => 1
+            ]);
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Se registro el consultorio';
+        } catch (\Throwable $th) {
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
+        }
+    
         $this->reset(['inputNombre' , 'inputInsta', 'inputFace',  'inputTwi', 'inputWeb', 'inputMap',
         'inputBarr', 'inputCiud', 'inputPais', 'inputTelf', 'inputIntervalo', 'inputRuc', 'inputFoto', 'inputPrinc',
         'inputSecu', 'inputTerc']);

@@ -4,11 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\post;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 class Showposts extends Component
 {    
     public $iden,$titulo, $bod, $photo, $post;
-
+    use WithPagination;
     public function setData($id, $title,$body, $pic) 
     {
     
@@ -28,7 +28,7 @@ class Showposts extends Component
     public function render()
     {   
 
-        $db = post::where('status_id','=',1)->get();
+        $db = post::where('status_id','=',1)->paginate(4);
 
 
         return view('livewire.showposts', compact('db'));

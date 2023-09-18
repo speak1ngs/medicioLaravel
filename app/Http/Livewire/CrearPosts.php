@@ -9,13 +9,13 @@ use Livewire\WithFileUploads;
 class CrearPosts extends Component
 {
     public $inputContent, $inputTittle, $inputPhoto, $control, $iden;
-
+    public $statAlert ,$title, $text;
     use WithFileUploads;
 
     public function mount() 
     {
         $this->iden = rand();
-        $this->control = "successComent";
+
     }
     public function upload() 
     {   
@@ -23,6 +23,19 @@ class CrearPosts extends Component
             ['inputPhoto' => 'image',]);
             
             return $this->inputPhoto->store('postimage', 'public');
+    }
+
+    
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
     public function setPost() 
@@ -40,19 +53,21 @@ class CrearPosts extends Component
                         'user_id' => 1,
                         'status_id' => 3
                     ]);
-                
-            $this->reset(['inputContent', 'inputTittle', 'inputPhoto']);
-            $this->iden = rand();
-            session()->flash('message', 'Se creo el post exitosamente.');    
-            $this->emitSelf('crear-posts');
-        }
+                    
+                $this->reset(['inputContent', 'inputTittle', 'inputPhoto']);
+                $this->iden = rand();
+                $this->statAlert = 'success';
+                $this->title = 'Exitoso';
+                $this->text = 'Se creo el post exitosamente.';
+              
+            }
         } catch (\Throwable $th) {
-            //throw $th;
-            $this->control = "failComment";
-            session()->flash('message', 'Fallo la conexion a la db.');
-
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
-
+        $this->alert(); 
+        $this->emitSelf('crear-posts');
     }
 
     public function render()

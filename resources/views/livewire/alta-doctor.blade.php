@@ -63,7 +63,7 @@
 						</td>
 						<td>
 					
-										<button class="btn btn-success btn-xs" data-title="doctorActive"
+										<button class="btn btn-success btn-xs" 
 											data-toggle="modal" data-dismiss="modal" wire:click="upState({{ $dato->id}}, 2)" ><span
 												class="fa fa-check-square-o"></span></button>
 					

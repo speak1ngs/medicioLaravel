@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JeroenNoten\LaravelAdminLte\View\Components\Form\Select;
 use Livewire\Component;
@@ -13,6 +14,7 @@ class TurnosReservados extends Component
     public $nom, $ide, $control, $val, $buttonState ,$statPaciente, $idpacen;
     public $cant = 10;
     public $stat = 1;
+    public $statAlert ,$title, $text;
     public $datTemp = [];
 
     use WithPagination;
@@ -23,6 +25,18 @@ class TurnosReservados extends Component
         $this->statPaciente= "presente";
         $this->cant= 10;
         $this->stat = 1 ;
+    }
+    
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
     public function instanData($iden, $nomb, $idpac) 
@@ -50,22 +64,27 @@ class TurnosReservados extends Component
                 'cal_pac_id' => $this->inputRating
                 
             ]);
-                $this->control = "successComent";
-                session()->flash('message', 'Se califico al doctor.');    
+        
+             
+                $this->statAlert = 'success';
+                $this->title = 'Exitoso';
+                $this->text = 'Se califico al doctor.';  
                 $this->reset(['inputRating','inputComent']);
             }
             else{
             $this->reset(['inputRating','inputComent']);
-                session()->flash('message', 'Ya se califico al doctor.');    
+                $this->statAlert = 'error';
+                $this->title = 'Error';
+                $this->text = 'Ya se califico al doctor';
             }
 
         } catch (\Throwable $th) {
-            //throw $th;
-            $this->control = "failComment";
-            session()->flash('message', 'Fallo la conexion a la db.');
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
             $this->reset(['inputRating','inputComent']);
         }
-    
+        $this->alert();
  
     }
 
@@ -103,9 +122,9 @@ class TurnosReservados extends Component
                     'consultorios.map as ubi'
                     )
             ->where('citas_status.id','=',1)
-            ->where('calendarios_detalles.dias_laborales', '<', '2023-09-08')
+            ->where('calendarios_detalles.dias_laborales', '<', '2023-09-30')
             ->where('citas.paciente_status_id','=',3)
-            ->where('citas.paciente_id','=', 1)
+            ->where('citas.paciente_id','=', Auth::user()->paciente_id)
             ->paginate($this->cant);
 
 

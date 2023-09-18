@@ -19,6 +19,7 @@ class AsigPerm extends Component
     public $inputRevoke = [];
     public $Rol, $RolRevoke;
     public $inputPerm;
+    public $statAlert ,$title, $text;
 
     use WithPagination;
 
@@ -29,6 +30,20 @@ class AsigPerm extends Component
         $this->Perm = Permission::all();
 
     }
+
+    
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
+    }
+
     public function closeModalAsign() {
         $this->reset(['cant','Rol','inputRol','inputRevoke','RolRevoke']);
     }
@@ -90,13 +105,35 @@ class AsigPerm extends Component
 
     
     public function revokeRol() {
-        foreach($this->inputRevoke as $val ){
-        User::find($this->idUser)->removeRole($val);
-       }
+        try {
+            foreach($this->inputRevoke as $val ){
+                User::find($this->idUser)->removeRole($val);
+            }
+
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Se revocaron los roles al usuario.';
+        } catch (\Throwable $th) {
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
+        }
+        $this->alert();
     }
 
     public function asigRol() {
-        User::find($this->idUser)->syncRoles($this->inputRol);
+        try {
+            User::find($this->idUser)->syncRoles($this->inputRol);
+
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Se asignaron los roles al usuario.';
+        } catch (\Throwable $th) {
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
+        }
+        $this->alert();
     }
 
     public function render()

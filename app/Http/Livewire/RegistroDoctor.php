@@ -20,6 +20,7 @@ class RegistroDoctor extends Component
     public $inputNombre, $inputApellido , $inputCedula, $inputRegistro, $inputBarrio, $inputCiudad, $inputEdad,
     $inputPais ,$inputFechNac, $inputFechaExpReg, $inputTelfLab, $inputEmail, $inputPass, $inputPhoto, $inputDescrip,$inputConsultorio;
     public $iden ,$paciente, $idpho;
+    public $statAlert ,$title, $text;
     public $especialidades;
     public $barrio ;
     public $ciudad ;
@@ -43,6 +44,19 @@ class RegistroDoctor extends Component
         'inputTelfLab' => 'required',
         'inputPhoto' => 'required'
         ];
+    
+        public function alert()
+        {
+    
+            $this->dispatchBrowserEvent('swal:modal', [
+    
+                    'icon' => $this->statAlert,  
+                    'title' => $this->title,
+                    'text' => $this->text,
+                ]);
+    
+        }
+    
     public function upload() 
     {   
             $this->validate(
@@ -64,59 +78,68 @@ class RegistroDoctor extends Component
     public function guardar()
     {
         $this->validate();
-        persona::create(
-            [
-                'nombre' => $this->inputNombre, 
-                'apellido' =>$this->inputApellido, 
-                'cedula' => $this->inputCedula,
-                'fecha_nacimiento' => $this->inputFechNac, 
-                'telefono_particular' => $this->inputTelfLab, 
-                'edad' => $this->inputEdad,
-                'ciudad_id' => $this->inputCiudad,
-                'pais_id' => $this->inputPais, 
-                'barrio_id' => $this->inputBarrio
-            ]
-        );
-
-        $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
-
-        if($iden){
-
-
-            $image=$this->upload();
-            
-            doctores::create(
+        try {
+            persona::create(
                 [
-                    'registro' => $this->inputRegistro,
-                    'foto_url' => $image,
-                    'telefono_laboral' => $this->inputTelfLab,
-                    'registro_expericacion_fecha' => $this->inputFechaExpReg,
-                    'descripcion' => $this->inputDescrip,
-                    'calificacion' => 0,
-                    'especialidades' => implode(",",$this->inputEspecial ),
-                    'persona_id'=> $iden[0]->id,
-                    'stat_id'=> 1
+                    'nombre' => $this->inputNombre, 
+                    'apellido' =>$this->inputApellido, 
+                    'cedula' => $this->inputCedula,
+                    'fecha_nacimiento' => $this->inputFechNac, 
+                    'telefono_particular' => $this->inputTelfLab, 
+                    'edad' => $this->inputEdad,
+                    'ciudad_id' => $this->inputCiudad,
+                    'pais_id' => $this->inputPais, 
+                    'barrio_id' => $this->inputBarrio
                 ]
-                );
-
-        }
-
-            $doctor = doctores::select('id')->where('persona_id', '=', $iden[0]->id)->get();
-         
-            if( $doctor){
-                $tip_user = 2;
-                User::create(
+            );
+    
+            $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
+    
+            if($iden){
+    
+    
+                $image=$this->upload();
+                
+                doctores::create(
                     [
-                        'email' => $this->inputEmail,
-                        'password' => Hash::make($this->inputPass),
-                        'paciente_id' => null,
-                        'doctor_id' =>  $doctor[0]->id,
-                        'tipo_usuario_id' => $tip_user,
-                        'persona_id' =>  $iden[0]->id 
+                        'registro' => $this->inputRegistro,
+                        'foto_url' => $image,
+                        'telefono_laboral' => $this->inputTelfLab,
+                        'registro_expericacion_fecha' => $this->inputFechaExpReg,
+                        'descripcion' => $this->inputDescrip,
+                        'calificacion' => 0,
+                        'especialidades' => implode(",",$this->inputEspecial ),
+                        'persona_id'=> $iden[0]->id,
+                        'stat_id'=> 1
                     ]
-                    )->syncRoles(2);
+                    );
+    
             }
-
+    
+                $doctor = doctores::select('id')->where('persona_id', '=', $iden[0]->id)->get();
+             
+                if( $doctor){
+                    $tip_user = 2;
+                    User::create(
+                        [
+                            'email' => $this->inputEmail,
+                            'password' => Hash::make($this->inputPass),
+                            'paciente_id' => null,
+                            'doctor_id' =>  $doctor[0]->id,
+                            'tipo_usuario_id' => $tip_user,
+                            'persona_id' =>  $iden[0]->id 
+                        ]
+                        )->syncRoles(2);
+                }
+                $this->statAlert = 'success';
+                $this->title = 'Exitoso';
+                $this->text = 'Se registro al profesional';
+        } catch (\Throwable $th) {
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
+        }
+       
 
         $this->reset([
            'inputNombre','inputApellido' , 'inputCedula', 'inputRegistro', 'inputBarrio', 'inputCiudad', 'inputEdad',

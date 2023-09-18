@@ -41,7 +41,7 @@
                                     <tr>
                                             <td>{{ $dato->personas->nombre . ' ' . $dato->personas->apellido}}</td>
                                             <td>{{ $dato->email}}</td>
-                                            <td>{{ $dato->getRoleNames() }}</td>
+                                            <td>{{ sizeof($dato->getRoleNames()) === 0 ? 'SIN ROL' :  $dato->getRoleNames() }}</td>
                                             <td>
                                         
                                                             <button class="btn btn-success btn-xs" data-title="asigRol"

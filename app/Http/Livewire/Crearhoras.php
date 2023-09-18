@@ -28,9 +28,21 @@ class Crearhoras extends Component
     public $test;
     public $diasDisp = [];
     public $open_day = false;
+    public $statAlert ,$title, $text;
 
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
   
@@ -120,28 +132,47 @@ class Crearhoras extends Component
 
     public function genDay()
     {
-        foreach( $this->inputMes as $arr){
-            $val = $this->valMonth($this->getIdMonth( $arr ))  . '' . $this->valYear();
-            $limit = $this->getLimit($arr);
-            $id = $this->getIdMonth($arr);
-            $this->calcDias($val, $limit, $id);
-        }
-
-        if(sizeof($this->diasDisp) >= 1){
-            foreach($this->diasDisp as $data){
-                CalendarioDetalles::create(
-                    [
-                        'dias_laborales' => $data["dias_laborales"],
-                        'horarios' => $data["horarios"],
-                        'calendarios_doctores_id' => $data["calendarios_doctores_id"],
-                        'stat_id' => $data["stat_id"],
-                    ]
-                );
-
+    
+    try {
+        if(!empty($this->inputMes) && !empty($this->inputDias)){
+            foreach( $this->inputMes as $arr){
+                $val = $this->valMonth($this->getIdMonth( $arr ))  . '' . $this->valYear();
+                $limit = $this->getLimit($arr);
+                $id = $this->getIdMonth($arr);
+                $this->calcDias($val, $limit, $id);
             }
-        }
-       
 
+            if(sizeof($this->diasDisp) >= 1){
+                foreach($this->diasDisp as $data){
+                    CalendarioDetalles::create(
+                        [
+                            'dias_laborales' => $data["dias_laborales"],
+                            'horarios' => $data["horarios"],
+                            'calendarios_doctores_id' => $data["calendarios_doctores_id"],
+                            'stat_id' => $data["stat_id"],
+                        ]
+                    );
+
+                }
+            }
+            
+            $this->statAlert = 'success';
+            $this->title = 'Exitoso';
+            $this->text = 'Se generaron los horarios';
+        }
+        else{
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se generaron los horarios';
+        }
+    } catch (\Throwable $th) {
+        $this->statAlert = 'error';
+        $this->title = 'Error';
+        $this->text = 'No se pudo acceder a la base de datos';
+    }
+
+       
+        $this->alert();
         $this->reset([     
             'datTrans',
             'dias',

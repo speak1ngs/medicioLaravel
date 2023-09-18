@@ -10,7 +10,7 @@
 
 
 	<div class="col-md-12">
-		<h4 class="text-center">Alta Profesional </h4>
+		<h4 class="text-center">Alta Consultorio </h4>
 		<div class="table-responsive">
 				<div class="form-group col-md-3">
 						<label for="">Mostrar</label>
@@ -62,7 +62,7 @@
 									<p data-placement="top" data-toggle="tooltip" title="Desactivar"
 										class="bottom-p">
 										<button class="btn btn-danger btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="{{ $control }}" wire:click="upState({{ $dato->id}}, 1)" ><span
+											data-toggle="modal"  wire:click="upState({{ $dato->id}}, 1)" ><span
 												class="fa fa-remove"></span></button>
 									</p>
 								</div>
@@ -73,7 +73,7 @@
 						<td>
 					
 										<button class="btn btn-success btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="{{ $control }}"  wire:click="upState({{ $dato->id}}, 2)" ><span
+											data-toggle="modal"   wire:click="upState({{ $dato->id}}, 2)" ><span
 												class="fa fa-check-square-o"></span></button>
 					
 						</td>

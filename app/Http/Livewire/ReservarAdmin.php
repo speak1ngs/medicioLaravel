@@ -20,6 +20,7 @@ class ReservarAdmin extends Component
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, 
     $inputCiudades, $inputDayWeek, $inputDia, $inputHour,$inputCedula, $inputName, $inputLastName, $inputCi, $inputEmail, $inputTelf;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
+    public $statAlert ,$title, $text;
     public $open_calendar,$fot;
     public $timeDoc = [];
     public $arrDay = [];
@@ -42,6 +43,17 @@ class ReservarAdmin extends Component
 
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
     public function mount()
@@ -248,7 +260,11 @@ class ReservarAdmin extends Component
                         'paciente_status_id' => 3
                         ]
                     );
-                    session()->flash('message','Se creo la prereserva.');
+
+
+                    $this->statAlert = 'success';
+                    $this->title = 'Exitoso';
+                    $this->text = 'Se creo la prereserva.';
 
                     break;
                 case '2':
@@ -316,12 +332,14 @@ class ReservarAdmin extends Component
                                 'paciente_status_id' => 3
                                 ]
                             );
-                            session()->flash('message','Se creo la prereserva.');
-
+                            $this->statAlert = 'success';
+                            $this->title = 'Exitoso';
+                            $this->text = 'Se creo la prereserva.';
                         }
                         else{
-                       
-                            session()->flash('message','El usuario ya existe.' . $check);
+                            $this->statAlert = 'error';
+                            $this->title = 'Error';
+                            $this->text = 'El usuario ya existe.' . $check;
                         }
 
                         break;
@@ -330,9 +348,12 @@ class ReservarAdmin extends Component
                     break;
             }
        } catch (\Throwable $th) {
-            $this->alert = '#failPayment';
+        $this->statAlert = 'error';
+        $this->title = 'Error';
+        $this->text = 'No se pudo acceder a la base de datos';
         }
         $this->resetModalEntries();
+        $this->alert();
     }
 
 

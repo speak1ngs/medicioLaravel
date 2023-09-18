@@ -20,6 +20,7 @@ class Reservar extends Component
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, $inputCiudades, $inputDayWeek, $inputDia, $inputHour;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
     public $open_calendar,$fot;
+    public $statAlert ,$title, $text;
     public $timeDoc = [];
     public $arrDay = [];
     public $anho = [];
@@ -38,8 +39,23 @@ class Reservar extends Component
     public $hourStart, $hourEnd, $ciudades;
     public $alert,$idenDetail;
 
+    protected $listeners = ['render'];
+
      public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+
+
+    public function alert()
+    {
+
+        $this->dispatchBrowserEvent('swal:modal', [
+
+                'icon' => $this->statAlert,  
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+
     }
 
     public function resetModalEntries()
@@ -182,11 +198,20 @@ class Reservar extends Component
             ]
         );
 
-
+            $this->statAlert = 'success';
+            $this->title = 'Se realizó la prereserva';
+            $this->text = 'Un operador se comunicará con usted para confirmar
+            su horario!!';
         } catch (\Throwable $th) {
-            $this->alert = '#failPayment';
+            $this->statAlert = 'error';
+            $this->title = 'Error';
+            $this->text = 'No se pudo acceder a la base de datos';
         }
+
+        
+        $this->alert();
         $this->resetModalEntries();
+        $this->resetShowEntries();
     }
     
     public function showDatesOfWeek() 

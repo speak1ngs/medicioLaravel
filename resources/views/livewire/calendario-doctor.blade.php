@@ -177,62 +177,6 @@
 
 
 
-	 <!--reserva exitosa -->
-
-	<div class="container">
-		<div class="modal fade" id="asigTime" tabindex="-1" role="dialog" aria-labelledby="asigTime"
-			aria-hidden="true">
-			<div class="modal-dialog modal-confirm" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box">
-							<i class="material-icons">&#xE876;</i>
-						</div>
-						<h4 class="modal-title w-100">Horario Asignado!</h4>
-					</div>
-					<div class="modal-body">
-						<p class="text-center">Alta exitosa!</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				
-			</div>
-			
-		</div>
-	</div> 
-
-
-
-	<!-- reserva fallida  -->
-	<div class="container">
-		<div class="modal fade" id="asigTimeFail" tabindex="-1" role="dialog" aria-labelledby="asigTimeFail"
-			aria-hidden="true">
-			<div class="modal-dialog modal-confirm-red" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box-red">
-							<span class="material-symbols-outline">
-								disabled_by_default
-							</span>
-						</div>
-						<h4 class="modal-title w-100">Alta fallida!</h4>
-					</div>
-					<div class="modal-body">
-						<p class="text-center">Intente nuevamente</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
-
-
 
 	</section>
 	

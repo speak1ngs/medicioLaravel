@@ -496,8 +496,8 @@
 					</div>
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-							class="glyphicon glyphicon-ok-sign" data-title="pagarReserva" data-toggle="modal"
-							data-dismiss="modal" data-target="{{$alert}}" wire:click="reserTime()">Generar reserva
+							class="glyphicon glyphicon-ok-sign"  data-toggle="modal"
+							data-dismiss="modal"  wire:click="reserTime()">Generar reserva
 							temporal</button>
 					</div>
 				</div>
@@ -576,7 +576,7 @@
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
 							class="glyphicon glyphicon-ok-sign" data-title="failPayment" data-toggle="modal"
-							data-dismiss="modal" data-target="{{$alert}}"><span></span>Generar reserva
+							data-dismiss="modal" ><span></span>Generar reserva
 							temporal</button>
 					</div>
 				</div>
@@ -585,71 +585,6 @@
 			<!-- /.modal-dialog -->
 		</div>
 	</div>
-
-	<!-- reserva exitosa -->
-
-	<div class="container">
-		<div class="modal fade" id="paymentCheck" tabindex="-1" role="dialog" aria-labelledby="paymentCheck"
-			aria-hidden="true">
-			<div class="modal-dialog modal-confirm" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box">
-							<i class="material-icons">&#xE876;</i>
-						</div>
-						<h4 class="modal-title w-100">Reserva Exitosa!</h4>
-					</div>
-					<div class="modal-body">
-					@if (session()->has('message'))
-
-					<div class="alert alert-success">
-
-						{{ session('message') }}
-
-					</div>
-
-					@endif
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
-
-
-
-	<!-- reserva fallida  -->
-	<div class="container">
-		<div class="modal fade" id="failPayment" tabindex="-1" role="dialog" aria-labelledby="failPayment"
-			aria-hidden="true">
-			<div class="modal-dialog modal-confirm-red" role="document">
-				<div class="modal-content ">
-					<div class="modal-header">
-						<div class="icon-box-red">
-							<span class="material-symbols-outline">
-								disabled_by_default
-							</span>
-						</div>
-						<h4 class="modal-title w-100">Reserva fallida!</h4>
-					</div>
-					<div class="modal-body">
-						<p class="text-center">Intente nuevamente</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
-	</div>
-
-
 
 </section>
 </x-body-wrapper>
