@@ -121,9 +121,11 @@
 		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Generar Horas" aria-hidden="true"  wire:ignore.self >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
-               
+
+					
 					
 					@if($datTrans)
+					
 					<div class="modal-header">
 						
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign" ><span

@@ -25,7 +25,8 @@ class Crearhoras extends Component
     public $meses = [];
     public $val;
     public $day = [];
-    public $test;
+    public $valtest= [];
+    public $test = [];
     public $diasDisp = [];
     public $open_day = false;
     public $statAlert ,$title, $text;
@@ -61,6 +62,13 @@ class Crearhoras extends Component
         return intval($this->arryDay[array_search( $mes, array_column($this->arryDay, 'month'))]['id']);
     }
 
+    public function getMonth($mesId)
+    {
+                  // obtiene  el  id segun mes
+        return $this->arryDay[array_search( $mesId, array_column($this->arryDay, 'id'))]['month'];
+    }
+
+
     public function mount()
     {
         $this->arryDay= [ 
@@ -80,7 +88,7 @@ class Crearhoras extends Component
         $this->day= array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
         $this->inputYear = date("Y");
         $this->val =$this->getLimit("Setiembre");
-        $this->test =  $this->valMonth($this->getIdMonth("Junio"));
+        // $this->test =  $this->valMonth($this->getIdMonth("Junio"));
         $this->especialidades = especialidades::all();
         
     }
@@ -132,8 +140,13 @@ class Crearhoras extends Component
 
     public function genDay()
     {
-    
+        $tet = DB::table('calendarios_detalles')
+        ->select(db::raw('MONTH(calendarios_detalles.dias_laborales) AS mes, YEAR(calendarios_detalles.dias_laborales) as anho, DAYOFWEEK(calendarios_detalles.dias_laborales) as dia'))
+        ->where('calendarios_detalles.calendarios_doctores_id','=', $this->datTrans[0]["id"])
+        ->groupBy('mes', 'anho', 'dia')->get()->toArray();
     try {
+
+  
         if(!empty($this->inputMes) && !empty($this->inputDias)){
             foreach( $this->inputMes as $arr){
                 $val = $this->valMonth($this->getIdMonth( $arr ))  . '' . $this->valYear();
@@ -143,22 +156,59 @@ class Crearhoras extends Component
             }
 
             if(sizeof($this->diasDisp) >= 1){
-                foreach($this->diasDisp as $data){
-                    CalendarioDetalles::create(
-                        [
-                            'dias_laborales' => $data["dias_laborales"],
-                            'horarios' => $data["horarios"],
-                            'calendarios_doctores_id' => $data["calendarios_doctores_id"],
-                            'stat_id' => $data["stat_id"],
-                        ]
-                    );
+                // $cal = array_diff($this->diasDisp, $tet);
+                if(!empty($tet)){
+                    foreach($tet as $tetVal){
+                        foreach($this->diasDisp as $key=> $value){
+                            if(intval($tetVal->mes) == intval(date('n',strtotime($value["dias_laborales"]))) &&  intval($tetVal->anho) == intval(date('Y',strtotime($value["dias_laborales"]))) &&  intval($tetVal->dia)-1 == intval(date('w',strtotime($value["dias_laborales"])))){
+                                $cal = intval($key);
+                                unset($this->diasDisp[$cal]);
+                            };
+                        }
+                    }
+                    if(sizeof($this->diasDisp) >= 1){
+                        foreach($this->diasDisp as $data){
+                            CalendarioDetalles::create(
+                                        [
+                                            'dias_laborales' => $data["dias_laborales"],
+                                            'horarios' => $data["horarios"],
+                                            'calendarios_doctores_id' => $data["calendarios_doctores_id"],
+                                            'stat_id' => $data["stat_id"],
+                                        ]
+                                    );
+                        }
 
+                        $this->statAlert = 'success';
+                        $this->title = 'Exitoso';
+                        $this->text = 'Se generaron los horarios';
+                    }
+                    else
+                    {
+                        $this->statAlert = 'error';
+                        $this->title = 'Error';
+                        $this->text = 'Intento generar horarios ya existentes';
+                    }
+                }
+                else{
+
+                    foreach($this->diasDisp as $data){
+                        CalendarioDetalles::create(
+                            [
+                                'dias_laborales' => $data["dias_laborales"],
+                                'horarios' => $data["horarios"],
+                                'calendarios_doctores_id' => $data["calendarios_doctores_id"],
+                                'stat_id' => $data["stat_id"],
+                            ]
+                        );
+                    
+                    }
+                    $this->statAlert = 'success';
+                    $this->title = 'Exitoso';
+                    $this->text = 'Se generaron los horarios';
                 }
             }
             
-            $this->statAlert = 'success';
-            $this->title = 'Exitoso';
-            $this->text = 'Se generaron los horarios';
+ 
         }
         else{
             $this->statAlert = 'error';
@@ -274,7 +324,39 @@ class Crearhoras extends Component
     public function arrReceive(  $detail )
     {
         array_push($this->datTrans, json_decode( $detail,true));
+        $valMes= [];
+        $valDia= [];
+        $diasArr = explode(',',$this->datTrans[0]["dias"]);
+        $meses = explode(',',$this->datTrans[0]["meses"]);
+
+        // if(!empty($val)){
+        //     // foreach($meses as $mes){
+        //     //     array_push($valMes,$this->getIdMonth($mes));
+        //     // }
         
+        //     // $this->valtest=    array_diff( $valMes,array_column($val, 'MES'));
+
+        //     // foreach($this->valtest as $valmonth){
+        //     //     array_push($this->meses, $this->getMonth($valmonth));
+        //     // }
+        //     // foreach($val as $dayfind){
+        //     //     array_push( $valDia, $this->day[$dayfind->DIAS-1]);
+        //     // }
+        //     // $this->dias = array_diff($valDia, $diasArr);
+        //     foreach($val as $dayfind){
+        //         $dayfind->DIAS;
+        //         $dayfind->MES;
+        //         $dayfind->anho;
+        //         $dayfind->fin;
+        //         $dayfind->inicio;
+        //         array_push( $valDia, $this->day[$dayfind->DIAS-1]);
+        //     }
+        //     $this->dias = explode(',',$this->datTrans[0]["dias"]);
+        //     $this->meses = explode(',',$this->datTrans[0]["meses"]);
+        // }
+        // else{
+       
+        // }
         $this->dias = explode(',',$this->datTrans[0]["dias"]);
         $this->meses = explode(',',$this->datTrans[0]["meses"]);
     }
