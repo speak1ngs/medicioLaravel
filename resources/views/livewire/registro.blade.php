@@ -1,5 +1,3 @@
- 
-
 <div>
 <x-header />
 	<x-body-wrapper >

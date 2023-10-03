@@ -12,10 +12,36 @@ class DoctorAgenda extends Component
     public $nom, $ide, $control, $val, $buttonState ,$statPaciente, $idpacen;
     public $cant = 10;
     public $stat = 1;
+    public $arryDay = [];
     use WithPagination;
+
+    public function getLimit( $mes )
+    {
+        // calculamos el rango de un mes
+        //retorna el limite segun nombre del mes que le pasemos
+        return  intval($this->arryDay[array_search( $mes, array_column($this->arryDay, 'id'))]['limit']);
+    }
+
+    public function esBisiesto($anio=null) {
+        return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
 
     public function mount() 
     {
+        $this->arryDay= [ 
+            ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],
+            ["id"=> 2, "month" => 'Febrero',"limit" =>  (bool)$this->esBisiesto(date("Y")) ? '29' : '28 '],
+            ["id"=> 3, "month" => 'Marzo', "limit" =>  '31'],
+            ["id"=> 4, "month" => 'Abril', "limit" =>'30' ],
+            ["id"=> 5, "month" => 'Mayo', "limit" =>'31'], 
+            ["id"=> 6, "month" => 'Junio', "limit" =>'30'],
+            ["id"=> 7, "month" => 'Julio', "limit" => '31' ],
+            ["id"=> 8, "month" => 'Agosto', "limit" => '31'],
+            ["id"=> 9, "month" => 'Setiembre',"limit" => '30'] ,
+            ["id"=> 10, "month" => 'Octubre',"limit" => '31'], 
+            ["id"=> 11, "month" => 'Noviembre',"limit" => '30'],
+            ["id"=> 12, "month" => 'Diciembre',"limit" => '31']
+            ];
         $this->control = "successComent";
         $this->statPaciente= "presente";
         $this->cant= 10;
@@ -96,6 +122,11 @@ class DoctorAgenda extends Component
     public function render()
     {
         // agregar id del doctor a nivel global
+     
+       
+        $limit = $this->getLimit(date("m"));
+        $date = date_create(strval(date('Y') . '-' . date('n')  . '-' .  $limit));
+        $dateFilter = date_format($date, 'Y-m-d');
         $db= DB::table('citas')
         ->join('calendarios_detalles', 'citas.calendarios_deta_id','=','calendarios_detalles.id')
         ->join('calendarios_doctores','calendarios_detalles.calendarios_doctores_id','=','calendarios_doctores.id')
@@ -108,7 +139,7 @@ class DoctorAgenda extends Component
                 'consultorios.nombre as consul_nomb', 'doctores.id as iddoc', 'citas.paciente_id as idpac'
                 )
         ->where('citas_status.id','=',1)
-        ->where('calendarios_detalles.dias_laborales', '<', '2023-08-08')
+        ->where('calendarios_detalles.dias_laborales', '<', $dateFilter)
         ->where('citas.paciente_status_id','=',3)
         ->where('doctores.id','=', 1)
         ->paginate($this->cant);

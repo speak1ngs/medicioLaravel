@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nombre',60);
             $table->string('apellido',60);
-            $table->string('cedula',15);
+            $table->string('cedula',15)->unique();
             $table->date('fecha_nacimiento')->nullable();
             $table->integer('telefono_particular')->nullable();
             $table->integer('edad')->nullable();

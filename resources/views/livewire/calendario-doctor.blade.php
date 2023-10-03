@@ -51,12 +51,14 @@
 								<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 									style="height: 180px; width: 100%; display: block;">
 								<div class="card-block">
-									<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
+									<h6 class="card-text"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h6>
 
-									<p class="card-text"><strong>Información:</strong> {{ $doctor->descripcion }}</p>
 
 									<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
-									<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
+							
+								</div>
+								<div class="card-block">
+								<a href="#" class="btn btn-primary btn-sm form-control" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
 							data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Asignar Horario</a>
 								</div>
 							</div>
@@ -82,7 +84,6 @@
 				<div class="modal-content modal-content-scroll">
 				
 					@if($nom)
-					
 					<div class="modal-header">
 						
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign" ><span

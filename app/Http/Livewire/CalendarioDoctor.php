@@ -28,6 +28,8 @@ class CalendarioDoctor extends Component
     public $nom, $docid;
     public $inputYear;
     public $control;
+    public $diasFijos;
+    public $mesesFijos;
     public $inputConsultorios, $inputTimeStart, $inputEspecialidad,    $inputTimeEnd, $inputImporte;
     
     public function esBisiesto($anio=null) {
@@ -78,6 +80,8 @@ class CalendarioDoctor extends Component
         $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         $this->docid = $dat[0]->id;
         $this->open_asign = true;
+        // $this->valTest = db::table('calendarios_doctores')->where('calendarios_doctores.doctores_id','=',  $this->docid)->get()->toArray();
+
     }
 
     public function closeModalAsign()
@@ -98,23 +102,63 @@ class CalendarioDoctor extends Component
 
     public function asignCalendar()
     {
-    
+        $val = db::table('calendarios_doctores')->where('calendarios_doctores.doctores_id','=',  $this->docid)->get()->toArray();
+        
     try {
-        calendarios_doctores::create(
-            [
-                'horario_inicio' => $this->inputTimeStart,
-                'horario_fin' => $this->inputTimeEnd,
-                'costo_consulta' => $this->inputImporte,
-                'dias' => implode(",",$this->inputDias),
-                'meses' => implode(",",$this->inputMes),
-                'doctores_id' => $this->docid,
-                'consultorios_id' => $this->inputConsultorios,
-                'especialidades_id' => $this->inputEspecialidad
-            ]
-        );
-        $this->statAlert = 'success';
-        $this->title = 'Exitoso';
-        $this->text = 'Se modifico el importe';
+        if(!empty($this->inputMes) && !empty($this->inputDias) && !empty($this->inputTimeStart) && !empty($this->inputTimeEnd) ){
+
+
+            foreach($this->inputMes as $key1 => $mesval){
+                foreach($this->inputDias as $key2 => $diaval){
+                    $val = db::table('calendarios_doctores')
+                            ->where('calendarios_doctores.doctores_id','=',  $this->docid)
+                            ->where( 'calendarios_doctores.meses' ,'LIKE', '%' . $mesval . '%')
+                            ->where( 'calendarios_doctores.dias' ,'LIKE', '%' . $diaval . '%')
+                            ->where('calendarios_doctores.horario_inicio','=',  $this->inputTimeStart)
+                            ->where('calendarios_doctores.horario_fin','=',  $this->inputTimeEnd)
+                            ->get()->toArray();
+                            if(!empty($val)){
+                                unset($this->inputMes[$key1]);
+                            }
+                }
+            }
+
+
+            if(!empty($this->inputMes) && !empty($this->inputDias)){
+                
+                calendarios_doctores::create(
+                    [
+                        'horario_inicio' => $this->inputTimeStart,
+                        'horario_fin' => $this->inputTimeEnd,
+                        'costo_consulta' => $this->inputImporte,
+                        'dias' => implode(",",$this->inputDias),
+                        'meses' => implode(",",$this->inputMes),
+                        'doctores_id' => $this->docid,
+                        'consultorios_id' => $this->inputConsultorios,
+                        'especialidades_id' => $this->inputEspecialidad
+                    ]
+                );
+                $this->statAlert = 'success';
+                $this->title = 'Exitoso';
+                $this->text = 'Se asigno el calendario al Doctor';
+
+            }
+            else{
+                $this->statAlert = 'error';
+                $this->title = 'El Doctor ya tiene esos horarios ocupados';
+                $this->text = 'Verificar horarios disponibles';
+
+            }
+   
+            }
+            else{
+                $this->statAlert = 'error';
+                $this->title = 'Error';
+                $this->text = 'Debe introducir todos los campos';
+
+            }
+
+
 
     } catch (\Throwable $th) {
         $this->statAlert = 'error';

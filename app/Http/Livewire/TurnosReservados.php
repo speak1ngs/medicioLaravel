@@ -16,11 +16,37 @@ class TurnosReservados extends Component
     public $stat = 1;
     public $statAlert ,$title, $text;
     public $datTemp = [];
+    public $arryDay = [];
 
     use WithPagination;
 
+    public function getLimit( $mes )
+    {
+        // calculamos el rango de un mes
+        //retorna el limite segun nombre del mes que le pasemos
+        return  intval($this->arryDay[array_search( $mes, array_column($this->arryDay, 'id'))]['limit']);
+    }
+
+    public function esBisiesto($anio=null) {
+        return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
+    }
+
     public function mount() 
     {
+        $this->arryDay= [ 
+            ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],
+            ["id"=> 2, "month" => 'Febrero',"limit" =>  (bool)$this->esBisiesto(date("Y")) ? '29' : '28 '],
+            ["id"=> 3, "month" => 'Marzo', "limit" =>  '31'],
+            ["id"=> 4, "month" => 'Abril', "limit" =>'30' ],
+            ["id"=> 5, "month" => 'Mayo', "limit" =>'31'], 
+            ["id"=> 6, "month" => 'Junio', "limit" =>'30'],
+            ["id"=> 7, "month" => 'Julio', "limit" => '31' ],
+            ["id"=> 8, "month" => 'Agosto', "limit" => '31'],
+            ["id"=> 9, "month" => 'Setiembre',"limit" => '30'] ,
+            ["id"=> 10, "month" => 'Octubre',"limit" => '31'], 
+            ["id"=> 11, "month" => 'Noviembre',"limit" => '30'],
+            ["id"=> 12, "month" => 'Diciembre',"limit" => '31']
+            ];
         $this->control = "successComent";
         $this->statPaciente= "presente";
         $this->cant= 10;
@@ -105,6 +131,10 @@ class TurnosReservados extends Component
 
     public function render()
     {
+
+        $limit = $this->getLimit(date("m"));
+        $date = date_create(strval(date('Y') . '-' . date('n')  . '-' .  $limit));
+        $dateFilter = date_format($date, 'Y-m-d');
                // agregar id del paciente a nivel global
             $db= DB::table('citas')
             ->join('calendarios_detalles', 'citas.calendarios_deta_id','=','calendarios_detalles.id')
@@ -122,7 +152,7 @@ class TurnosReservados extends Component
                     'consultorios.map as ubi'
                     )
             ->where('citas_status.id','=',1)
-            ->where('calendarios_detalles.dias_laborales', '<', '2023-09-30')
+            ->where('calendarios_detalles.dias_laborales', '<', $dateFilter)
             ->where('citas.paciente_status_id','=',3)
             ->where('citas.paciente_id','=', Auth::user()->paciente_id)
             ->paginate($this->cant);
