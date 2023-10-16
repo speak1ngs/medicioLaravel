@@ -3462,3 +3462,21 @@ padding-right: 1.5rem;
 	height: 400px;
 	object-fit: cover;
 }
+
+.starlef{
+	margin-top:0px;
+	margin-bottom:15px;
+	margin-left: 15px;
+	margin-right: 0px;
+}
+.checked{
+	color:orange;
+}
+
+.starcenter{
+	margin-top:0px;
+	margin-bottom:15px;
+	margin-left: 100px;
+	margin-right: 0px;
+}
+

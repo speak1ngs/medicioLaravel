@@ -8,7 +8,10 @@ use Livewire\WithPagination;
 class Showposts extends Component
 {    
     public $iden,$titulo, $bod, $photo, $post;
+    public $readyToLoad = false;
     use WithPagination;
+
+
     public function setData($id, $title,$body, $pic) 
     {
     
@@ -16,12 +19,26 @@ class Showposts extends Component
         $this->titulo = $title;
         $this->bod =$body;
         $this->photo = $pic;
+        
+        $this->openModal();
+
+    }
+
+    public function openModal()
+    {
+    $this->dispatchBrowserEvent('openblogRead');
+    }
+    public function closeModal()
+    {
+    $this->dispatchBrowserEvent('closeblogRead');
     }
 
     public function unsetData() 
     {
-        $this->reset(['iden','titulo','bod','photo']);
+        $this->reset(['iden','titulo','bod','photo','readyToLoad']);
+        $this->closeModal();
     }
+
 
 
 

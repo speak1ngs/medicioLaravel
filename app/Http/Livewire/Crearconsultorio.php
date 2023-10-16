@@ -21,6 +21,16 @@ class Crearconsultorio extends Component
 
     use WithFileUploads;
 
+    protected $rules = [
+        'inputNombre' => 'required',
+        'inputMap' => 'required',
+        'inputCiud' => 'required',
+        'inputPais' => 'required',
+        'inputFoto' => 'required',
+        'inputTelf' => 'required',
+        'inputIntervalo' => 'required',
+        ];
+
     public function mount() 
     {
         $this->barrio  = barrios::all();
@@ -52,6 +62,7 @@ class Crearconsultorio extends Component
 
     public function regConsul() 
     {
+        $this->validate();
         try {
             $image=$this->upload();
             consultorio::create([

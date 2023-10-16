@@ -44,12 +44,12 @@
 				<div id="grid-container" class="cbp-l-grid-team">
 					<ul>
                         @foreach($doctores as $doc)
-                    
+						@if($doc->calificacion > 3)
 						<li class="cbp-item {{ $doc->calendarios_doctores->first()->especialidad->descripcion }}">
 							<a
 							
                                 href="{{ route('show-doc', $doc->id) }}" 
-								class="cbp-caption cbp-singlePage"
+								class="cbp-caption cbp-singlePage "
 							>
 								<div class="cbp-caption-defaultWrap">
 									<img src="{{ mix('./public/storage/'. $doc['foto_url'])}}" alt="" width="100%" />
@@ -58,17 +58,33 @@
 									<div class="cbp-l-caption-alignCenter">
 										<div class="cbp-l-caption-body">
 											<div class="cbp-l-caption-text">VER PERFIL</div>
+											<div>
+											<span class = "{{ $doc->calificacion >= 1 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+											<span class = "{{ $doc->calificacion >= 2 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+											<span class = "{{ $doc->calificacion >= 3 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+											<span class = "{{ $doc->calificacion >= 4 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+											<span class = "{{ $doc->calificacion >= 5 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  	
+											</div>
 										</div>
 									</div>
 								</div>
 							</a>
+			
+		
+		
 							<a
                             href="{{ route('show-doc', $doc->id) }}" 
 								class="cbp-singlePage cbp-l-grid-team-name"
 								>{{ $doc['personas']->nombre . ' ' . $doc['personas']->apellido }}</a
 							>
-							<div class="cbp-l-grid-team-position">{{ $doc->calendarios_doctores->first()->especialidad->descripcion }}</div>
+							<div class="cbp-l-grid-team-position">{{ $doc->calendarios_doctores->first()->especialidad->descripcion }}
+							</div>
+					
+						
+							
+			
 						</li>
+						@endif
                         @endforeach
 						
 					</ul>

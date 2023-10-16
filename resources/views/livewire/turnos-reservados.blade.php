@@ -28,6 +28,7 @@
 						    <th>Especialidad</th>
 						    <th>Reserva</th>
 						    <th>Calificar</th>
+							<th>Estado</th>
 							</thead>
 							<tbody>
 
@@ -36,22 +37,37 @@
 								
 								
 								@foreach($db as $data)
-								<tr>
-									<td>{{ $data->nombres }} </td>
-                                    <td>{{ $data->especialidad }}</td>
-									<td><a href="#" data-title="detailDate" data-toggle="modal"
-											data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore>Ver detalle</a></td>
-									<td>
-										
-										<span data-title="calf" data-toggle="modal" data-target="#calf"
-									data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
-                                    <a href="#">Calificar</a>
-                                    
-                                </span>
+									@if($data->idcit == '1')
+										@if($data->dias_laborales <= $today)
+												@if($data->horarios <= $hour)
+														{{ $this->changeStateEnd($data->id)}}
+												@endif
+										@endif
 							
+										
+									@endif
+									@if($data->dias_laborales >= $dateStart && $data->dias_laborales <= $dateFilter)
+											@if($data->idcit != '3' && $data->idcit!='4')
+														@if(empty($data->calId))
+															<tr>
+																<td>{{ $data->nombres }} </td>
+																<td>{{ $data->especialidad }}</td>
+																<td><a href="#" data-title="detailDate" data-toggle="modal"
+																		data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore>Ver detalle</a></td>
+																<td>
+																	
+																	<span data-title="calf" data-toggle="modal" data-target="#calf"
+																data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
+																<a href="#">Calificar</a>
+																</span>
+															<td>
+																	{{$data->descripcion}}
+																</td>
 
-									</td>
-									
+																</td>
+														@endif
+												@endif
+										@endif
 									@endforeach
 									@else
 									<td> No hay datos a mostrar</td>

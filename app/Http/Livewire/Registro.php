@@ -77,8 +77,9 @@ class Registro extends Component
     public function guardar()
     {
    
-        $this->validate();
+        
         try {
+            $this->validate();
             $val = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
             dump($val);
             if(empty($val)){
@@ -156,7 +157,7 @@ class Registro extends Component
             }
             
             $this->alert();
-            redirect()->route('login');
+            // redirect()->route('login');
     }
 
     public function render()

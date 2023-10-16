@@ -56,6 +56,15 @@ class ReservarAdmin extends Component
 
     }
 
+    protected $rules = [
+        'inputDias' => 'required',
+        'inputMes' => 'required',
+        'inputHour' => 'required',
+        ];
+
+    public function check(){
+        $this->validate();
+    }
     public function mount()
     {
         $this->can = 10;

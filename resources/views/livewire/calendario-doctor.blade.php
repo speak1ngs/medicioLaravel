@@ -96,6 +96,7 @@
 							<div class="frb-group">
 								<div class="row center-block">
 									@foreach($arryMonth as $arr)
+									@if($arr['id'] >= date('n'))
 									<div class="col-md-4">
 										<div class="frb frb-success">
 											<input type="checkbox" id="checkbox-{{ $arr['id']}}1" name="checkbox-{{ $arr['id']}}1"  wire:model.defer="inputMes" value="{{ $arr['month']}}">
@@ -106,6 +107,7 @@
 										</div>
 
 									</div>
+									@endif
 									@endforeach
 								</div>
 							</div>

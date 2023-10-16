@@ -50,9 +50,9 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 align-items-start">
-					<label for="inputState">Especialidades</label>
+					<label for="inputEspecialidades">Especialidades</label>
 					
-					<select id="inputStat" class="form-control" wire:model="inputEspecialidades" wire:click="resetShowEntries">
+					<select id="inputEspecialidades" class="form-control" wire:model="inputEspecialidades" wire:click="resetShowEntries">
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
@@ -114,6 +114,7 @@
 				<div class="container well">
 					<div class="row g-2 hidden-md-up ">
 					
+					
 					@if(count($do) >=1)
 
 							@foreach($do as $doctor)	
@@ -123,9 +124,26 @@
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
 											<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
+											<div class="row banner-social-buttons">
+												<div class="col-md-8 rate  div-star starlef">
+													
+													<span class = "{{ $doctor->calificacion >= 1 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 2 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 3 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 4 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 5 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  	
 
-											<p class="card-text"><strong>Información:</strong> {{ $doctor->descripcion }}</p>
+													
+												
+												
+												</div>
+											</div>
+												
+													
 
+									
+				
+							
 											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
 											@role('Invitado')
 

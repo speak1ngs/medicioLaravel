@@ -50,9 +50,9 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 align-items-start">
-					<label for="inputState">Especialidades</label>
+					<label for="inputEspecialidades">Especialidades</label>
 					
-					<select id="inputStat" class="form-control" wire:model="inputEspecialidades" wire:click="resetShowEntries">
+					<select id="inputEspecialidades" class="form-control" wire:model="inputEspecialidades" wire:click="resetShowEntries">
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
@@ -121,9 +121,21 @@
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
 											<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
+											<div class="row banner-social-buttons">
+												<div class="col-md-8 rate starlef">
+													
+													<span class = "{{ $doctor->calificacion >= 1 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 2 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 3 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 4 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  
+													<span class = "{{ $doctor->calificacion >= 5 ? 'fa fa-star checked' :  'fa fa-star-o' }}"></span>  	
 
-											<p class="card-text"><strong>Información:</strong> {{ $doctor->descripcion }}</p>
-
+													
+												
+												
+												</div>
+											</div>
+											
 											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
 									data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Ver calendario</a>
@@ -304,6 +316,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
+											<x-input-error for="inputMes" />
 										</div>	
 									</div>
 									@endif
@@ -323,6 +336,7 @@
                                                 </div>
                                             </div>
                                             @endforeach
+											<x-input-error for="inputHour" />
                                         </div>  
                                     </div>
                                     @endif
@@ -345,8 +359,13 @@
 									
 									<div class="modal-footer ">
 										<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-											data-title="pagarReserva" data-toggle="modal" data-target="#userDetail"
-											data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span>Continuar reserva</button>
+											data-title="pagarReserva" wire:click="check()"
+											@if( !empty($inputMes) && !empty($inputHour))
+											data-toggle="modal" data-target="#userDetail"
+											data-dismiss="modal"
+											@endif
+											
+											><span class="glyphicon glyphicon-ok-sign"></span>Continuar reserva</button>
 									</div>
 							</div>
 						</div>

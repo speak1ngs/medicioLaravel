@@ -21,11 +21,11 @@
 			 >
 				@if(!empty($db))
 					@if(count($db) >=10)
-				<ol class="carousel-indicators">
-				
-					<li data-target="#slider" data-slide-to="0" class="active"></li>
-					<li data-target="#slider" data-slide-to="1"></li>
-				</ol>
+					<ol class="carousel-indicators">
+					
+						<li data-target="#slider" data-slide-to="0" class="active"></li>
+						<li data-target="#slider" data-slide-to="1"></li>
+					</ol>
 					@endif
 				@endif
 
@@ -48,8 +48,7 @@
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...' }}</h6>
 												<p class="card-text line-clamp"> {{  substr($db[$i]->body,0,60) }} </p>
-												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" >Leer más</a>
+												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')"  >Leer más</a>
 											</div>
 										</div>
 									</div>
@@ -65,9 +64,8 @@
 												alt=""   style="auto:compress; cs:tinysrgb; width:100%; height:200px" >
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...'}}</h6>
-												<p class="card-text line-clamp">{{  substr($db[$i]->body,0,60) }}</p>
-												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')" data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" >Leer más</a>
+												<p class="card-text line-clamp">{{  substr($db[$i]->body,0,20) }}</p>
+												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')"  >Leer más</a>
 											</div>
 										</div>
 									</div>
@@ -98,8 +96,7 @@
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...' }}</h6>
 												<p class="card-text line-clamp">{{ substr($db[$i]->body,0,60)}}</p>
-												<a class="btn btn-skin btn-sm" data-title="blogRead" data-toggle="modal"
-													data-target="#blogRead" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')">Leer más</a>
+												<a class="btn btn-skin btn-sm"  wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')">Leer más</a>
 											</div>
 										</div>
 									</div>
@@ -126,49 +123,55 @@
 
 	</div>
 
-	<div class="container">
-		<div class="modal fade" id="blogRead" tabindex="-1" role="dialog" aria-labelledby="blogRead" aria-hidden="true">
+	<div class="container" >
+		<div class="modal fade" id="blogRead" tabindex="-1" role="dialog" aria-labelledby="blogRead" aria-hidden="true"  >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
-					@if(!empty($titulo))
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="unsetData">
-							<span
-								class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-						<h4 class="modal-title custom_align text-center" id="Heading">{{ $titulo }}</h4>
-					</div>
-					<div class="modal-body">
+				
+						@if(!empty($titulo))
 					
-							<div class="row mb-4 align-items-center flex-lg-row-reverse">
-								<div class="col-md-6 col-xl-5">
-									<div class="lc-block mb-4">
-										<div editable="rich">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="unsetData">
+								<span
+									class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+							<h4 class="modal-title custom_align text-center" id="Heading">{{ $titulo }}</h4>
+						</div>
+						<div class="modal-body">
+						
+								<div class="row mb-4 align-items-center flex-lg-row-reverse">
+									<div class="col-md-6 col-xl-5">
+										<div class="lc-block mb-4">
+											<div editable="rich">
 
-											<p class="text-left">
-												{{ $bod }}
-											</p>
+												<p class="text-left">
+													{{ $bod }}
+												</p>
 
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6 col-xl-7 mb-4 mb-lg-0 ">
+									<div class="col-md-6 col-xl-7 mb-4 mb-lg-0 ">
 
-									<div class="lc-block position-relative img-thumbnail">
-										<!-- <img class="img-fluid rounded shadow" src="./img/team/1.jpg"> -->
-										<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $photo)}}"
-											data-holder-rendered="true"
-											style="height: 180px; width: 100%; display: block;">
+										<div class="lc-block position-relative img-thumbnail">
+											<!-- <img class="img-fluid rounded shadow" src="./img/team/1.jpg"> -->
+											<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $photo)}}"
+												data-holder-rendered="true"
+												style="height: 180px; width: 100%; display: block;">
+										</div>
 									</div>
-								</div>
 
-							</div>
-					</div>
+								</div>
+								
+						</div>
 					<!-- /.modal-content -->
-				</div>
-				@else
+					@else
 					<span> no hay texto</span>
-				@endif
+					@endif
+					
+				</div>
+			
 				<!-- /.modal-dialog -->
+			
 			</div>
 		</div>
 
@@ -176,5 +179,14 @@
 </section>
 </div>
 
+<script>
+  window.addEventListener('openblogRead', event => {
+      $("#blogRead").modal('show');
+  })
+
+  window.addEventListener('closeblogRead', event => {
+      $("#blogRead").modal('hide');
+  })
+</script>
 
 
