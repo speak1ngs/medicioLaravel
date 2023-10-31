@@ -14,8 +14,8 @@
 
 				<div class="row">
 					<div class="col-md-3  align-items-start">
-					<label for="inputCedula">Profesional</label>
-						<input type="text" class="form-control" id="inputCedula" placeholder="Nombre del medico" wire:model="inputNombre" wire:click="resetShowEntries">
+					<label for="inputNombre">Profesional</label>
+						<input type="text" class="form-control" id="inputNombre" placeholder="Nombre del medico" wire:model="inputNombre" wire:click="resetShowEntries">
 					</div>
 				
 					<div class="col-md-3 align-self-center">
@@ -39,7 +39,7 @@
 												<option selected value="">Seleccionar Horario</option>
 											@if(count($hourEnd) >= 1)
 													@foreach($hourEnd as $especial )
-														<option value="{{ $especial['horario_inicio']}}">{{ $especial['horario_fin'] }}</option>
+														<option value="{{ $especial['horario_fin']}}">{{ $especial['horario_fin'] }}</option>
 												@endforeach
 											@else
 											<option>No hay horario de inicio</option>
@@ -56,7 +56,7 @@
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
-														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
+														<option value="{{ $especial->id}}">{{$especial->descripcion . '-'. $especial->id}}</option>
 												@endforeach
 											@else
 											<option>No hay Especialidades</option>
@@ -113,7 +113,8 @@
 			<div class="py-5">
 				<div class="container well">
 					<div class="row g-2 hidden-md-up ">
-					
+					@dump($da)
+									
 					
 					@if(count($do) >=1)
 
@@ -372,8 +373,7 @@
 									</div>
 										
 									
-									
-									
+								
 									
 									<div class="modal-footer ">
 										<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"

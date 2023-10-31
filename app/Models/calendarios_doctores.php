@@ -24,6 +24,15 @@ class calendarios_doctores extends Model
         return $this->belongsTo(doctores::class, 'doctores_id', 'id');
     }
 
+    public function consultorios(){
+        return $this->belongsTo(consultorio::class, 'consultorios_id', 'id');
+    }
+
+    public function calendarios_detalles()
+    {
+        return $this->hasMany(CalendarioDetalles::class);
+    }
+
 
     protected $fillable = ['horario_inicio', 'horario_fin', 'costo_consulta','dias','meses','doctores_id', 'consultorios_id', 'especialidades_id'];
 }

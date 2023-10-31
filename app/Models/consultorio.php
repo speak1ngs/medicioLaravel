@@ -28,6 +28,10 @@ class consultorio extends Model
         return $this->belongsTo(status::class);
     }
 
+    public function calendarios_doctores()
+    {
+        return $this->hasMany(calendario_doctor::class);
+    }
 
    
 
