@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\calendarios_doctores;
 use App\Models\cita;
 use App\Models\ciudades;
+use App\Models\doctores;
 use App\Models\especialidades;
 use App\Models\paciente;
 use App\Models\persona;
@@ -40,6 +41,15 @@ class ReservarAdmin extends Component
     public $hourStart, $hourEnd, $ciudades;
     public $userState;
     public $alert, $idenDetail, $showUserType, $idenpac, $nomuser;
+    public $filters = [
+        'status' => 2,
+        'especialidades' => 4,
+        'nombre' => '',
+        'horaInicio' => '00:00:00',
+        'horaFin' => '23:59:59',
+        'ciudad' => 1,
+        'dia' => ''
+    ];
 
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -131,7 +141,7 @@ class ReservarAdmin extends Component
         $dat = db::table(db::raw('personas'))
         ->join('doctores', 'personas.id','=', 'doctores.persona_id')
         ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion', 'doctores.foto_url as fotdoc')
-        ->where('personas.cedula', '=', $data)->get();
+        ->where('personas.id', '=', $data)->get();
         // $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         if(empty($this->inputEspecialidades)){
         $calen = DB::table(db::raw('personas'))
@@ -235,6 +245,11 @@ class ReservarAdmin extends Component
         }
     }
  
+    public function resetFilters(){
+        $this->reset([ 'inputEspecialidades', 'inputNombre',  'inputHorarioIni', 'inputHorarioFin', 'inputCiudades', 'inputDayWeek', 'can']);
+        $this->resetShowEntries();
+    }
+
     public function resetModalEntries()
     {
         $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail']);
@@ -372,21 +387,34 @@ class ReservarAdmin extends Component
     {
         $mes =intval(date("n"));
 
-        $do = DB::table('personas')
-        ->join('doctores','personas.id','=','doctores.persona_id')
-        ->join('calendarios_doctores','doctores.id','=','calendarios_doctores.doctores_id')
-        ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
-        ->join('calendarios_detalles','calendarios_doctores.id','=', 'calendarios_detalles.calendarios_doctores_id')
-        ->whereRaw( '"'.(empty($this->inputHorarioIni) ? '09:30:00': $this->inputHorarioIni) .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
-        ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '10:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
-        ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '. "'%".$this->inputDayWeek. "%'")
-        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
-        ->where('calendarios_doctores.especialidades_id','like', (empty(intval($this->inputEspecialidades)) ? '%4%': "'%".$this->inputEspecialidades . "%'" ))
-        ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : "'%". intval($this->inputCiudades) ."%'") )
-        ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
-        ->where('doctores.stat_id','like', "'%" . 2 ."%'")
-        ->groupBy( 'personas.id')
-        ->paginate($this->can);
+        // $do = DB::table('personas')
+        // ->join('doctores','personas.id','=','doctores.persona_id')
+        // ->join('calendarios_doctores','doctores.id','=','calendarios_doctores.doctores_id')
+        // ->join('consultorios','calendarios_doctores.consultorios_id','=','consultorios.id')
+        // ->join('calendarios_detalles','calendarios_doctores.id','=', 'calendarios_detalles.calendarios_doctores_id')
+        // ->whereRaw( '"'.(empty($this->inputHorarioIni) ? '09:30:00': $this->inputHorarioIni) .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+        // ->orWhereRaw( '"'. (empty($this->inputHorarioFin) ? '10:00:00': $this->inputHorarioFin)  .'" BETWEEN calendarios_doctores.horario_inicio and calendarios_doctores.horario_fin')
+        // ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '. "'%".$this->inputDayWeek. "%'")
+        // ->whereMonth('calendarios_detalles.dias_laborales',$mes)
+        // ->where('calendarios_doctores.especialidades_id','like', (empty(intval($this->inputEspecialidades)) ? '%4%': "'%".$this->inputEspecialidades . "%'" ))
+        // ->where('consultorios.ciudad_id','like', (empty(intval($this->inputCiudades)) ? '%1%' : "'%". intval($this->inputCiudades) ."%'") )
+        // ->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%".$this->inputNombre . "%'")
+        // ->where('doctores.stat_id','like', "'%" . 2 ."%'")
+        // ->groupBy( 'personas.id')
+        // ->paginate($this->can);
+
+
+        $es = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with(['especialidad' , 'consultorios','calendarios_detalles'])]);
+        $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.especialidades_id', empty($this->inputEspecialidades) ? $this->filters['especialidades'] : intval($this->inputEspecialidades) ));
+        $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_inicio','>=', empty($this->inputHorarioIni) ? $this->filters['horaInicio'] : $this->inputHorarioIni ));
+        $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_fin','<=',  empty($this->inputHorarioFin) ? $this->filters['horaFin'] : $this->inputHorarioFin  ));
+        $es->whereHas('personas',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
+        $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereMonth('calendarios_detalles.dias_laborales', $mes));
+        $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '.  ( empty($this->inputDayWeek) ? "'%". $this->filters['dia'] . "%'" : "'%". $this->inputDayWeek . "%'") ));
+        $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->where('calendarios_doctores.especialidades_id',  empty($this->inputEspecialidades) ? $this->filters['especialidades'] : $this->inputEspecialidades    ));
+        $es->whereHas('calendarios_doctores.consultorios',fn($query) => $query->where('consultorios.ciudad_id',  empty($this->inputCiudades) ? $this->filters['ciudad'] : $this->inputCiudades  ));
+        $do = $es->when($this->filters['status'], fn($query, $status) => $query->where('doctores.stat_id', $status))
+            ->paginate($this->can);
 
         return view('livewire.reservar-admin', compact('do'));
     }

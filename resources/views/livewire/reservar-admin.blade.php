@@ -103,6 +103,9 @@
 								<option value="100">100</option>
 						</select>
 					</div>
+					<div class="col-md-3 top-button align-self-center">
+					<a href="#" class="btn btn-primary btn-sm"wire:click="resetFilters()">Reiniciar Filtros</a>
+					</div>
 				</div>
 			</div>
 
@@ -120,7 +123,7 @@
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url)  }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
+											<h4 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h4>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate starlef">
 													
@@ -136,9 +139,9 @@
 												</div>
 											</div>
 											
-											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
+											<p class="card-text"> <strong> Especialidades:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-									data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
 										</div>
 									</div>
 								</div>
@@ -280,9 +283,9 @@
 							
 									<label for="inpuTDias">Dias:</label>
 									<select id="inputDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek()">
-											<option selected value="">Seleccionar Día</option>
 											
 											@if( !empty($dias))
+											<option selected value="">Seleccionar Día</option>
 											
 													@foreach($dias as $ar )
 														<option value="{{ $ar}}" >{{ $ar}}</option>
@@ -362,6 +365,8 @@
 											data-title="pagarReserva" wire:click="check()"
 											@if( !empty($inputMes) && !empty($inputHour))
 											data-toggle="modal" data-target="#userDetail"
+											data-dismiss="modal"
+											@else
 											data-dismiss="modal"
 											@endif
 											

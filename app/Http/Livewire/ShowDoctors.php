@@ -17,6 +17,8 @@ class ShowDoctors extends Component
     public function mount() {
         $especial = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with('especialidad')]);
         $especial->whereHas('calendarios_doctores.doctores');
+        $especial->where('doctores.calificacion', '>=', 4);
+        $especial->whereHas('calendarios_doctores.especialidad', fn($query) => $query->distinct('especialidad.descripcion'));
         $this->especialidades = especialidades::all();
         $this->doctores = $especial->get();
     }

@@ -33,7 +33,7 @@
 							<tbody>
 
 
-								@if(!empty($db))
+								@if(sizeof($db) >= 1)
 								
 								
 								@foreach($db as $data)
@@ -56,22 +56,23 @@
 																		data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore>Ver detalle</a></td>
 																<td>
 																	
-																	<span data-title="calf" data-toggle="modal" data-target="#calf"
-																data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
-																<a href="#">Calificar</a>
-																</span>
-															<td>
-																	{{$data->descripcion}}
-																</td>
+																		<span data-title="calf" data-toggle="modal" data-target="#calf"
+																	data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
+																	<a href="#">Calificar</a>
+																	</span>
+																	<td>
+																		{{$data->descripcion}}
+																	</td>
 
 																</td>
+													
 														@endif
-												@endif
+											@endif
 										@endif
-									@endforeach
-									@else
-									<td> No hay datos a mostrar</td>
-									@endif
+								@endforeach
+								@else
+								<td> No hay datos a mostrar</td>
+								@endif
 								</tr>
 
 

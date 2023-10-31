@@ -56,7 +56,7 @@
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
-														<option value="{{ $especial->id}}">{{$especial->descripcion . '-'. $especial->id}}</option>
+														<option value="{{ $especial->id}}">{{ $especial->descripcion }}</option>
 												@endforeach
 											@else
 											<option>No hay Especialidades</option>
@@ -91,7 +91,7 @@
 											@endif
 											</select>
 					</div>
-
+				
 
 					<div class="col-md-3 align-selft-center">
 					<label for="">Mostrar</label>
@@ -103,6 +103,9 @@
 								<option value="100">100</option>
 						</select>
 					</div>
+					<div class="col-md-3 top-button align-self-center">
+					<a href="#" class="btn btn-primary btn-sm"wire:click="resetFilters()">Reiniciar Filtros</a>
+					</div>
 				</div>
 			</div>
 
@@ -113,10 +116,10 @@
 			<div class="py-5">
 				<div class="container well">
 					<div class="row g-2 hidden-md-up ">
-					@dump($da)
-									
 					
-					@if(count($do) >=1)
+					
+					
+					@if(sizeof($do) >= 1)
 
 							@foreach($do as $doctor)	
 								<div class="col-sm-3 well bg-white">
@@ -124,7 +127,7 @@
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h4 class="card-title"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h4>
+											<h4 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h4>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate  div-star starlef">
 													
@@ -145,10 +148,10 @@
 									
 				
 							
-											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
+											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
 											@role('Invitado')
 
-											<a href="https://api.whatsapp.com/send?phone={{env('PHONE')}}&text=Hola quisiera reservar turno con el Dr. {{ $doctor->nombre . ' ' . $doctor->apellido  }} su especialidad es  {{ $doctor->especialidades }}, soy un usuario invitado."
+											<a href="https://api.whatsapp.com/send?phone={{env('PHONE')}}&text=Hola quisiera reservar turno con el Dr. {{  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido  }} su especialidad es  {{ $doctor->calendarios_doctores->first()->especialidad->descripcion }}, soy un usuario invitado."
 												target="_blank" class="btn btn-success ">Whatsapp
 											
 											</a>
@@ -157,7 +160,7 @@
 
 											@role('Paciente')
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-											data-dismiss="modal" wire:click="asig({{ $doctor->cedula }})">Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
 											@endrole
 										</div>
 									</div>
@@ -301,10 +304,10 @@
 							
 									<label for="inpuDias">Dias:</label>
 									<select id="inpuDias" class="form-control" wire:model.defer="inputDias" wire:click="showDatesOfWeek()">
-										<option selected value="">Seleccionar Día</option>
+										
 											
 											@if( !empty($dias))
-											
+											<option selected value="">Seleccionar Día</option>
 													@foreach($dias as $ar )
 														<option value="{{ $ar}}" >{{ $ar}}</option>
 												@endforeach
