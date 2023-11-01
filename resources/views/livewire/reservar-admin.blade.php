@@ -123,7 +123,7 @@
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url)  }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h4 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h4>
+											<h6 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate starlef">
 													
@@ -139,7 +139,7 @@
 												</div>
 											</div>
 											
-											<p class="card-text"> <strong> Especialidades:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
+											<p class="card-text"> <strong> Especialidad:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
 											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
 										</div>
@@ -149,7 +149,7 @@
 
 							@if($do->hasPages())
 								<div class="divpag">
-									{{ $do->link()}}
+									{{ $do->links()}}
 								</div>
 							@endif
 					@else

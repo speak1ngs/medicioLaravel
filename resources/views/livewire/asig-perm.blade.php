@@ -68,7 +68,7 @@
                                         </table>
                                         @if($user->hasPages())
                                         <div class="divpag">
-                                            {{ $datos->link()}}
+                                            {{ $datos->links()}}
                                         </div>
                                         @endif
                                     @else

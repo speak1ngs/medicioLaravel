@@ -31,6 +31,7 @@ class CalendarioDoctor extends Component
     public $diasFijos;
     public $mesesFijos;
     public $inputConsultorios, $inputTimeStart, $inputEspecialidad,    $inputTimeEnd, $inputImporte;
+    public $espeAsig = [];
     
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -76,10 +77,23 @@ class CalendarioDoctor extends Component
 
     public function asig($data)
     {   
-        $dat = db::table('personas')->join('doctores', 'personas.id','=', 'doctores.persona_id')->select('doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell')->where('personas.cedula', '=', $data)->get();
+        $dat = db::table('personas')->join('doctores', 'personas.id','=', 'doctores.persona_id')->select('doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell','doctores.especialidades as esp')->where('personas.cedula', '=', $data)->get();
         $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         $this->docid = $dat[0]->id;
         $this->open_asign = true;
+        // array_intersect(array_column($dt,'descripcion'), explode(",", $dat[0]->esp));
+        // array_intersect_assoc(, explode(",", $dat[0]->esp));
+        $val =explode(",", $dat[0]->esp);
+
+        foreach ($val as $value) {
+            foreach ($this->especialidades as $ve) {
+                if($value == $ve['descripcion']){
+                    array_push($this->espeAsig,$ve);
+                }
+            }
+        }
+
+       
         // $this->valTest = db::table('calendarios_doctores')->where('calendarios_doctores.doctores_id','=',  $this->docid)->get()->toArray();
 
     }
@@ -96,7 +110,8 @@ class CalendarioDoctor extends Component
             'docid',
             'inputConsultorios', 
             'inputEspecialidad',
-            'open_asign'
+            'open_asign',
+            'espeAsig'
         ]);
     }
 

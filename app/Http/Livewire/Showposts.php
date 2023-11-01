@@ -11,7 +11,7 @@ class Showposts extends Component
     public $readyToLoad = false;
     use WithPagination;
 
-
+    protected $paginationTheme = 'bootstrap';
     public function setData($id, $title,$body, $pic) 
     {
     

@@ -54,7 +54,7 @@
 									<h6 class="card-text"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h6>
 
 
-									<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p>
+									<!-- <p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p> -->
 							
 								</div>
 								<div class="card-block">
@@ -67,7 +67,7 @@
 
 					@if($do->hasPages())
 						<div class="divpag">
-							{{ $do->link()}}
+							{{ $do->links()}}
 						</div>
 			@endif
 				@else
@@ -82,7 +82,7 @@
 		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Asignar" aria-hidden="true" >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
-				
+				  @dump($espeAsig)
 					@if($nom)
 					<div class="modal-header">
 						
@@ -154,8 +154,8 @@
 					<label for="inputSta">Especialidades</label>
 					<select id="inputSta" class="form-control" wire:model.defer="inputEspecialidad">
 												<option selected value="">Seleccionar Especialidad</option>
-											@if(count($especialidades) >= 1)
-													@foreach($especialidades as $especial )
+											@if(count($espeAsig) >= 1)
+													@foreach($espeAsig as $especial )
 														<option value="{{ $especial->id}}">{{$especial->descripcion}}</option>
 												@endforeach
 											@else

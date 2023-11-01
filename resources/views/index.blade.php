@@ -20,7 +20,7 @@
 					<livewire:show-doctors/>
 					<livewire:showposts />
 					@livewireScripts
-				<x-partners />
+				<!-- <x-partners /> -->
 				<!-- nav-bar
 				<?php
 					//  include('./nav-bar.php');
@@ -58,13 +58,15 @@
 
 			jq(document).ready(function(){
 			$("#blogRead").on('show.bs.modal', function() {
-				modifHomeZ.partner.style.zIndex = "0";
+				modifHomeZ.doctor.style.zIndex = "0";
+				// modifHomeZ.partner.style.zIndex = "0";
 				
 			});
 
 
 			$("#blogRead").on('hide.bs.modal', function() {
-				modifHomeZ.partner.style.zIndex = "120";
+				modifHomeZ.doctor.style.zIndex = "120";
+				// modifHomeZ.partner.style.zIndex = "120";
 				
 			});
 

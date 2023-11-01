@@ -107,7 +107,7 @@
 
 					@if($do->hasPages())
 						<div class="divpag">
-							{{ $do->link()}}
+							{{ $do->links()}}
 						</div>
 			@endif
 				@else

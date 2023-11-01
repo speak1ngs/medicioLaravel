@@ -83,7 +83,7 @@
 						</table>
 						@if($db->hasPages())
 						<div class="divpag">
-							{{ $db->link()}}
+							{{ $db->links()}}
 						</div>
 						@endif
 						

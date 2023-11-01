@@ -10,21 +10,29 @@
 				<p>Aquí puede ver información útil y la más actualizada referente al mundo de la medicina. </p><br>
 			</div>
 		</div>
-
+		
 		<div class="row">
 			<div id="slider" class="carousel slide"
 			@if(!empty($db))
+			
 			@if(count($db) >= 10)
 				data-ride="carousel"
 			@endif
 			@endif
 			 >
 				@if(!empty($db))
-					@if(count($db) >=10)
+					@if(count($db) >=1)
 					<ol class="carousel-indicators">
-					
-						<li data-target="#slider" data-slide-to="0" class="active"></li>
-						<li data-target="#slider" data-slide-to="1"></li>
+					@if ($db->onFirstPage())
+						<li data-target="#slider" data-slide-to="0" class="active" wire:click="previousPage()"></li>
+					@else
+					<li data-target="#slider" data-slide-to="0" class="active" wire:click="previousPage()"></li>
+
+					@endif
+						<!-- <li data-target="#slider" data-slide-to="1"></li> -->
+						@if ($db->hasMorePages())
+						<li data-target="#slider" data-slide-to="{{ sizeof($db)+1 }}" wire:click="nextPage()"class="active"></li>
+						@endif
 					</ol>
 					@endif
 				@endif
@@ -180,13 +188,13 @@
 </div>
 
 <script>
-  window.addEventListener('openblogRead', event => {
-      $("#blogRead").modal('show');
-  })
+	window.addEventListener('openblogRead', event => {
+		$("#blogRead").modal('show');
+	})
 
-  window.addEventListener('closeblogRead', event => {
-      $("#blogRead").modal('hide');
-  })
+	window.addEventListener('closeblogRead', event => {
+		$("#blogRead").modal('hide');
+	})
 </script>
 
 

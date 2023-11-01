@@ -127,7 +127,7 @@
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h4 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h4>
+											<h6 class="card-title text-center"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate  div-star starlef">
 													
@@ -148,7 +148,7 @@
 									
 				
 							
-											<p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
+											<p class="card-text"> <strong> Especialidad:</strong> {{ $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
 											@role('Invitado')
 
 											<a href="https://api.whatsapp.com/send?phone={{env('PHONE')}}&text=Hola quisiera reservar turno con el Dr. {{  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido  }} su especialidad es  {{ $doctor->calendarios_doctores->first()->especialidad->descripcion }}, soy un usuario invitado."
@@ -169,7 +169,7 @@
 
 							@if($do->hasPages())
 								<div class="divpag">
-									{{ $do->link()}}
+									{{ $do->links()}}
 								</div>
 							@endif
 					@else
