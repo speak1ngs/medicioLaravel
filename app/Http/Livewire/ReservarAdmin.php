@@ -21,7 +21,7 @@ class ReservarAdmin extends Component
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, 
     $inputCiudades, $inputDayWeek, $inputDia, $inputHour,$inputCedula, $inputName, $inputLastName, $inputCi, $inputEmail, $inputTelf;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
-    public $statAlert ,$title, $text;
+    public $statAlert ,$title, $text, $horIn, $horFin;
     public $open_calendar,$fot;
     public $timeDoc = [];
     public $arrDay = [];
@@ -37,6 +37,7 @@ class ReservarAdmin extends Component
     public $inputDayse;
     public $calenShow = [];
     public $arryHour = [];
+    public $arryDay = [];
     public $test ;
     public $hourStart, $hourEnd, $ciudades;
     public $userState;
@@ -95,6 +96,21 @@ class ReservarAdmin extends Component
             array_push($this->anho, $i);
 
         }      
+
+        $this->arryDay= [ 
+            ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],
+            ["id"=> 2, "month" => 'Febrero',"limit" =>  (bool)$this->esBisiesto($this->inputYear) ? '29' : '28 '],
+            ["id"=> 3, "month" => 'Marzo', "limit" =>  '31'],
+            ["id"=> 4, "month" => 'Abril', "limit" =>'30' ],
+            ["id"=> 5, "month" => 'Mayo', "limit" =>'31'], 
+            ["id"=> 6, "month" => 'Junio', "limit" =>'30'],
+            ["id"=> 7, "month" => 'Julio', "limit" => '31' ],
+            ["id"=> 8, "month" => 'Agosto', "limit" => '31'],
+            ["id"=> 9, "month" => 'Setiembre',"limit" => '30'] ,
+            ["id"=> 10, "month" => 'Octubre',"limit" => '31'], 
+            ["id"=> 11, "month" => 'Noviembre',"limit" => '30'],
+            ["id"=> 12, "month" => 'Diciembre',"limit" => '31']
+            ];
         
         $this->day= [
             ["id"=> 1 , "dayWeek" => 'Domingo'],
@@ -203,24 +219,49 @@ class ReservarAdmin extends Component
     {
         $this->datTrans = calendarios_doctores::where('id', '=', $inicio)->get();
         $this->idenDetail = $this->datTrans[0]->id;
-        
+        $this->horIn = $this->datTrans[0]->horario_inicio;
+        $this->horFin = $this->datTrans[0]->horario_fin;
         $this->dias = explode(',',$this->datTrans[0]->dias);
     }
+    public function getLimit( $mes )
+    {
+        // calculamos el rango de un mes
+        //retorna el limite segun nombre del mes que le pasemos
+        return  intval($this->arryDay[array_search( $mes, array_column($this->arryDay, 'id'))]['limit']);
 
+
+    }
     public function showDatesOfWeek() 
     {
         $this->reset(['arrDay','arryHour','open_day','inputMes']);
     
         $mes =intval(date("n"));    
         //$mes =intval("7");    
+        $cal =$this->getLimit($mes) - date("j");
+        
+        $date = date_create(strval(date('Y') . '-' . (date('n')+ 1)  . '-' . $this->getLimit($mes)));
+        $dateFormat = date_format($date, 'Y-m-d');
+        date_default_timezone_set('America/Asuncion');
 
-        $val = DB::table('calendarios_detalles')
-                        ->where('calendarios_doctores_id', '=', $this->idenDetail)
-                        ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-                        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
-                        ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
-                        ->distinct()
-                        ->get('dias_laborales')->toArray();
+        $this->test= date('H:i:s');
+        if($cal <= 6){
+            $val = DB::table('calendarios_detalles')
+            ->where('calendarios_doctores_id', '=', $this->idenDetail)
+            ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
+            ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
+            ->where('calendarios_detalles.dias_laborales', '<=', $dateFormat)
+            ->distinct()
+            ->get('dias_laborales')->toArray();
+        }
+        else{
+            $val = DB::table('calendarios_detalles')
+            ->where('calendarios_doctores_id', '=', $this->idenDetail)
+            ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
+            ->whereMonth('calendarios_detalles.dias_laborales', '>=' ,$mes)
+            ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
+            ->groupBy('dias_laborales')
+            ->get()->toArray();
+        }
         if(count($val)>=1){
             for($i= 0; $i < sizeof($val); $i++){
                 array_push($this->arrDay,json_decode(json_encode($val[$i]), true));

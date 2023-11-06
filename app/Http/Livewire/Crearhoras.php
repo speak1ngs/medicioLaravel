@@ -46,7 +46,6 @@ class Crearhoras extends Component
 
     }
 
-  
     public function getLimit( $mes )
     {
         // calculamos el rango de un mes

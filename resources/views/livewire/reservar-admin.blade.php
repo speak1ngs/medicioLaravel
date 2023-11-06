@@ -309,16 +309,32 @@
 									>Fechas disponibles:</label >
 									<div class="frb-group">
 										<div class="row center-block">
+										
 										@foreach($arrDay as $arr)
-                                            <div class="col-md-4">
-                                                <div class="frb frb-success">
-                                                    <input type="radio" id="radio-button-{{$arr['dias_laborales'] }}-1" name="radio-button"  wire:model.defer="inputMes"  value="{{ $arr['dias_laborales'] }}" wire:click="showHoursOfWeek()">
-                                                    <label for="radio-button-{{$arr['dias_laborales'] }}-1">
-                                                        <span class="frb-description">{{ $arr['dias_laborales']}}</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            @endforeach
+												
+												@if($arr['dias_laborales'] ===  date('Y-m-d'))
+													@if($horIn >= $test  && $test <= $horFin)
+													<div class="col-md-4">
+												<div class="frb frb-success">
+													<input type="radio" id="radio-button-{{$arr['dias_laborales'] }}-1" name="radio-button"  wire:model.defer="inputMes"  value="{{ $arr['dias_laborales'] }}" wire:click="showHoursOfWeek()">
+													<label for="radio-button-{{$arr['dias_laborales'] }}-1">
+														<span class="frb-description">{{ $arr['dias_laborales']}}</span>
+													</label>
+													</div>
+											</div>
+													@endif
+												@else
+												<div class="col-md-4">
+												<div class="frb frb-success">
+													<input type="radio" id="radio-button-{{$arr['dias_laborales'] }}-1" name="radio-button"  wire:model.defer="inputMes"  value="{{ $arr['dias_laborales'] }}" wire:click="showHoursOfWeek()">
+													<label for="radio-button-{{$arr['dias_laborales'] }}-1">
+														<span class="frb-description">{{ $arr['dias_laborales']}}</span>
+													</label>
+													</div>
+											</div>
+												@endif
+											
+										@endforeach
 											<x-input-error for="inputMes" />
 										</div>	
 									</div>
@@ -332,10 +348,19 @@
                                             <div class="col-md-4">
 												
                                                 <div class="frb frb-success">
+												@if($inputMes === date('Y-m-d'))
+													@if($arr['horarios'] >= $test )
                                                     <input type="radio" id="radio-button-{{ $arr['horarios']}}-1" name="radio-button1"    value="{{  $arr['id'] }}" wire:model.defer="inputHour" >
                                                     <label for="radio-button-{{ $arr['horarios']}}-1">
                                                         <span class="frb-description">{{ $arr['horarios']}}</span>
                                                     </label>
+													@endif
+												@else
+													<input type="radio" id="radio-button-{{ $arr['horarios']}}-1" name="radio-button1"    value="{{  $arr['id'] }}" wire:model.defer="inputHour" >
+                                                    <label for="radio-button-{{ $arr['horarios']}}-1">
+                                                        <span class="frb-description">{{ $arr['horarios']}}</span>
+                                                    </label>
+												@endif
                                                 </div>
                                             </div>
                                             @endforeach

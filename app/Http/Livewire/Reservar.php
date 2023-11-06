@@ -21,7 +21,7 @@ class Reservar extends Component
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, $inputCiudades, $inputDayWeek, $inputDia, $inputHour;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
     public $open_calendar,$fot;
-    public $statAlert ,$title, $text;
+    public $statAlert ,$title, $text, $horIn, $horFin;
     public $timeDoc = [];
     public $arrDay = [];
     public $anho = [];
@@ -36,6 +36,7 @@ class Reservar extends Component
     public $inputDayse;
     public $calenShow = [];
     public $arryHour = [];
+    public $arryDay = [];
     public $test ;
     public $hourStart, $hourEnd, $ciudades;
     public $alert,$idenDetail;
@@ -72,7 +73,7 @@ class Reservar extends Component
 
     public function resetModalEntries()
     {
-        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail']);
+        $this->reset(['inputMes','diasDisp', 'inputDias', 'inputYear','timeDoc','open_hour','dias', 'inputHour','arrDay','arryHour','open_day','inputMes','idenDetail','inputHour']);
     }
 
     public function mount()
@@ -95,6 +96,21 @@ class Reservar extends Component
             array_push($this->anho, $i);
 
         }      
+
+        $this->arryDay= [ 
+            ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],
+            ["id"=> 2, "month" => 'Febrero',"limit" =>  (bool)$this->esBisiesto($this->inputYear) ? '29' : '28 '],
+            ["id"=> 3, "month" => 'Marzo', "limit" =>  '31'],
+            ["id"=> 4, "month" => 'Abril', "limit" =>'30' ],
+            ["id"=> 5, "month" => 'Mayo', "limit" =>'31'], 
+            ["id"=> 6, "month" => 'Junio', "limit" =>'30'],
+            ["id"=> 7, "month" => 'Julio', "limit" => '31' ],
+            ["id"=> 8, "month" => 'Agosto', "limit" => '31'],
+            ["id"=> 9, "month" => 'Setiembre',"limit" => '30'] ,
+            ["id"=> 10, "month" => 'Octubre',"limit" => '31'], 
+            ["id"=> 11, "month" => 'Noviembre',"limit" => '30'],
+            ["id"=> 12, "month" => 'Diciembre',"limit" => '31']
+            ];
         
         $this->day= [
             ["id"=> 1 , "dayWeek" => 'Domingo'],
@@ -183,7 +199,8 @@ class Reservar extends Component
     {
         $this->datTrans = calendarios_doctores::where('id', '=', $inicio)->get();
         $this->idenDetail = $this->datTrans[0]->id;
-    
+        $this->horIn = $this->datTrans[0]->horario_inicio;
+        $this->horFin = $this->datTrans[0]->horario_fin;
         $this->dias = explode(',',$this->datTrans[0]->dias);
     }
 
@@ -232,6 +249,14 @@ class Reservar extends Component
         $this->resetModalEntries();
         $this->resetShowEntries();
     }
+    public function getLimit( $mes )
+    {
+        // calculamos el rango de un mes
+        //retorna el limite segun nombre del mes que le pasemos
+        return  intval($this->arryDay[array_search( $mes, array_column($this->arryDay, 'id'))]['limit']);
+
+
+    }
     
     public function showDatesOfWeek() 
     {
@@ -240,13 +265,31 @@ class Reservar extends Component
         $mes =intval(date("n"));    
         //$mes =intval("7");    
 
-        $val = DB::table('calendarios_detalles')
-                        ->where('calendarios_doctores_id', '=', $this->idenDetail)
-                        ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-                        ->whereMonth('calendarios_detalles.dias_laborales',$mes)
-                        ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
-                        ->distinct()
-                        ->get('dias_laborales')->toArray();
+        $cal =$this->getLimit($mes) - date("j");
+        
+        $date = date_create(strval(date('Y') . '-' . (date('n')+ 1)  . '-' . $this->getLimit($mes)));
+        $dateFormat = date_format($date, 'Y-m-d');
+        date_default_timezone_set('America/Asuncion');
+        $this->test= date('H:i:s');
+        if($cal <= 6){
+            $val = DB::table('calendarios_detalles')
+            ->where('calendarios_doctores_id', '=', $this->idenDetail)
+            ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
+            ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
+            ->where('calendarios_detalles.dias_laborales', '<=', $dateFormat)
+            ->distinct()
+            ->get('dias_laborales')->toArray();
+        }
+        else{
+            $val = DB::table('calendarios_detalles')
+            ->where('calendarios_doctores_id', '=', $this->idenDetail)
+            ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
+            ->whereMonth('calendarios_detalles.dias_laborales', '>=' ,$mes)
+            ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
+            ->groupBy('dias_laborales')
+            ->get()->toArray();
+        }
+   
         if(count($val)>=1){
             for($i= 0; $i < sizeof($val); $i++){
                 array_push($this->arrDay,json_decode(json_encode($val[$i]), true));
@@ -261,7 +304,7 @@ class Reservar extends Component
 
     public function showHoursOfWeek() 
     {
-        $this->reset(['arryHour']);
+        $this->reset(['arryHour','inputHour']);
         $val = DB::table('calendarios_detalles')->where('calendarios_detalles.calendarios_doctores_id', '=',  $this->idenDetail)->where('calendarios_detalles.stat_id', '=', 1)->where('calendarios_detalles.dias_laborales', '=', $this->inputMes)->get()->toArray();
 
         if(count($val)>=1){
