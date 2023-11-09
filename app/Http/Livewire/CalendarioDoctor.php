@@ -14,7 +14,6 @@ use Livewire\WithPagination;
 
 class CalendarioDoctor extends Component
 {
-    use WithPagination;
     public $especialidades, $consultorios;
     public $statAlert ,$title, $text;
     public $open_asign = false;
@@ -32,6 +31,20 @@ class CalendarioDoctor extends Component
     public $mesesFijos;
     public $inputConsultorios, $inputTimeStart, $inputEspecialidad,    $inputTimeEnd, $inputImporte;
     public $espeAsig = [];
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
+
+ 
+
     
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -190,7 +203,8 @@ class CalendarioDoctor extends Component
         'inputMes',
         'dat',
         'inputConsultorios',
-        'inputEspecialidad'
+        'inputEspecialidad',
+        'espeAsig'
     ]);
     }
 

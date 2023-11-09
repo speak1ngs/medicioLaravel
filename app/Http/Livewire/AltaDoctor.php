@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 
 class AltaDoctor extends Component
 {
-    use WithPagination;
+   
     public $doc;
     public $search;
     public $cant;
@@ -21,7 +21,16 @@ class AltaDoctor extends Component
     public $stat ;
     public $statAlert ,$title, $text;
     protected $listeners = ['render'];
+    use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
     
     public function mount()
     {

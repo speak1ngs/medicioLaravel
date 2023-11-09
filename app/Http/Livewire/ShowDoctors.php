@@ -27,8 +27,11 @@ class ShowDoctors extends Component
             ->join('personas','doctores.persona_id', '=','personas.id')
             ->join('calendarios_doctores','doctores.id', '=','calendarios_doctores.doctores_id')
             ->join('especialidades','calendarios_doctores.especialidades_id', '=','especialidades.id')
+            ->join('calendarios_detalles', 'calendarios_doctores.id', 'calendarios_detalles.calendarios_doctores_id')
+            ->join('citas', 'calendarios_detalles.id', 'citas.calendarios_deta_id')
             ->select('doctores.id', 'doctores.foto_url','personas.nombre', 'personas.apellido',DB::raw( 'MAX(doctores.calificacion) AS VAL'), 'especialidades.descripcion')
-            ->where('doctores.stat_id',2)
+            ->where('doctores.stat_id','=',2)
+            ->where('doctores.calificacion','>=',4)
             ->groupBy('calendarios_doctores.especialidades_id')->get();
 
 

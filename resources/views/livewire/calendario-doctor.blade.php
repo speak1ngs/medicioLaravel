@@ -51,7 +51,7 @@
 								<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 									style="height: 180px; width: 100%; display: block;">
 								<div class="card-block">
-									<h6 class="card-text"> {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h6>
+									<h6 class="text-resp" > {{ 'Dr. ' .  $doctor->nombre . ' ' . $doctor->apellido}}</h6>
 
 
 									<!-- <p class="card-text"> <strong> Especialidades:</strong> {{ $doctor->especialidades }}</p> -->
@@ -64,17 +64,25 @@
 							</div>
 						</div>
 					@endforeach
-
-					@if($do->hasPages())
-						<div class="divpag">
-							{{ $do->links()}}
-						</div>
-			@endif
+			
+				
 				@else
 					<label for="">No hay registro a mostrar</label>
 				@endif
+
+				
 			</div>
+			@if($do->hasPages())
+					
+				<div class="divpag">
+				{{ $do->links()}}
+
+				</div>
+				
+				
+	@endif	
 		</div>
+
 	</div>
 	
 	
@@ -82,13 +90,13 @@
 		<div class="modal fade" id="Asignar" tabindex="-1" role="dialog" aria-labelledby="Asignar" aria-hidden="true" >
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-content-scroll">
-				  @dump($espeAsig)
+			
 					@if($nom)
 					<div class="modal-header">
 						
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="closeModalAsign" ><span
 						class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-						<h4 class="modal-title custom_align text-center" id="Heading">{{ 'Dr. ' . $nom }}</h4>
+						<h6 class="modal-title custom_align text-center" id="Heading">{{ 'Dr. ' . $nom }}</h6>
 					</div>
 					
 					<div class="modal-body">

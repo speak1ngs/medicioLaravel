@@ -16,7 +16,7 @@
 
 					<div class="img-thumbnail">
 
-						<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $inputPhoto)}}" data-holder-rendered="true"
+						<img class="card-img-top" alt="100%x180" src="{{ mix('./public/storage/'. $pic)}}" data-holder-rendered="true"
 							style="height: 180px; width: 100%; display: block;">
 					</div>
 				</div>
@@ -172,10 +172,12 @@ regular
 
 			</form>
 
+			@if($test)
+			@json($test)
+		@endif
 
 		</div>
-
-
+		
 
 
 

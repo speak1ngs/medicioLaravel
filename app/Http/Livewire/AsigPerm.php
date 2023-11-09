@@ -23,6 +23,17 @@ class AsigPerm extends Component
 
     use WithPagination;
 
+
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
+
     public function mount() {
 
 
@@ -53,7 +64,7 @@ class AsigPerm extends Component
         $this->nameUser = $name;
 
         $rolesArr =Role::all()->toArray();
-      
+        array_push($this->inputRol, $roles);
         foreach ($roles as $rol) {
             if(empty($roleDat)){
                 $roleDat= array_filter($rolesArr,function ($val) use ($rol)
@@ -134,6 +145,7 @@ class AsigPerm extends Component
             $this->text = 'No se pudo acceder a la base de datos';
         }
         $this->alert();
+        redirect()->route('admin.asig-permisos');
     }
 
     public function render()

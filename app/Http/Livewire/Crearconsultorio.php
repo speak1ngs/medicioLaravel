@@ -26,7 +26,7 @@ class Crearconsultorio extends Component
         'inputMap' => 'required',
         'inputCiud' => 'required',
         'inputPais' => 'required',
-        'inputFoto' => 'required',
+        'inputFoto' => 'required|image|max:2048|mimes:jpeg,jpg',
         'inputTelf' => 'required',
         'inputIntervalo' => 'required',
         ];
@@ -79,6 +79,7 @@ class Crearconsultorio extends Component
                 'latitud' => null,
                 'longitud'=> null,
                 'pais_id' => $this->inputPais, 
+                'ciudad_id' => $this->inputCiud,
                 'calle_principal_id' => $this->inputPrinc,
                 'calle_secundaria_id' => $this->inputSecu, 
                 'calle_terciaria_id' => $this->inputTerc,
@@ -97,7 +98,8 @@ class Crearconsultorio extends Component
         $this->reset(['inputNombre' , 'inputInsta', 'inputFace',  'inputTwi', 'inputWeb', 'inputMap',
         'inputBarr', 'inputCiud', 'inputPais', 'inputTelf', 'inputIntervalo', 'inputRuc', 'inputFoto', 'inputPrinc',
         'inputSecu', 'inputTerc']);
-        $this->emitSelf('crearconsultorio');
+        $this->alert();
+        // $this->emitSelf('crearconsultorio');
         // $this->emit('alert','Consultorio registrado');
     }
 

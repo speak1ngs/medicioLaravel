@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 
 class Editimportdoc extends Component
 {
-    use WithPagination;
+   
     public $idUp, $nameDoc, $espDoc, $inputImport;
     public $search;
     public $cant;
@@ -19,7 +19,16 @@ class Editimportdoc extends Component
     public $stat ;
     public $statAlert ,$title, $text;
     protected $listeners = ['render'];
+    use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
 
     public function mount()
     {
@@ -48,12 +57,13 @@ class Editimportdoc extends Component
             $this->statAlert = 'success';
             $this->title = 'Exitoso';
             $this->text = 'Se modifico el importe';
+            
         } catch (\Throwable $th) {
             $this->statAlert = 'error';
             $this->title = 'Error';
             $this->text = 'No se pudo acceder a la base de datos';
         }
-
+        $this->reset(['inputImport','idUp','nameDoc','espDoc']);
         $this->alert();
     }
 
@@ -71,11 +81,21 @@ class Editimportdoc extends Component
     }
 
     public function render()
-    {
+    {   
 
-        $val = calendarios_doctores::with(['doctores'=> fn($q) => $q->with(['personas']),'especialidad']);
-        $val->whereHas('doctores.calendarios_doctores');
-        $datos = $val->whereHas('doctores.personas', fn ($q) => $q->where('cedula','like', '%' . $this->search . '%'))->paginate($this->cant);
+        $datos =db::table('personas')
+        ->join('doctores','personas.id','doctores.persona_id')
+        ->join('calendarios_doctores', 'doctores.id','calendarios_doctores.doctores_id')
+        ->join('especialidades','calendarios_doctores.especialidades_id','especialidades.id')
+        ->join('consultorios','calendarios_doctores.consultorios_id','consultorios.id')
+        ->select('personas.nombre as persnom', 'personas.apellido as persapell','personas.cedula','especialidades.descripcion','consultorios.nombre','calendarios_doctores.costo_consulta', 'calendarios_doctores.id as idcalen')
+        ->where('personas.cedula','like','%'. $this->search . '%')
+        ->paginate($this->cant);
+
+
+        // $val = calendarios_doctores::with(['doctores'=> fn($q) => $q->with(['personas']),'especialidad']);
+        // $val->whereHas('doctores.calendarios_doctores');
+        // $datos = $val->whereHas('doctores.personas', fn ($q) => $q->where('cedula','like', '%' . $this->search . '%'))->paginate($this->cant);
 
 
         return view('livewire.editimportdoc',compact('datos'));

@@ -42,7 +42,7 @@ class RegistroDoctor extends Component
         'inputRegistro' => 'required',
         'inputPass' => 'required',
         'inputTelfLab' => 'required',
-        'inputPhoto' => 'required'
+        'inputPhoto' => 'required|image|max:2048|mimes:jpeg,jpg,png'
         ];
     
         public function alert()
@@ -81,8 +81,8 @@ class RegistroDoctor extends Component
         try {
 
             $val = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
-            dump($val);
-            if(empty($val)){
+           
+            if(sizeof($val)<=0){
                     persona::create(
                         [
                             'nombre' => $this->inputNombre, 
@@ -141,26 +141,14 @@ class RegistroDoctor extends Component
                     }
                     else{
                         $test =doctores::select('id')->where('persona_id', '=', $val[0]->id)->get();
-                        if($test){
+                      
+                        if(sizeof($test)>=1){
                             $this->statAlert = 'error';
                             $this->title = 'Error';
                             $this->text = 'El profesional ya esta registrado';
                         }
                         else{
-                            persona::create(
-                                [
-                                    'nombre' => $this->inputNombre, 
-                                    'apellido' =>$this->inputApellido, 
-                                    'cedula' => $this->inputCedula,
-                                    'fecha_nacimiento' => $this->inputFechNac, 
-                                    'telefono_particular' => $this->inputTelfLab, 
-                                    'edad' => $this->inputEdad,
-                                    'ciudad_id' => $this->inputCiudad,
-                                    'pais_id' => $this->inputPais, 
-                                    'barrio_id' => $this->inputBarrio
-                                ]
-                            );
-                    
+                          
                             $iden = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
                     
                             if($iden){
@@ -215,6 +203,7 @@ class RegistroDoctor extends Component
            'inputNombre','inputApellido' , 'inputCedula', 'inputRegistro', 'inputBarrio', 'inputCiudad', 'inputEdad',
             'inputPais' ,'inputFechNac', 'inputFechaExpReg', 'inputTelfLab', 'inputEmail', 'inputPass', 'inputPhoto', 'inputDescrip','inputConsultorio', 'inputEspecial'
         ]);
+        $this->alert();
         $this->idpho = rand();
 
     }

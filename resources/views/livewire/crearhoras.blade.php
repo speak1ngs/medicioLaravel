@@ -96,8 +96,12 @@
 									</tbody>	
 
 								</table>
-
-					
+								@if($do->hasPages())
+									<div class="divpag">
+										{{ $do->links()}}
+									</div>
+								@endif
+								
 							</div>
 
 						</div>
@@ -105,11 +109,7 @@
 	
 				
 
-					@if($do->hasPages())
-						<div class="divpag">
-							{{ $do->links()}}
-						</div>
-			@endif
+				
 				@else
 					<label for="">No hay registro a mostrar</label>
 				@endif

@@ -13,7 +13,6 @@ use Livewire\WithPagination;
 
 class Crearhoras extends Component
 {
-    use WithPagination;
     public $inputYear, $especialidades, $inputEspecialidades, $inputCedula;
     public $inputCan = 10 ;
     public $datTrans= [];
@@ -30,6 +29,17 @@ class Crearhoras extends Component
     public $diasDisp = [];
     public $open_day = false;
     public $statAlert ,$title, $text;
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
 
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
@@ -156,7 +166,7 @@ class Crearhoras extends Component
 
             if(sizeof($this->diasDisp) >= 1){
                 // $cal = array_diff($this->diasDisp, $tet);
-                if(!empty($tet)){
+                if(sizeof($tet)>=1){
                     foreach($tet as $tetVal){
                         foreach($this->diasDisp as $key=> $value){
                             if(intval($tetVal->mes) == intval(date('n',strtotime($value["dias_laborales"]))) &&  intval($tetVal->anho) == intval(date('Y',strtotime($value["dias_laborales"]))) &&  intval($tetVal->dia)-1 == intval(date('w',strtotime($value["dias_laborales"])))){
@@ -219,9 +229,6 @@ class Crearhoras extends Component
         $this->title = 'Error';
         $this->text = 'No se pudo acceder a la base de datos';
     }
-
-       
-        $this->alert();
         $this->reset([     
             'datTrans',
             'dias',
@@ -230,6 +237,9 @@ class Crearhoras extends Component
             'inputMes',
             'diasDisp',
         ]);
+        
+        $this->alert();
+        
     }
 
     public function calcDias( $val, $limit, $id)
@@ -246,7 +256,7 @@ class Crearhoras extends Component
 
             if($start <= $limit){
                 if( intval(str_replace(' ', '',strtr(date('H:i'), ':', ' '))) <=  intval(str_replace(' ', '',strtr(date('H:i',strtotime( "22:00:00")), ':', ' ')))){
-                    for($start; $start < $limit; $start++ ){
+                    for($start; $start <= $limit; $start++ ){
 
                         $date = date_create(strval(date('Y') . '-' . date('n')  . '-' . $start));
                         $dateFormat = date_format($date, 'Y-m-d');

@@ -37,8 +37,8 @@
 							</div>
 							<div class="row">
 								<div class="col-sm-4 form-group">
-									<label for="inputState">Barrio</label>
-									<select id="inputState" class="form-control" wire:model="inputBarr">
+									<label for="inputBarr">Barrio</label>
+									<select id="inputBarr" class="form-control" wire:model="inputBarr">
 										<option selected>Seleccionar Barrio</option>
 										@if(count($barrio)>=1)
 										@foreach($barrio as $barr )
@@ -50,8 +50,8 @@
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
-									<label for="inputState">Ciudad</label>
-									<select id="inputState" class="form-control"  wire:model="inputCiud">
+									<label for="inputCiud">Ciudad</label>
+									<select id="inputCiud" class="form-control"  wire:model="inputCiud">
 										<option selected>Seleccionar Ciudad</option>
 										@if(count($ciudad)>=1)
 										@foreach($ciudad as $ciuda )
@@ -63,8 +63,8 @@
 									</select>
 								</div>
 								<div class="col-sm-4 form-group">
-									<label for="inputState">Pais</label>
-									<select id="inputState" class="form-control" wire:model="inputPais">
+									<label for="inputPais">Pais</label>
+									<select id="inputPais" class="form-control" wire:model="inputPais">
 										<option selected>Seleccionar Pais</option>
 									@if(count($pais) >= 1)
 											@foreach($pais as $pai )
@@ -99,6 +99,7 @@
 									<label for="file">Sube una foto :</label>
 									<input type="file" class="form-control" id="file" wire:model="inputFoto">
 								</span>
+								<x-input-error for="inputFoto"/>
 							</div>
 
                             <div class="row">

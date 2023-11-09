@@ -40,6 +40,15 @@ class Reservar extends Component
     public $test ;
     public $hourStart, $hourEnd, $ciudades;
     public $alert,$idenDetail;
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
    
     public $filters = [
         'status' => 2,
@@ -128,15 +137,18 @@ class Reservar extends Component
     
     public function asig($data)
     {   
-
-
-        $this->ced = $data;
+     
+        $this->reset(['nom','apell','descrip','fot']);
+        // $this->ced = $data;
         $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
 
         $dat = db::table(db::raw('personas'))
         ->join('doctores', 'personas.id','=', 'doctores.persona_id')
         ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion', 'doctores.foto_url as docfoto')
         ->where('personas.id', '=', $data)->get();
+   
+       
+        // $this->ced = $dat;
         // $this->nom =$dat[0]->nomb . ' ' . $dat[0]->apell;
         if(empty($this->inputEspecialidades)){
         $calen = DB::table(db::raw('personas'))
@@ -179,11 +191,16 @@ class Reservar extends Component
         }
 
         $this->reset(['calenShow']);
-
-        $this->nom = $dat[0]->nomb;
-        $this->apell = $dat[0]->apell;
-        $this->descrip = $dat[0]->descripcion;
-        $this->fot = $dat[0]->docfoto;
+        foreach($dat as $val => $value){
+            if($value->idp === $data){
+                $this->nom = $value->nomb;
+                $this->apell = $value->apell;
+                $this->descrip = $value->descripcion;
+                $this->fot = $value->docfoto;
+                $this->ced = $value->idp;
+            }
+        }
+      
    
         //  $this->calenShow = $calen;
         $this->open_calendar = true;
@@ -284,7 +301,7 @@ class Reservar extends Component
             $val = DB::table('calendarios_detalles')
             ->where('calendarios_doctores_id', '=', $this->idenDetail)
             ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-            ->whereMonth('calendarios_detalles.dias_laborales', '>=' ,$mes)
+            ->whereMonth('calendarios_detalles.dias_laborales', '=' ,$mes)
             ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
             ->groupBy('dias_laborales')
             ->get()->toArray();

@@ -38,20 +38,21 @@
 					<th>Modificar</th>
 				</thead>
 				<tbody>
+				
 					@foreach($datos as $dato)
 					<tr>
-
-						<td>{{ $dato->doctores->first()->personas->nombre . ' ' . $dato->doctores->first()->personas->apellido }}</td>
+					<td>{{ $dato->persnom . ' ' . $dato->persapell }}</td>
+                        <td>{{ $dato->descripcion }}</td>
                         <td>{{ $dato->costo_consulta}}</td>
-						<td>{{ $dato['especialidad']->descripcion }}</td>
-						<td>{{ $dato->doctores->first()->personas->cedula }}</td>
-						<td>
-					
-										<button class="btn btn-success btn-xs" data-title="doctorActive"
-											data-toggle="modal" data-target="#asgiOp"  wire:click.prevent="sendData('{{ $dato->id }}', '{{  $dato->doctores->first()->personas->nombre . '' . $dato->doctores->first()->personas->apellido  }}','{{ $dato['especialidad']->descripcion  }}')" ><span
-												class="fa fa-check-square-o"></span>IMPORTE</button>
-					
-						</td>
+                        <td>{{ $dato->cedula }}</td>
+                        <td>
+                    
+                                        <button class="btn btn-success btn-xs" data-title="doctorActive"
+                                            data-toggle="modal" data-target="#asgiOp"  wire:click.prevent="sendData('{{ $dato->idcalen }}', '{{  $dato->persnom . ' ' . $dato->persapell  }}','{{ $dato->descripcion  }}')" ><span
+                                                class="fa fa-check-square-o"></span>IMPORTE</button>
+                    
+                        </td>
+				
 
 					</tr>
 

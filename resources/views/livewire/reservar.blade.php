@@ -127,7 +127,7 @@
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url) }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h6 class="card-title text-center"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
+											<h6 class="card-title text-center text-resp"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate  div-star starlef">
 													
@@ -160,7 +160,7 @@
 
 											@role('Paciente')
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})" wire:ignore>Ver calendario</a>
 											@endrole
 										</div>
 									</div>
@@ -193,8 +193,8 @@
 
 				
 				@if(!empty($nom))
-	
-					<div class="row mb-4 align-items-center flex-lg-row-reverse"  wire:ignore>
+				
+					<div class="row mb-4 align-items-center flex-lg-row-reverse"  >
 						<div class="col-md-6 col-xl-5">
 							<div class="lc-block mb-3">
 								<div editable="rich">
@@ -248,8 +248,7 @@
 									<tbody>
 													
 									@if(!empty($calenShow))
-				
-							
+									
 										
 									@foreach($calenShow as $calen)
                                                 <tr>

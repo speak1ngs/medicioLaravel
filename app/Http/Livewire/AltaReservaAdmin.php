@@ -15,6 +15,37 @@ class AltaReservaAdmin extends Component
     public $cant = 10;
     public $statAlert ,$title, $text;
     use WithPagination;
+
+
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
+
+    public function openModal()
+    {
+    $this->dispatchBrowserEvent('openblogRead');
+    }
+    public function closeModal()
+    {
+    $this->dispatchBrowserEvent('closeblogRead');
+    }
+
+    public function openModalDetail()
+    {
+    $this->dispatchBrowserEvent('openDetail');
+    }
+    public function closeModalDetail()
+    {
+    $this->dispatchBrowserEvent('closeDetail');
+    }
+
+    
     public function mount() 
     {
         $this->alert = "#reservaActive";
@@ -36,6 +67,8 @@ class AltaReservaAdmin extends Component
         $this->ide = $iden;
         $this->ideCalen = $idCalen;
         $this->namPac = $name;
+
+        $this->openModal();
         
     }
     public function resetData() 
@@ -63,6 +96,7 @@ class AltaReservaAdmin extends Component
             $this->text = 'No se pudo acceder a la base de datos';
         }
         $this->alert();
+        redirect()->route('admin.altaReser');
     }
 
     public function closeModalAsign()
@@ -94,13 +128,23 @@ class AltaReservaAdmin extends Component
             $this->text = 'No se pudo acceder a la base de datos';
         }
         $this->alert();
+        redirect()->route('admin.altaReser');
     }
 
+    public function sendDataDetail( $data ) 
+    {
+        // $this->reset(['datTemp']);
+        array_push($this->datTemp, json_decode( $data,true));
+        if(sizeof($this->datTemp) >=1 )
+            $this->openModalDetail();
 
+    }
     public function sendData( $data ) 
     {
         // $this->reset(['datTemp']);
         array_push($this->datTemp, json_decode( $data,true));
+    
+
     }
     protected $listeners = ['render'];
     public function render()

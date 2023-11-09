@@ -40,8 +40,8 @@
 
 
 				</div>
-			
                 @if(!empty($doctores))
+				
 				<div id="grid-container" class="cbp-l-grid-team">
 					<ul>
                         @foreach($doctores as $doc)
@@ -75,7 +75,7 @@
 		
 							<a
                             href="{{ route('show-doc', $doc->id) }}" 
-								class="cbp-singlePage cbp-l-grid-team-name"
+								class="cbp-singlePage cbp-l-grid-team-name text-rtn"
 								>{{ $doc->nombre . ' ' . $doc->apellido }}</a
 							>
 							<div class="cbp-l-grid-team-position">{{ $doc->descripcion }}

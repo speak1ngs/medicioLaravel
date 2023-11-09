@@ -28,7 +28,7 @@
 							</div>
 
 
-			<table id="mytable" class="table table-striped table-bordered" style="width:100%">
+			<table id="mytable" class="table table-striped table-bordered" style="width:100%" wire:ignore>
 				<thead>
 					<tr>
 						<th>Paciente</th>
@@ -46,16 +46,15 @@
 					@foreach($db as $data)
 					<tr>
 						<td>{{$data->nombres}}</td>
-						<td><a href=""   data-title="detailDate" data-toggle="modal"
-											data-target="#detailDate" wire:click.prevent="sendData('{{ json_encode($data, true)}}')" wire:ignore.self>Detalle Turno</a></td>
+						<td><a class="pointer"   wire:click.prevent="sendDataDetail('{{ json_encode($data, true)}}')" wire:ignore.self>Detalle Turno</a></td>
 						<td>{{$data->descripcion}}</td>
 						<td>
 							<div class="row">
 								<div class="form-group col-sm-6 bottom-p text-center">
 									<p data-placement="top" data-toggle="tooltip" title="Cancelar" class="bottom-p">
 										<button class="btn btn-danger btn-xs" 
-											data-toggle="modal" data-target="#confirmModal"><span
-												class="fa fa-remove" wire:click.prevent="dataSet({{ $data->id }}, {{ $data->idCalenDet}} , '{{ $data->nombres }}')" ></span></button>
+											><span
+												class="fa fa-remove" wire:click.prevent="dataSet({{ $data->id }}, {{ $data->idCalenDet}} , '{{ $data->nombres }}')" wire:ignore.self></span></button>
 									</p>
 								</div>
 
@@ -129,7 +128,7 @@
 										<p class="text-center bottom-p">Doctor: <strong> {{ $datTemp[0]['consul_nomb']}} </strong></p>
 										<p class="text-center bottom-p">Telf: <strong> {{ $datTemp[0]['consult_telf']}} </strong></p>
 										<p class="text-center bottom-p">Ciudad: <strong> {{ $datTemp[0]['ciudad']}} </strong></p>
-										<p class="text-center bottom-p">Ubicación: <strong> <a href="{{ $datTemp[0]['ubi'] }}">Google Map</a> </strong></p>
+										<p class="text-center bottom-p">Ubicación: <strong> <a href="{{ $datTemp[0]['ubi'] ? $datTemp[0]['ubi'] : '#'  }}">{{ $datTemp[0]['ubi'] ?  'Google Map' : 'No tiene Ubicación' }}</a> </strong></p>
 
 									</div>
 									<h6 class="modal-title custom_align" id="Heading">Detalle:</h6>
@@ -262,7 +261,27 @@
 				<!-- /.modal-dialog -->
 			</div>
 		</div>
+
+
 	</div>
+
+	<script>
+	window.addEventListener('openblogRead', event => {
+		$("#confirmModal").modal('show');
+	})
+
+	window.addEventListener('closeblogRead', event => {
+		$("#confirmModal").modal('hide');
+	})
+
+	window.addEventListener('openDetail', event => {
+		$("#detailDate").modal('show');
+	})
+
+	window.addEventListener('closeDetail', event => {
+		$("#detailDate").modal('hide');
+	})
+</script>
 
 </section>
 	</x-body-wrapper>

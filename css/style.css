@@ -59,6 +59,7 @@ layout
 		display: none;
 	}
 
+
 }
 
 
@@ -2402,10 +2403,42 @@ a.btn:focus {
 	margin-top: 16px;
 }
 
-
-
+.text-resp{
+	font-size:0.8vw;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+	.btn{
+		font-size:12px;
+	}
+	
+}
 
 /* Media queries */
+@media (min-width: 768px) and (max-width: 795px) {
+	.text-resp{
+		font-size:1.2vw;
+	}
+	
+}
+@media (min-width: 796px) and (max-width: 867px) {
+	.text-resp{
+		font-size:1.1vw;
+	}
+	
+}
+
+@media (min-width: 868px) and (max-width: 954px) {
+	.text-resp{
+		font-size:1vw;
+	}
+}
+@media (min-width: 955px) and (max-width: 1199px) {
+	.text-resp{
+		font-size:0.9vw;
+	}
+}
+
+
 
 @media (min-width: 768px) and (max-width: 979px) {
 	.navbar-brand {
@@ -2620,7 +2653,9 @@ a.btn:focus {
 		/* width: 325px; */
 		width: calc(100% - 100px);
 	}
-
+	.text-resp{
+		font-size:5vw;
+	}
 }
 
 
@@ -2706,7 +2741,11 @@ a.btn:focus {
 		margin-top:16px;
 	}
 
-
+}
+@media (max-width:375px) {
+	.text-resp{
+		font-size:4vw;
+	}
 }
 
 @media (max-width:320px) {
@@ -3480,3 +3519,7 @@ padding-right: 1.5rem;
 	margin-right: 0px;
 }
 
+.pointer {cursor: pointer;}
+.text-rtn{
+	font-size: 0.8vw;
+}

@@ -37,6 +37,7 @@
 								
 								
 								@foreach($db as $data)
+									
 									@if($data->idcit == '1')
 										@if($data->dias_laborales <= $today)
 												@if($data->horarios <= $hour)

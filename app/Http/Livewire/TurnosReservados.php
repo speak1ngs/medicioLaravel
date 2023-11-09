@@ -20,6 +20,15 @@ class TurnosReservados extends Component
     public $dateFilter, $dateStart, $today,$hour;
 
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
 
     protected $listeners = ['render'];
     public function getLimit( $mes )
@@ -36,7 +45,7 @@ class TurnosReservados extends Component
     public function mount() 
     {
         date_default_timezone_set('America/Asuncion');
-        $this->hour= date("h:i:s");
+        $this->hour= date("H:i:s");
 
         $this->arryDay= [ 
             ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],

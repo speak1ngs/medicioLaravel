@@ -32,7 +32,7 @@ class Registro extends Component
         'inputCedula' => 'required',
         'inputEmail' => 'required|email',
         'inputTelf' => 'required',
-        'inputPhoto' => 'required|image|max:2048|mime:jpg',
+        'inputPhoto' => 'required|image|max:2048|mimes:jpeg,jpg',
         'inputPassword' => 'required|min:8',
     ];
 
@@ -76,17 +76,13 @@ class Registro extends Component
 
     public function guardar()
     {
-   
         
+        $this->validate();
         try {
-            $this->validate();
+            
             $val = persona::select('id')->where('cedula','=', $this->inputCedula)->get();
-            dump($val);
-            if(empty($val)){
-                dump($val);
-                    if( !isset($this->inputNombre) && !isset($this->inputApellido) && !isset($this->inputApellido) && !isset($this->inputCedula) &&
-                    !isset($this->inputEmail) &&     !isset($this->inputTelf) && !isset($this->inputPhoto) && !isset($this->inputPassword) 
-                    ){
+            
+            if(sizeof($val)<=0){
                         persona::create(
                             [
                                 'nombre' => $this->inputNombre, 
@@ -130,20 +126,15 @@ class Registro extends Component
                                         'persona_id' => $iden[0]->id
                                     ]
                                     )->syncRoles(3);
+                                        
+                                    $this->statAlert = 'success';
+                                    $this->title = 'Registrado';
+                                    $this->text = 'Se registro exitosamente';
                 
                                     $this->idpho = rand();
                 
-                                    $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputAddress', 'inputAddress2', 'inputAdress3', 'inputCiudad','inputBarrio', 'inputPais','inputNac', 'inputPhoto']);
+                                    $this->reset(['inputNombre', 'inputApellido', 'inputCedula','inputEmail','inputPassword', 'inputTelf', 'inputEdad', 'inputBarrio', 'inputCiudad', 'inputPais', 'inputNac', 'inputPhoto']);
                             }
-                            $this->statAlert = 'success';
-                            $this->title = 'Registrado';
-                            $this->text = 'Se registro exitosamente';
-                    }
-                    else{
-                        $this->statAlert = 'error';
-                        $this->title = 'Error';
-                        $this->text = 'Debe completar el formulario';
-                    }
             }
             else{
                 $this->statAlert = 'error';
@@ -155,10 +146,12 @@ class Registro extends Component
                 $this->title = 'Error';
                 $this->text = 'No se pudo acceder a la base de datos';
             }
-            
+   
             $this->alert();
             // redirect()->route('login');
     }
+
+
 
     public function render()
     {

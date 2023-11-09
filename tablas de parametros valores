@@ -1,22 +1,21 @@
 INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'paciente', NULL, NULL) ;
 INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'doctor', NULL, NULL) ;
-INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'consutlorio', NULL, NULL) ;
+INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'consultorio', NULL, NULL) ;
 INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'adm', NULL, NULL) ;
 INSERT INTO `tipos_usuarios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'limitadm', NULL, NULL) ;
 
 
-
-
 INSERT INTO `status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'inactivo', NULL, NULL) ;
 INSERT INTO `status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'activo', NULL, NULL) ;
+INSERT INTO `status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'pendiente', NULL, NULL) ;
 
 
 INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Pediatra', NULL, NULL) ;
-INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Urologo', NULL, NULL) ;
-INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Ginecologo', NULL, NULL) ;
-INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'Clinico', NULL, NULL) ;
-INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'Oftalmologo', NULL, NULL) ;
-INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (6, 'Gastrointerologo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Urólogo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Ginecólogo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'Clínico', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (5, 'Oftalmólogo', NULL, NULL) ;
+INSERT INTO `especialidades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (6, 'Gastroenterólogo', NULL, NULL) ;
 
 
 
@@ -26,9 +25,9 @@ INSERT INTO `paises` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3
 
 
 INSERT INTO `barrios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'San Roque', NULL, NULL) ;
-INSERT INTO `barrios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Palmaloma', NULL, NULL) ;
+INSERT INTO `barrios` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Palma loma', NULL, NULL) ;
 
-INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Asuncion', NULL, NULL) ;
+INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1, 'Asunción', NULL, NULL) ;
 INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'Luque', NULL, NULL) ;
 INSERT INTO `ciudades` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'Aregua', NULL, NULL) ;
 
@@ -37,9 +36,6 @@ INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (1
 INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (2, 'San Martin', NULL, NULL) ;
 INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (3, 'España', NULL, NULL) ;
 INSERT INTO `calles` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES (4, 'Aviadores del Chaco', NULL, NULL) ;
-
-
-INSERT INTO `consultorios` (`id`, `nombre`, `social_instagram`, `social_facebook`, `social_twitter`, `social_web_site`, `ruc`, `telefono`, `intervalo_consulta`, `foto_url`, `latitud`, `longitud`, `pais_id`, `calle_principal_id`, `calle_secundaria_id`, `calle_terciaria_id`, `barrio_id`, `stat_id`, `created_at`, `updated_at`) VALUES (1, 'Medicio', NULL, NULL, NULL, NULL, NULL, '0999999', '15', 'asdadas.jph', '0.5656', '0.564', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) ;
 
 
 
@@ -80,3 +76,165 @@ INSERT INTO `citas_calificacion_status` (`id`, `descripcion`, `created_at`, `upd
 INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('1', 'ausente', NULL, NULL) ;
 INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('2', 'presente', NULL, NULL) ;
 INSERT INTO `pacientes_status` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('3', 'pendiente', NULL, NULL) ;
+
+
+INSERT INTO `posts_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('1', 'activado', NULL, NULL) ;
+INSERT INTO `posts_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('2', 'desactivado', NULL, NULL) ;
+INSERT INTO `posts_stats` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES ('3', 'pendiente', NULL, NULL) ;
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (NULL, 'Admin', 'web', '2023-08-30 20:19:49', '2023-08-30 20:19:49');
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (NULL, 'Doctor', 'web', '2023-08-30 20:19:56', '2023-08-30 20:19:56');
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (NULL, 'Paciente', 'web', '2023-08-30 20:20:00', '2023-08-30 20:20:00'); 
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (NULL, 'Invitado', 'web', '2023-08-30 20:20:04', '2023-08-30 20:20:04');
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES (NULL, 'Blogger', 'web', '2023-08-31 13:49:03', '2023-08-31 13:49:03') ; 
+
+
+INSERT INTO `users` (`id`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `created_at`, `updated_at`, `paciente_id`, `doctor_id`, `tipo_usuario_id`, `persona_id`) VALUES (NULL, 'guest@medicio.com', NULL, '$2y$10$/JBeuxmRJGi3WF4VpWxC3.nJz/OPScdLevLITr//gNQzmurDujuEi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL) ;
+
+
+
+CREATE TRIGGER `calDoc` AFTER UPDATE ON `citas`
+ FOR EACH ROW BEGIN
+	DECLARE idDoc int;
+    DECLARE sumCal int;
+    DECLARE countCal int;
+    DECLARE prom int;
+    
+    	select doctores.id
+        INTO idDoc
+        from citas 
+        INNER JOIN calendarios_detalles
+        on citas.calendarios_deta_id = calendarios_detalles.id
+        INNER JOIN calendarios_doctores
+        on calendarios_detalles.calendarios_doctores_id = calendarios_doctores.id
+        INNER JOIN doctores
+        on calendarios_doctores.doctores_id = doctores.id
+        WHERE calendarios_detalles.id =  OLD.calendarios_deta_id
+        and citas.status_id = 5 ;
+    
+    	select sum(citas.cal_pac_id) as suma_cal
+        INTO sumCal
+        from citas
+        INNER JOIN calendarios_detalles
+        on citas.calendarios_deta_id = calendarios_detalles.id
+        INNER JOIN calendarios_doctores
+        on calendarios_detalles.calendarios_doctores_id = calendarios_doctores.id
+        INNER JOIN doctores
+        on calendarios_doctores.doctores_id = doctores.id
+        WHERE citas.cal_pac_id IS NOT NULL
+        AND citas.status_id= 5
+        AND doctores.id = idDoc;
+        
+       
+        select count(citas.cal_pac_id)
+        INTO countCal
+        from citas
+        INNER JOIN calendarios_detalles
+        on citas.calendarios_deta_id = calendarios_detalles.id
+        INNER JOIN calendarios_doctores
+        on calendarios_detalles.calendarios_doctores_id = calendarios_doctores.id
+        INNER JOIN doctores
+        on calendarios_doctores.doctores_id = doctores.id
+        WHERE citas.cal_pac_id IS NOT NULL
+        AND citas.status_id= 5
+        AND doctores.id = idDoc;
+
+    	set prom =  sumCal / countCal;
+    	IF OLD.cal_pac_id IS NULL && NEW.cal_pac_id IS NOT NULL THEN
+        		UPDATE doctores
+            SET doctores.calificacion = prom
+            WHERE doctores.id = idDoc; 
+            END IF;
+        
+        
+    	IF NEW.cal_pac_id <> OLD.cal_pac_id
+			then
+			UPDATE doctores
+            SET doctores.calificacion = prom
+            WHERE doctores.id = idDoc; 
+
+		END IF;
+END
+
+CREATE TRIGGER `calPac` AFTER UPDATE ON `citas`
+ FOR EACH ROW BEGIN
+	DECLARE idPAC int;
+    DECLARE sumPac int;
+    DECLARE countPac int;
+    DECLARE prod int;
+    	
+        select pacientes.id
+        INTO idPAC
+        from citas 
+        INNER JOIN pacientes
+        on citas.paciente_id = pacientes.id
+        WHERE pacientes.id = OLD.paciente_id
+        and citas.status_id = 5 
+        GROUP BY pacientes.id;
+        
+        select sum(citas.cal_doc_id) as suma_cal
+        INTO sumPac
+        from citas
+        WHERE citas.cal_doc_id IS NOT NULL
+        AND citas.status_id= 5
+        AND citas.paciente_id = idPAC;
+        
+       
+       select count(citas.cal_doc_id) as suma_cal
+        INTO countPac
+        from citas
+        WHERE citas.cal_doc_id IS NOT NULL
+        AND citas.status_id= 5
+        AND citas.paciente_id = idPAC;
+
+        set prod =  sumPac / countPac;
+       
+           IF OLD.cal_doc_id IS NULL && NEW.cal_doc_id IS NOT NULL THEN
+        		UPDATE pacientes
+            SET pacientes.calificacion = prod
+            WHERE pacientes.id = OLD.paciente_id; 
+            END IF;
+           
+        IF NEW.cal_doc_id <> OLD.cal_doc_id
+            then
+      		UPDATE pacientes
+            SET pacientes.calificacion = prod
+            WHERE pacientes.id = OLD.paciente_id; 
+
+        END IF;
+END
+
+
+wire:click="check()"
+                                            @if( $open_modal)
+                                            
+                                            @else
+                                            data-dismiss="modal"
+                                            @endif
+
+
+
+                                                                     <td>{{ 'Dr. ' .  $calen['nombre'] . ' ' . $calen['apellido'] }} </td>
+                                                    <td>{{  $calen['especialidades'] }} </td>
+                                                    <td>{{  $calen['consultorio'] }} </td>
+                                                    <td>{{  $calen['dias'] }} </td>
+                                                    <td>{{ 'De: ' . $calen['horario_inicio'] . ' a ' . $calen['horario_fin'] }} </td>
+                                                    <td>
+                                                        <p data-placement="top" data-toggle="tooltip" title="reservar"><button
+                                                                class="btn btn-primary btn-xs" data-title="Reservar" data-toggle="modal"
+                                                                data-target="#Reservar" wire:click="arrReceive( {{ $calen['calenId'] }})"><span class="fa fa-calendar"></span></button>
+                                                        </p>
+                                                    </td>
+
+
+                                                            <td>{{ $dato->doctores->first()->personas->nombre . ' ' . $dato->doctores->first()->personas->apellido }}</td>
+                        <td>{{ $dato['especialidad']->descripcion }}</td>
+                        <td>{{ $dato->costo_consulta}}</td>
+                        <td>{{ $dato->doctores->first()->personas->cedula }}</td>
+                        <td>
+                    
+                                        <button class="btn btn-success btn-xs" data-title="doctorActive"
+                                            data-toggle="modal" data-target="#asgiOp"  wire:click.prevent="sendData('{{ $dato->id }}', '{{  $dato->doctores->first()->personas->nombre . '' . $dato->doctores->first()->personas->apellido  }}','{{ $dato['especialidad']->descripcion  }}')" ><span
+                                                class="fa fa-check-square-o"></span>IMPORTE</button>
+                    
+                        </td>

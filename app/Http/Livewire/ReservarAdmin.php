@@ -17,7 +17,7 @@ use Livewire\WithPagination;
 
 class ReservarAdmin extends Component
 {
-    use WithPagination;
+   
     public $especialidades, $inputEspecialidades, $inputNombre, $inputFech, $inputYear, $inputMes, $inputDias, $inputHourse, $inputHorarioIni, $inputHorarioFin, 
     $inputCiudades, $inputDayWeek, $inputDia, $inputHour,$inputCedula, $inputName, $inputLastName, $inputCi, $inputEmail, $inputTelf;
     public $can, $nom ,  $horasToInt , $horasToIntFin, $intervalo, $apell , $descrip;
@@ -41,6 +41,7 @@ class ReservarAdmin extends Component
     public $test ;
     public $hourStart, $hourEnd, $ciudades;
     public $userState;
+    public $open_modal= false;
     public $alert, $idenDetail, $showUserType, $idenpac, $nomuser;
     public $filters = [
         'status' => 2,
@@ -51,7 +52,23 @@ class ReservarAdmin extends Component
         'ciudad' => 1,
         'dia' => ''
     ];
+    protected $rules = [
+        'inputDias' => 'required',
+        'inputMes' => 'required',
+        'inputHour' => 'required',
+        ];
 
+
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
     public function esBisiesto($anio=null) {
         return date('L',($anio==null) ? time(): strtotime($anio.'-01-01'));
     }
@@ -67,14 +84,15 @@ class ReservarAdmin extends Component
 
     }
 
-    protected $rules = [
-        'inputDias' => 'required',
-        'inputMes' => 'required',
-        'inputHour' => 'required',
-        ];
+ 
 
     public function check(){
-        $this->validate();
+        if($this->inputMes && $this->inputHour){
+            $this->open_modal= true;
+        }
+        else{
+            $this->open_modal= false;
+        }
     }
     public function mount()
     {
@@ -151,7 +169,7 @@ class ReservarAdmin extends Component
 
     public function asig($data)
     {   
-        $this->ced = $data;
+        $this->reset(['nom','apell','descrip','fot']);
         $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
 
         $dat = db::table(db::raw('personas'))
@@ -166,7 +184,7 @@ class ReservarAdmin extends Component
                 ->select('calendarios_doctores.id as  calenId','personas.nombre',  'personas.apellido', 'calendarios_doctores.horario_inicio' , 'calendarios_doctores.horario_fin', 'calendarios_doctores.dias', db::raw('(SELECT consultorios.nombre
                 FROM consultorios 
                 WHERE consultorios.id = calendarios_doctores.consultorios_id) as consultorio'), db::raw( '(SELECT especialidades.descripcion from especialidades WHERE especialidades.id = calendarios_doctores.especialidades_id) as especialidades')) 
-                ->where('personas.id', '=', $dat[0]->idp)
+                ->where('personas.id', '=', $data)
                 ->where('doctores.stat_id', '=', 2)
                 // ->where('calendarios_doctores.dias', 'like', '%' . $dias[date('w')] . '%')
                 ->get()->toArray();
@@ -200,10 +218,18 @@ class ReservarAdmin extends Component
         }
 
         $this->reset(['calenShow']);
-        $this->nom = $dat[0]->nomb;
-        $this->apell = $dat[0]->apell;
-        $this->descrip = $dat[0]->descripcion;
-        $this->fot = $dat[0]->fotdoc;
+
+
+        foreach($dat as $val => $value){
+            if($value->idp === $data){
+                $this->nom = $value->nomb;
+                $this->apell = $value->apell;
+                $this->descrip = $value->descripcion;
+                $this->fot = $value->fotdoc;
+                $this->ced = $value->idp;
+            }
+        }
+  
    
         //  $this->calenShow = $calen;
         $this->open_calendar = true;
@@ -257,7 +283,7 @@ class ReservarAdmin extends Component
             $val = DB::table('calendarios_detalles')
             ->where('calendarios_doctores_id', '=', $this->idenDetail)
             ->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) = '.  intval($this->day[array_search( $this->inputDias, array_column($this->day, 'dayWeek'))]['id']))
-            ->whereMonth('calendarios_detalles.dias_laborales', '>=' ,$mes)
+            ->whereMonth('calendarios_detalles.dias_laborales', '=' ,$mes)
             ->where('calendarios_detalles.dias_laborales', '>=', date('Y-m-d'))
             ->groupBy('dias_laborales')
             ->get()->toArray();
@@ -325,7 +351,7 @@ class ReservarAdmin extends Component
                         'paciente_status_id' => 3
                         ]
                     );
-
+                    db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);
 
                     $this->statAlert = 'success';
                     $this->title = 'Exitoso';
@@ -374,7 +400,8 @@ class ReservarAdmin extends Component
                                         'password' => Hash::make("12345678"),
                                         'paciente_id' => $paciente[0]->id,
                                         'doctor_id' => null,
-                                        'tipo_usaurio_id' => $tip_user  
+                                        'tipo_usuario_id' => null,
+                                        'persona_id' => $iden[0]->id
                                     ]
                                     );
                 
@@ -397,6 +424,8 @@ class ReservarAdmin extends Component
                                 'paciente_status_id' => 3
                                 ]
                             );
+
+                            db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 3]);
                             $this->statAlert = 'success';
                             $this->title = 'Exitoso';
                             $this->text = 'Se creo la prereserva.';
@@ -404,7 +433,7 @@ class ReservarAdmin extends Component
                         else{
                             $this->statAlert = 'error';
                             $this->title = 'Error';
-                            $this->text = 'El usuario ya existe.' . $check;
+                            $this->text = 'El usuario ya existe.' ;
                         }
 
                         break;
@@ -446,10 +475,10 @@ class ReservarAdmin extends Component
 
 
         $es = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with(['especialidad' , 'consultorios','calendarios_detalles'])]);
-        $es->whereHas('calendarios_doctores',fn($query) => $query->whereRaw('calendarios_doctores.especialidades_id LIKE' . (empty($this->inputEspecialidades) ? "'%". $this->filters['especialidades'] . "%'" : "'%" . intval($this->inputEspecialidades) . "%'") ));
+        $es->whereHas('calendarios_doctores.doctores',fn($query) => $query->whereRaw('calendarios_doctores.especialidades_id LIKE' . (empty($this->inputEspecialidades) ? "'%". $this->filters['especialidades'] . "%'" : "'%" . intval($this->inputEspecialidades) . "%'") ));
         $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_inicio','>=', empty($this->inputHorarioIni) ? $this->filters['horaInicio'] : $this->inputHorarioIni ));
         $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_fin','<=',  empty($this->inputHorarioFin) ? $this->filters['horaFin'] : $this->inputHorarioFin  ));
-        $es->whereHas('personas',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
+        $es->whereHas('personas.doctores',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
         // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereMonth('calendarios_detalles.dias_laborales', $mes));
         $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '.  ( empty($this->inputDayWeek) ? "'%". $this->filters['dia'] . "%'" : "'%". $this->inputDayWeek . "%'") ));
         // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->where('calendarios_doctores.especialidades_id',  empty($this->inputEspecialidades) ? $this->filters['especialidades'] : $this->inputEspecialidades    ));

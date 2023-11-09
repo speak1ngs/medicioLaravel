@@ -14,7 +14,15 @@ class Altaconsultorio extends Component
     public $statAlert ,$title, $text;
     public $inputState;
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     
+    public function updatingSearch()
+
+    {
+
+        $this->resetPage();
+
+    }
     public function alert()
     {
 

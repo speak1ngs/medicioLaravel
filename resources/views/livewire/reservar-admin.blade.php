@@ -113,17 +113,18 @@
 
 
 			<div class="py-5">
-				<div class="container well">
+				<div class="container well" >
 					<div class="row g-2 hidden-md-up ">
 					
 					@if(count($do) >=1)
+					
 							@foreach($do as $doctor)	
 								<div class="col-sm-3 well bg-white">
 									<div class="card card-block">
 										<img class="card-img-top img-responsive img-thumbnail" alt="100%x180" src="{{  mix('./public/storage/'. $doctor->foto_url)  }}" data-holder-rendered="true"
 											style="height: 180px; width: 100%; display: block;">
 										<div class="card-block">
-											<h6 class="card-title"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
+											<h6 class="card-title text-resp"> {{ 'Dr. ' .  $doctor['personas']->nombre . ' ' . $doctor['personas']->apellido}}</h6>
 											<div class="row banner-social-buttons">
 												<div class="col-md-8 rate starlef">
 													
@@ -139,9 +140,9 @@
 												</div>
 											</div>
 											
-											<p class="card-text"> <strong> Especialidad:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion }}</p>
+											<p class="card-text"> <strong> Especialidad:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion}}</p>
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})" wire:ignore.self>Ver calendario</a>
 										</div>
 									</div>
 								</div>
@@ -173,7 +174,7 @@
 				
 				@if(!empty($nom))
 	
-					<div class="row mb-4 align-items-center flex-lg-row-reverse"  wire:ignore>
+					<div class="row mb-4 align-items-center flex-lg-row-reverse" >
 						<div class="col-md-6 col-xl-5">
 							<div class="lc-block mb-3">
 								<div editable="rich">
@@ -184,7 +185,7 @@
 		
 							<div class="lc-block mb-4">
 								<div editable="rich">
-									<label for="">Informacion del Profesional:</label>
+									<label for="">Información del Profesional:</label>
 									<p class="lead">{{ $descrip }}</p>
 
 								</div>
@@ -226,10 +227,8 @@
 									</thead>
 									<tbody>
 													
-									@if(!empty($calenShow))
-				
-							
-										
+									@if(sizeof($calenShow)>= 1)
+																		
 									@foreach($calenShow as $calen)
                                                 <tr>
 
@@ -387,13 +386,8 @@
 									
 									<div class="modal-footer ">
 										<button type="button" class="btn btn-warning btn-lg" style="width: 100%;"
-											data-title="pagarReserva" wire:click="check()"
-											@if( !empty($inputMes) && !empty($inputHour))
-											data-toggle="modal" data-target="#userDetail"
-											data-dismiss="modal"
-											@else
-											data-dismiss="modal"
-											@endif
+											data-title="pagarReserva"data-toggle="modal" data-target="#userDetail"
+											data-dismiss="modal" 
 											
 											><span class="glyphicon glyphicon-ok-sign"></span>Continuar reserva</button>
 									</div>
