@@ -10,7 +10,30 @@
 				<div class="col-md-12">
 					<h4 class="text-center">Turnos reservados </h4>
 					<div class="table-responsive">
-							<div class="form-group col-md-1 ">
+						<div class="row">
+							<div class="col-md-3  align-items-start">
+							<label for="inputCedula">Profesional</label>
+								<input type="text" class="form-control" id="inputCedula" placeholder="Nombre del medico" wire:model="inputNombre">
+							</div>
+
+							<div class="col-md-3 align-self-center">
+								<label for="inputEstado">Estado</label>
+								
+								<select id="inputEstado" class="form-control" wire:model="inputEstado" >
+															<option selected value="">Seleccionar estado</option>
+														@if(count($estado) >= 1)
+																@foreach($estado as $especial )
+																	@if($especial['descripcion'] == 'finalizado' || $especial['descripcion'] == 'reservado' )
+																	<option value="{{ $especial['id']}}">{{ $especial['descripcion'] }}</option>
+																	@endif
+															@endforeach
+														@else
+														<option>No hay estados para mostrar.</option>
+														@endif
+														</select>
+								</div>
+
+							<div class="form-group col-md-3 align-selft-center">
 								<label for="">Mostrar</label>
 								<select id="inputState" class="form-control" wire:model="cant">
 										
@@ -19,8 +42,17 @@
 										<option value="50">50</option>
 										<option value="100">100</option>
 								</select>
+							
 							</div>
 
+
+								<div class="col-md-3 mg-filter align-self-center">
+										<a href="#" class="btn btn-primary btn-sm"wire:click="resetFilters()">Reiniciar Filtros</a>
+								</div>
+									
+						</div>
+							
+							
 						<table id="mytable" class="table table-bordered table-striped">
 
 							<thead>
@@ -49,7 +81,7 @@
 									@endif
 									@if($data->dias_laborales >= $dateStart && $data->dias_laborales <= $dateFilter)
 											@if($data->idcit != '3' && $data->idcit!='4')
-														@if(empty($data->calId))
+													
 															<tr>
 																<td>{{ $data->nombres }} </td>
 																<td>{{ $data->especialidad }}</td>
@@ -58,7 +90,7 @@
 																<td>
 																	
 																		<span data-title="calf" data-toggle="modal" data-target="#calf"
-																	data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}')" wire:ignore.self> 
+																	data-dismiss="modal" wire:click.prevent="instanData('{{ $data->id }}','{{ $data->nombres }}', '{{ $data->idpac }}', '{{$data->descripcion}}')" wire:ignore.self> 
 																	<a href="#">Calificar</a>
 																	</span>
 																	<td>
@@ -67,7 +99,7 @@
 
 																</td>
 													
-														@endif
+														
 											@endif
 										@endif
 								@endforeach
@@ -332,6 +364,22 @@
 			$('#Reservar').modal('show');
 		});
 	});
+
+	
+	window.addEventListener('opendetailDate', event => {
+		$("#detailDate").modal('show');
+	})
+
+	window.addEventListener('closedetailDate', event => {
+		$("#detailDate").modal('hide');
+	})
+
+
+
+
+
+
+
 	</script>
 
     

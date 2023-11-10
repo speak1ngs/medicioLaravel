@@ -137,7 +137,7 @@ class Reservar extends Component
     
     public function asig($data)
     {   
-     
+       
         $this->reset(['nom','apell','descrip','fot']);
         // $this->ced = $data;
         $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -145,7 +145,7 @@ class Reservar extends Component
         $dat = db::table(db::raw('personas'))
         ->join('doctores', 'personas.id','=', 'doctores.persona_id')
         ->select('personas.id as idp','doctores.id as id', 'personas.nombre as nomb', 'personas.apellido as apell', 'doctores.descripcion as descripcion', 'doctores.foto_url as docfoto')
-        ->where('personas.id', '=', $data)->get();
+        ->where('personas.id', '=', intval($data))->get();
    
        
         // $this->ced = $dat;
@@ -192,7 +192,7 @@ class Reservar extends Component
 
         $this->reset(['calenShow']);
         foreach($dat as $val => $value){
-            if($value->idp === $data){
+            if($value->idp === intval($data)){
                 $this->nom = $value->nomb;
                 $this->apell = $value->apell;
                 $this->descrip = $value->descripcion;
@@ -366,11 +366,22 @@ class Reservar extends Component
         // ->groupBy( 'personas.id')
         // ->paginate($this->can);
 
+        // $es = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with(['especialidad' , 'consultorios','calendarios_detalles'])]);
+        // $es->whereHas('calendarios_doctores.doctores',fn($query) => $query->whereRaw('calendarios_doctores.especialidades_id LIKE' . (empty($this->inputEspecialidades) ? "'%". $this->filters['especialidades'] . "%'" : "'%" . intval($this->inputEspecialidades) . "%'") ));
+        // $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_inicio','>=', empty($this->inputHorarioIni) ? $this->filters['horaInicio'] : $this->inputHorarioIni ));
+        // $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_fin','<=',  empty($this->inputHorarioFin) ? $this->filters['horaFin'] : $this->inputHorarioFin  ));
+        // $es->whereHas('personas.doctores',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
+        // // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereMonth('calendarios_detalles.dias_laborales', $mes));
+        // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '.  ( empty($this->inputDayWeek) ? "'%". $this->filters['dia'] . "%'" : "'%". $this->inputDayWeek . "%'") ));
+        // // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->where('calendarios_doctores.especialidades_id',  empty($this->inputEspecialidades) ? $this->filters['especialidades'] : $this->inputEspecialidades    ));
+        // $es->whereHas('calendarios_doctores.consultorios',fn($query) => $query->where('consultorios.ciudad_id',  empty($this->inputCiudades) ? $this->filters['ciudad'] : $this->inputCiudades  ));
+        // $do = $es->when($this->filters['status'], fn($query, $status) => $query->where('doctores.stat_id', $status))
+        //     ->paginate($this->can);
         $es = doctores::with(['personas','calendarios_doctores'=> fn($q) => $q->with(['especialidad' , 'consultorios','calendarios_detalles'])]);
-        $es->whereHas('calendarios_doctores',fn($query) => $query->whereRaw('calendarios_doctores.especialidades_id LIKE' . (empty($this->inputEspecialidades) ? "'%". $this->filters['especialidades'] . "%'" : "'%" . intval($this->inputEspecialidades) . "%'") ));
+        $es->whereHas('calendarios_doctores.doctores',fn($query) => $query->whereRaw('calendarios_doctores.especialidades_id LIKE' . (empty($this->inputEspecialidades) ? "'%". $this->filters['especialidades'] . "%'" : "'%" . intval($this->inputEspecialidades) . "%'") ));
         $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_inicio','>=', empty($this->inputHorarioIni) ? $this->filters['horaInicio'] : $this->inputHorarioIni ));
         $es->whereHas('calendarios_doctores',fn($query) => $query->where('calendarios_doctores.horario_fin','<=',  empty($this->inputHorarioFin) ? $this->filters['horaFin'] : $this->inputHorarioFin  ));
-        $es->whereHas('personas',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
+        $es->whereHas('personas.doctores',fn($query) => $query->whereRaw('concat(personas.nombre," ",personas.apellido) LIKE '. "'%". ( empty($this->inputNombre) ? $this->filters['nombre'] : $this->inputNombre  ) . "%'"));
         // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereMonth('calendarios_detalles.dias_laborales', $mes));
         $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->whereRaw( 'DAYOFWEEK(calendarios_detalles.dias_laborales) like '.  ( empty($this->inputDayWeek) ? "'%". $this->filters['dia'] . "%'" : "'%". $this->inputDayWeek . "%'") ));
         // $es->whereHas('calendarios_doctores.calendarios_detalles',fn($query) => $query->where('calendarios_doctores.especialidades_id',  empty($this->inputEspecialidades) ? $this->filters['especialidades'] : $this->inputEspecialidades    ));

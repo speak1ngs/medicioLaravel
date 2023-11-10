@@ -45,7 +45,7 @@ class CrearPosts extends Component
             if(!empty($this->inputPhoto)){
             
                 $image=$this->upload();
-
+                
                     post::create([
                         'titulo'=> $this->inputTittle,
                         'body' => $this->inputContent,

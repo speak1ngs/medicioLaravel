@@ -157,10 +157,10 @@
 											</a>
 
 											@endrole
-
+											
 											@role('Paciente')
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})" wire:ignore>Ver calendario</a>
+											data-dismiss="modal" wire:click="asig('{{ $doctor['personas']->id }}')" >Ver calendario</a>
 											@endrole
 										</div>
 									</div>
@@ -205,7 +205,7 @@
 		
 							<div class="lc-block mb-4">
 								<div editable="rich">
-									<label for="">Informacion del Profesional:</label>
+									<label for="">Información del Profesional:</label>
 									<p class="lead">{{ $descrip }}</p>
 
 								</div>

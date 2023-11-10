@@ -64,7 +64,7 @@
 									<p data-placement="top" data-toggle="tooltip" title="Desactivar"
 										class="bottom-p">
 										<button class="btn btn-danger btn-xs" data-title="confirmModal" wire:ignore.self
-											data-toggle="modal" data-target="#confirmModal" wire:click.prevent="dataSet('{{ $data->id }}', 'desactivar','{{ $data->titulo }}', '{{ $data->body }}', '{{ $data->foto_url }}')">
+											data-toggle="modal" data-target="#confirmModal" wire:click="dataSet('{{ $data->id }}', 'desactivar')">
 											<span class="fa fa-remove"></span>
 										</button>
 									</p>
@@ -75,11 +75,11 @@
 						</td>
 						<td>
 							<div class="row">
-
-								<div class="form-group col-sm-4 bottom-p text-center" wire:ignore.self>
+				
+								<div class="form-group col-sm-4 bottom-p text-center" >
 									<p data-placement="top" data-toggle="tooltip" title="Activar" class="bottom-p">
 										<button class="btn btn-success btn-xs" data-title="previewPost"
-											data-toggle="modal" data-target="#previewPost"  wire:click.prevent="dataSet('{{ $data->id }}', 'activar','{{ $data->titulo }}', '{{ $data->body }}', '{{ $data->foto_url }}')"> 
+											data-toggle="modal" data-target="#previewPost"  wire:click="dataSet( '{{ $data->id }}','activar')"> 
 											<span class="fa fa-check-square-o"></span>
 										</button>
 									</p>

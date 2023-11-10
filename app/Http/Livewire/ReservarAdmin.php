@@ -403,7 +403,7 @@ class ReservarAdmin extends Component
                                         'tipo_usuario_id' => null,
                                         'persona_id' => $iden[0]->id
                                     ]
-                                    );
+                                    )->syncRoles(3);;
                 
                             }
                             db::table('calendarios_detalles')->where('id','=',$this->inputHour)->update(['stat_id' => 2]);

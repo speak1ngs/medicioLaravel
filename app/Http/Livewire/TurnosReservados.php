@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\cita_stat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use JeroenNoten\LaravelAdminLte\View\Components\Form\Select;
@@ -10,13 +11,14 @@ use Livewire\WithPagination;
 
 class TurnosReservados extends Component
 {
-    public $inputRating , $inputComent;
+    public $inputRating , $inputComent, $inputNombre, $inputEstado;
     public $nom, $ide, $control, $val, $buttonState ,$statPaciente, $idpacen;
     public $cant = 10;
     public $stat = 1;
-    public $statAlert ,$title, $text;
+    public $statAlert ,$title, $text, $estado;
     public $datTemp = [];
     public $arryDay = [];
+    public $descrip;
     public $dateFilter, $dateStart, $today,$hour;
 
     use WithPagination;
@@ -31,6 +33,20 @@ class TurnosReservados extends Component
     }
 
     protected $listeners = ['render'];
+
+    public function openModal()
+    {
+    $this->dispatchBrowserEvent('opendetailDate');
+    }
+    public function closeModal()
+    {
+    $this->dispatchBrowserEvent('closedetailDate');
+    }
+
+    public function resetFilters(){
+        $this->reset(['inputEstado', 'inputNombre','cant']);
+    }
+
     public function getLimit( $mes )
     {
         // calculamos el rango de un mes
@@ -46,7 +62,7 @@ class TurnosReservados extends Component
     {
         date_default_timezone_set('America/Asuncion');
         $this->hour= date("H:i:s");
-
+       
         $this->arryDay= [ 
             ["id"=> 1 , "month" => 'Enero', "limit" => '31' ],
             ["id"=> 2, "month" => 'Febrero',"limit" =>  (bool)$this->esBisiesto(date("Y")) ? '29' : '28 '],
@@ -66,6 +82,7 @@ class TurnosReservados extends Component
             $this->dateFilter = date_format($date, 'Y-m-d');
             $this->dateStart = date_format(date_create(strval(date('Y') . '-' . date('n')  . '-' .'01')), 'Y-m-d');
             $this->today =date_format(date_create(strval(date('Y') . '-' . date('n')  . '-' . date('d'))), 'Y-m-d');
+            $this->estado = cita_stat::all();
         $this->control = "successComent";
         $this->statPaciente= "presente";
         $this->cant= 10;
@@ -84,14 +101,15 @@ class TurnosReservados extends Component
 
     }
 
-    public function instanData($iden, $nomb, $idpac) 
+    public function instanData($iden, $nomb, $idpac, $descp) 
     {   
         $this->reset(['ide','nom','idpacen']);
         $this->ide = $iden;
         $this->nom = $nomb;
         $this->idpacen = $idpac;
+        $this->descrip = $descp;
         $this->val = db::table('citas')->where('id','=',$this->ide)->get('cal_pac_id');
-        if( !empty($this->val[0]->cal_pac_id) ){
+        if(  !is_null($this->val[0]->cal_pac_id) ){
             $this->control = "failComment";
         }
 
@@ -106,24 +124,43 @@ class TurnosReservados extends Component
         }
         $this->emitSelf('render');
     }
+    public function sendData( $data ) 
+    {
+        // $this->reset(['datTemp']);
+        array_push($this->datTemp, json_decode( $data,true));
 
+        if(sizeof($this->datTemp) >= 1)
+            $this->openModal();
+
+    
+    }
     public function calificar()
     {   
         
         try {
             if($this->control === "successComent" ){
                 if(!empty($this->inputComent) && !empty($this->inputRating)){
-                    db::table('citas')->where('id','=',$this->ide)->update([
-                        'descripcion_paciente' => $this->inputComent,
-                        'cal_pac_id' => $this->inputRating
-                        
-                    ]);
-                
-                     
-                        $this->statAlert = 'success';
-                        $this->title = 'Exitoso';
-                        $this->text = 'Se califico al doctor.';  
+            
+                    if( $this->descrip === 'finalizado'){
+                        db::table('citas')->where('id','=',$this->ide)->update([
+                            'descripcion_paciente' => $this->inputComent,
+                            'cal_pac_id' => $this->inputRating
+                            
+                        ]);
+                    
+
+                            $this->statAlert = 'success';
+                            $this->title = 'Exitoso';
+                            $this->text = 'Se califico al doctor.';  
+                            $this->reset(['inputRating','inputComent','control']);
+                    }
+                    else{
+                        $this->statAlert = 'error';
+                        $this->title = 'Error';
+                        $this->text = 'Al finalizar el  turno va a poder calificar al profesional.';  
                         $this->reset(['inputRating','inputComent','control']);
+                    }
+                  
                 }
                 else{
                     $this->reset(['inputRating','inputComent','control']);
@@ -159,11 +196,7 @@ class TurnosReservados extends Component
     }
 
 
-    public function sendData( $data ) 
-    {
-        // $this->reset(['datTemp']);
-        array_push($this->datTemp, json_decode( $data,true));
-    }
+
 
     public function render()
     {
@@ -209,7 +242,8 @@ class TurnosReservados extends Component
                     'consultorios.telefono as consult_telf', db::raw('(SELECT ciudades.descripcion from ciudades WHERE ciudades.id = consultorios.ciudad_id) as ciudad'),
                     'consultorios.map as ubi'
                     )
-            // ->where('citas_status.id','=',1)
+            ->whereRaw('citas_status.id LIKE' . "'%".$this->inputEstado . "%'")
+            ->whereRaw('(SELECT concat(personas.nombre," ", personas.apellido ) from personas where personas.id = doctores.persona_id) LIKE '. "'%" . $this->inputNombre . "%'")
             ->where('citas.paciente_id','=', Auth::user()->paciente_id)
             ->paginate($this->cant);
 

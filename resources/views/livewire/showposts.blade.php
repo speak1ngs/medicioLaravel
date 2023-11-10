@@ -56,7 +56,7 @@
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...' }}</h6>
 												<p class="card-text line-clamp"> {{  substr($db[$i]->body,0,60) }} </p>
-												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')"  >Leer más</a>
+												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}')"  >Leer más</a>
 											</div>
 										</div>
 									</div>
@@ -73,7 +73,7 @@
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...'}}</h6>
 												<p class="card-text line-clamp">{{  substr($db[$i]->body,0,20) }}</p>
-												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')"  >Leer más</a>
+												<a class="btn btn-skin btn-sm" wire:click="setData('{{ $db[$i]->id }}')"  >Leer más</a>
 											</div>
 										</div>
 									</div>
@@ -104,7 +104,7 @@
 											<div class="card-block">
 												<h6 class="card-title">{{ substr($db[$i]->titulo,0,20) . '...' }}</h6>
 												<p class="card-text line-clamp">{{ substr($db[$i]->body,0,60)}}</p>
-												<a class="btn btn-skin btn-sm"  wire:click="setData('{{ $db[$i]->id }}','{{ $db[$i]->titulo }}', '{{ $db[$i]->body}}','{{ $db[$i]->foto_url }}')">Leer más</a>
+												<a class="btn btn-skin btn-sm"  wire:click="setData('{{ $db[$i]->id }}')">Leer más</a>
 											</div>
 										</div>
 									</div>

@@ -12,15 +12,24 @@ class Showposts extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public function setData($id, $title,$body, $pic) 
+    public function setData($id) 
     {
-    
-        $this->iden = $id;
-        $this->titulo = $title;
-        $this->bod =$body;
-        $this->photo = $pic;
         
-        $this->openModal();
+
+        $valt = post::all()->where('id',intval($id));
+   
+        foreach($valt as $value){
+            
+            $this->iden =$value->id;
+            $this->titulo = $value->titulo;
+            $this->bod = $value->body;
+            $this->photo = $value->foto_url;
+           
+        }
+
+
+        if($this->iden)
+            $this->openModal();
 
     }
 

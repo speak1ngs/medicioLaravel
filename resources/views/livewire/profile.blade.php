@@ -172,9 +172,7 @@ regular
 
 			</form>
 
-			@if($test)
-			@json($test)
-		@endif
+	
 
 		</div>
 		

@@ -3523,3 +3523,9 @@ padding-right: 1.5rem;
 .text-rtn{
 	font-size: 0.8vw;
 }
+
+.mg-filter{
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

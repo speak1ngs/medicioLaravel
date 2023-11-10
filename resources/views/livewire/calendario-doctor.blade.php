@@ -16,8 +16,8 @@
 			</div>
 			<div class="col-md-4">
 		
-			<label for="inputStat">Especialidades</label>
-					<select id="inputStat" class="form-control" wire:model="inputEspecialidades">
+			<label for="inputEspecialidades">Especialidades</label>
+					<select id="inputEspecialidades" class="form-control" wire:model="inputEspecialidades">
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($especialidades) >= 1)
 													@foreach($especialidades as $especial )
@@ -159,8 +159,8 @@
 													<option>No hay Consultorios</option>
 													@endif
 							</select>
-					<label for="inputSta">Especialidades</label>
-					<select id="inputSta" class="form-control" wire:model.defer="inputEspecialidad">
+					<label for="inputEspecialidad">Especialidades</label>
+					<select id="inputEspecialidad" class="form-control" wire:model.defer="inputEspecialidad">
 												<option selected value="">Seleccionar Especialidad</option>
 											@if(count($espeAsig) >= 1)
 													@foreach($espeAsig as $especial )

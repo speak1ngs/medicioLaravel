@@ -142,7 +142,7 @@
 											
 											<p class="card-text"> <strong> Especialidad:</strong> {{  $doctor->calendarios_doctores->first()->especialidad->descripcion}}</p>
 											<a href="#" class="btn btn-primary btn-sm" 	data-title="Asignar" data-toggle="modal" data-target="#Asignar"
-											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})" wire:ignore.self>Ver calendario</a>
+											data-dismiss="modal" wire:click="asig({{ $doctor['personas']->id }})">Ver calendario</a>
 										</div>
 									</div>
 								</div>

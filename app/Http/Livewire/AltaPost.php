@@ -16,6 +16,7 @@ class AltaPost extends Component
     public $statPost ;
     public $statAlert ,$title, $text;
     public $state = [];
+    public $datTemp = [];
     public $flag = 0; 
     use WithPagination;
     use WithFileUploads;
@@ -51,15 +52,18 @@ class AltaPost extends Component
 
 
 
-    public function dataSet($iden ,$val, $titulo, $body ,$foto_url) 
+    public function dataSet($dat ,$val) 
     {
-  
-
+        $valt = post::all()->where('id',$dat);
         $this->statPost = $val;
-        $this->idp = $iden;
-        $this->inputTitle = $titulo;
-        $this->inputBody = $body;
-        $this->inputFotoUrl = $foto_url;
+        foreach($valt as $value){
+            
+            $this->idp =$value->id;
+            $this->inputTitle = $value->titulo;
+            $this->inputBody = $value->body;
+            $this->inputFotoUrl = $value->foto_url;
+        }
+     
         
     }
 
